@@ -67,6 +67,7 @@
 <li class="toctree-l1"><a class="reference internal" href="12_oop.html">第 12 章 クラスとオブジェクト指向</a></li>
 <li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめと次のステップ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
 </ul>
 
         </div>
@@ -96,12 +97,13 @@
 <h1>第 9 章 ファイルの入出力<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>ファイルを開く<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>Python でファイルを読み書きするには、<code class="docutils literal notranslate"><span class="pre">open</span></code> 関数を使用します。<code class="docutils literal notranslate"><span class="pre">open</span></code> 関数は、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文と組み合わせて使うことで、処理が終わったときに自動的にファイルを閉じられます。ファイルを開いたまま忘れてしまうことがなくなるため、ファイル操作では <code class="docutils literal notranslate"><span class="pre">with</span></code> 文を使うことをお勧めします。</p>
+<p>Python でファイルを読み書きするには、<code class="docutils literal notranslate"><span class="pre">open</span></code> 関数を使用する。<code class="docutils literal notranslate"><span class="pre">open</span></code> 関数は、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文と組み合わせて使うことで、処理が終わったときに自動的にファイルを閉じられる。ファイルを開いたまま忘れてしまうことがなくなるため、ファイル操作では <code class="docutils literal notranslate"><span class="pre">with</span></code> 文を使うのが一般的である。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;こんにちは</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">mode</span></code> 引数には、次のような値を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">open</span></code> 関数の第 1 引数にはファイル名を、<code class="docutils literal notranslate"><span class="pre">mode</span></code> 引数にはファイルを開く目的を、<code class="docutils literal notranslate"><span class="pre">encoding</span></code> 引数にはファイルの文字コードを指定する。<code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">式</span> <span class="pre">as</span> <span class="pre">変数名:</span></code> と書くと、開いたファイルを表すオブジェクト（ファイルオブジェクト）が変数に代入され、ブロックの中でファイルを操作できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">mode</span></code> 引数には、次のような値を指定する。</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>mode</p></th>
@@ -120,10 +122,11 @@
 </tr>
 </tbody>
 </table>
+<p><code class="docutils literal notranslate"><span class="pre">encoding</span></code> 引数を省略した場合に使われる文字コードは、Python のバージョンや OS によって異なる。Python 3.14 以前の Windows では、日本語環境の既定の文字コード（cp932）が使われることがあり、UTF-8 で保存されたファイルを読み込むと文字化けやエラーが発生する場合がある。Python 3.15 以降は既定が UTF-8 になったが、どの環境でも同じように動作させるため、本資料では常に <code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8&quot;</span></code> を指定する。</p>
 </section>
 <section id="id3">
 <h2>ファイルへの書き込み<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>複数行のテキストをファイルに書き込む場合は、次のようにループを使って 1 行ずつ書き込みます。</p>
+<p>複数行のテキストをファイルに書き込む場合は、次のようにループを使って 1 行ずつ書き込む。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1 行目です。&quot;</span><span class="p">,</span> <span class="s2">&quot;2 行目です。&quot;</span><span class="p">,</span> <span class="s2">&quot;3 行目です。&quot;</span><span class="p">]</span>
 <span class="linenos">2</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">3</span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -133,7 +136,7 @@
 </section>
 <section id="id4">
 <h2>ファイルの読み込み<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>ファイルの内容を読み込む場合は、<code class="docutils literal notranslate"><span class="pre">mode=&quot;r&quot;</span></code> を指定して <code class="docutils literal notranslate"><span class="pre">open</span></code> 関数を呼び出します。ファイルオブジェクトに対して <code class="docutils literal notranslate"><span class="pre">for</span></code> 文を使うと、ファイルの内容を 1 行ずつ取り出せます。</p>
+<p>ファイルの内容を読み込む場合は、<code class="docutils literal notranslate"><span class="pre">mode=&quot;r&quot;</span></code> を指定して <code class="docutils literal notranslate"><span class="pre">open</span></code> 関数を呼び出す。ファイルオブジェクトに対して <code class="docutils literal notranslate"><span class="pre">for</span></code> 文を使うと、ファイルの内容を 1 行ずつ取り出せる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">3</span>        <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
@@ -142,19 +145,19 @@
 </section>
 <section id="pathlib">
 <h2>pathlib モジュールの利用<a class="headerlink" href="#pathlib" title="Link to this heading"></a></h2>
-<p>ファイルパスを扱う際は、標準ライブラリの <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> モジュールを使うと便利です。文字列を <code class="docutils literal notranslate"><span class="pre">+</span></code> で連結してパスを組み立てる方法もありますが、<code class="docutils literal notranslate"><span class="pre">pathlib</span></code> モジュールの <code class="docutils literal notranslate"><span class="pre">Path</span></code> クラスを使うと、<code class="docutils literal notranslate"><span class="pre">/</span></code> 演算子でパスを組み立てられるうえ、Windows と macOS、Linux など OS ごとのパスの区切り文字の違いを意識する必要がなくなります。</p>
+<p>ファイルパスを扱う際は、標準ライブラリの <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> モジュールを使うと便利である。文字列を <code class="docutils literal notranslate"><span class="pre">+</span></code> で連結してパスを組み立てる方法もあるが、<code class="docutils literal notranslate"><span class="pre">pathlib</span></code> モジュールの <code class="docutils literal notranslate"><span class="pre">Path</span></code> クラスを使うと、<code class="docutils literal notranslate"><span class="pre">/</span></code> 演算子でパスを組み立てられるうえ、Windows と macOS、Linux など OS ごとのパスの区切り文字の違いを意識する必要がなくなる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="linenos">2</span>
 <span class="linenos">3</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;memo.txt&quot;</span>
 <span class="linenos">4</span><span class="nb">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>  <span class="c1"># data\memo.txt（Windows の場合）</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトは、組み込みの <code class="docutils literal notranslate"><span class="pre">open</span></code> 関数の代わりに、<code class="docutils literal notranslate"><span class="pre">open</span></code> メソッドでファイルを開けます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトは、組み込みの <code class="docutils literal notranslate"><span class="pre">open</span></code> 関数の代わりに、<code class="docutils literal notranslate"><span class="pre">open</span></code> メソッドでファイルを開ける。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">with</span> <span class="n">file_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>このほかにも、<code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトには、ファイルが存在するかを確認する <code class="docutils literal notranslate"><span class="pre">exists</span></code> メソッドや、ファイル名だけを取り出す <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性など、ファイルパスの操作に役立つ機能が数多く用意されています。</p>
+<p>このほかにも、<code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトには、ファイルが存在するかを確認する <code class="docutils literal notranslate"><span class="pre">exists</span></code> メソッドや、ファイル名だけを取り出す <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性など、ファイルパスの操作に役立つ機能が数多く用意されている。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nb">print</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>  <span class="c1"># ファイルが存在すれば True、存在しなければ False</span>
 <span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>      <span class="c1"># memo.txt</span>
 </pre></div>
@@ -162,7 +165,7 @@
 </section>
 <section id="tempfile">
 <h2>一時ファイルの利用（tempfile モジュール）<a class="headerlink" href="#tempfile" title="Link to this heading"></a></h2>
-<p>動作確認のためだけにファイルを作成すると、パソコン上に不要なファイルが残ってしまいます。標準ライブラリの <code class="docutils literal notranslate"><span class="pre">tempfile</span></code> モジュールを使うと、一時的なディレクトリを作成し、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文のブロックを抜けたときに自動的に削除できます。</p>
+<p>動作確認のためだけにファイルを作成すると、パソコン上に不要なファイルが残ってしまう。標準ライブラリの <code class="docutils literal notranslate"><span class="pre">tempfile</span></code> モジュールを使うと、一時的なフォルダを作成し、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文のブロックを抜けたときに自動的に削除できる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 <span class="linenos">2</span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="linenos">3</span>
@@ -172,27 +175,27 @@
 <span class="linenos">7</span>        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;一時ファイルの内容です。</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">tempfile.TemporaryDirectory()</span></code> は、一時的なディレクトリを作成し、そのパスを文字列として返します。<code class="docutils literal notranslate"><span class="pre">with</span></code> 文のブロックを抜けると、作成したディレクトリとその中身は自動的に削除されます。後述のサンプルコードでも、このモジュールを利用しています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tempfile.TemporaryDirectory()</span></code> は、一時的なフォルダを作成し、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文と組み合わせると、そのパスを文字列として変数に代入する。<code class="docutils literal notranslate"><span class="pre">with</span></code> 文のブロックを抜けると、作成したフォルダとその中身は自動的に削除される。後述のサンプルコードでも、このモジュールを利用している。</p>
 </section>
 <section id="id5">
 <h2>サンプルコード<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>一時ディレクトリにファイルを作成し、書き込みと読み込みを行うサンプルコードです。実行しても、パソコン上に余分なファイルが残らないように、一時ディレクトリを利用しています。</p>
+<p>一時フォルダにファイルを作成し、書き込みと読み込みを行うサンプルコードである。実行しても、パソコン上に余分なファイルが残らないように、一時フォルダを利用している。</p>
 <p><a class="reference download internal" download="" href="../_downloads/ff24f3dddaae9b6947698b892cd75c63/file_io.py"><code class="xref download docutils literal notranslate"><span class="pre">file_io.py</span></code></a></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;ファイルへの書き込みと読み込みの基本を示すサンプルです。&quot;&quot;&quot;</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;ファイルへの書き込みと読み込みの基本を示すサンプル。&quot;&quot;&quot;</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 <span class="linenos"> 4</span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="linenos"> 5</span>
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">write_lines</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos"> 8</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;指定したパスのファイルに、複数行のテキストを書き込みます。&quot;&quot;&quot;</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;指定したパスのファイルに、複数行のテキストを書き込む。&quot;&quot;&quot;</span>
 <span class="linenos"> 9</span>    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">10</span>        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
 <span class="linenos">11</span>            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>
 <span class="linenos">14</span><span class="k">def</span><span class="w"> </span><span class="nf">read_lines</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;指定したパスのファイルを読み込み、行のリストとして返します。&quot;&quot;&quot;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;指定したパスのファイルを読み込み、行のリストとして返す。&quot;&quot;&quot;</span>
 <span class="linenos">16</span>    <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="linenos">17</span>    <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
 <span class="linenos">18</span>        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
@@ -201,7 +204,7 @@
 <span class="linenos">21</span>
 <span class="linenos">22</span>
 <span class="linenos">23</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos">24</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;一時ファイルへの書き込みと読み込みの結果を表示します。&quot;&quot;&quot;</span>
+<span class="linenos">24</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;一時ファイルへの書き込みと読み込みの結果を表示する。&quot;&quot;&quot;</span>
 <span class="linenos">25</span>    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">temp_dir</span><span class="p">:</span>
 <span class="linenos">26</span>        <span class="n">file_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;memo.txt&quot;</span>
 <span class="linenos">27</span>

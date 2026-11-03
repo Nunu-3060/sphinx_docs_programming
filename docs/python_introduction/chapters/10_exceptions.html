@@ -68,6 +68,7 @@
 <li class="toctree-l1"><a class="reference internal" href="12_oop.html">第 12 章 クラスとオブジェクト指向</a></li>
 <li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめと次のステップ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
 </ul>
 
         </div>
@@ -97,11 +98,11 @@
 <h1>第 10 章 例外処理<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>例外とは<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>プログラムの実行中に発生するエラーのことを、Python では例外（exception）と呼びます。たとえば、0 で割り算をしようとしたときや、存在しないファイルを開こうとしたときに例外が発生します。例外が発生すると、対処をしない限りプログラムはそこで終了してしまいます。</p>
+<p>プログラムの実行中に発生するエラーのことを、Python では例外（exception）と呼ぶ。たとえば、0 で割り算をしようとしたときや、存在しないファイルを開こうとしたときに例外が発生する。例外が発生すると、対処をしない限りプログラムはそこで終了してしまう。</p>
 </section>
 <section id="id3">
 <h2>エラーメッセージ（トレースバック）の読み方<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>発生した例外が対処されなかった場合、Python はエラーの内容を「トレースバック（traceback）」と呼ばれる形式でコンソールに表示し、プログラムを終了します。次のプログラムを例に、トレースバックの読み方を説明します。</p>
+<p>発生した例外が対処されなかった場合、Python はエラーの内容を「トレースバック（traceback）」と呼ばれる形式でコンソールに表示し、プログラムを終了する。次のプログラムを例に、トレースバックの読み方を説明する。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
 <span class="linenos">3</span>
@@ -109,21 +110,21 @@
 <span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>このプログラムを実行すると、次のようなトレースバックが表示されます。</p>
+<p>このプログラムを実行すると、次のようなトレースバックが表示される。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>example.py
 <span class="go">Traceback (most recent call last):</span>
-<span class="go">  File &quot;example.py&quot;, line 5, in &lt;module&gt;</span>
+<span class="go">  File &quot;C:\work\example.py&quot;, line 5, in &lt;module&gt;</span>
 <span class="go">    print(divide(10, 0))</span>
 <span class="go">          ~~~~~~^^^^^^^</span>
-<span class="go">  File &quot;example.py&quot;, line 2, in divide</span>
+<span class="go">  File &quot;C:\work\example.py&quot;, line 2, in divide</span>
 <span class="go">    return a / b</span>
 <span class="go">           ~~^~~</span>
 <span class="go">ZeroDivisionError: division by zero</span>
 </pre></div>
 </div>
-<p>トレースバックは、まず一番下の行に注目して読みます。<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError:</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> の部分が、発生した例外の種類（<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>）と、その内容を説明するメッセージ（<code class="docutils literal notranslate"><span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code>）です。どのような種類のエラーが起きたのかは、まずここで確認できます。</p>
-<p>続いて、<code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">&quot;...&quot;</span> <span class="pre">,</span> <span class="pre">line</span> <span class="pre">...,</span> <span class="pre">in</span> <span class="pre">...</span></code> という行に注目します。これは、そのファイル名、行番号、関数名を表しています。トレースバックには、呼び出し元をさかのぼる形で複数の行が表示されます。一番下に近い <code class="docutils literal notranslate"><span class="pre">File</span></code> の行（この例では 2 行目の <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">a</span> <span class="pre">/</span> <span class="pre">b</span></code>）が、実際に例外が発生した箇所です。<code class="docutils literal notranslate"><span class="pre">^</span></code> の記号は、エラーの原因となった式の位置を示しています。</p>
-<p>代表的な例外の種類には、次のようなものがあります。</p>
+<p>トレースバックは、まず一番下の行に注目して読む。<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError:</span> <span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code> の部分が、発生した例外の種類（<code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>）と、その内容を説明するメッセージ（<code class="docutils literal notranslate"><span class="pre">division</span> <span class="pre">by</span> <span class="pre">zero</span></code>）である。どのような種類のエラーが起きたのかは、まずここで確認できる。</p>
+<p>続いて、<code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">&quot;...&quot;,</span> <span class="pre">line</span> <span class="pre">...,</span> <span class="pre">in</span> <span class="pre">...</span></code> という行に注目する。これは、例外に関係する処理が書かれているファイル名、行番号、関数名を表している。ファイル名は、実行したファイルの場所（この例では <code class="docutils literal notranslate"><span class="pre">C:\work</span></code>）を含めて表示される。トレースバックには、呼び出し元をさかのぼる形で複数の行が表示される。一番下に近い <code class="docutils literal notranslate"><span class="pre">File</span></code> の行（この例では 2 行目の <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">a</span> <span class="pre">/</span> <span class="pre">b</span></code>）が、実際に例外が発生した箇所である。<code class="docutils literal notranslate"><span class="pre">~</span></code> と <code class="docutils literal notranslate"><span class="pre">^</span></code> の記号は、エラーの原因となった式の位置を示しており、<code class="docutils literal notranslate"><span class="pre">^</span></code> が付いた部分が直接の原因である。この記号による位置の表示は、Python 3.11 から追加された機能である。また、Python 3.13 以降では、対応するコマンドラインでトレースバックが色付きで表示される。</p>
+<p>代表的な例外の種類には、次のようなものがある。</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>例外の種類</p></th>
@@ -154,11 +155,11 @@
 </tr>
 </tbody>
 </table>
-<p>エラーが発生した場合は、まず例外の種類とメッセージを確認し、次にトレースバックが示すファイルと行番号を確認して、該当する箇所のコードを見直してください。原因を修正できない場合や、エラーが発生してもプログラムを続行させたい場合は、この後説明する <code class="docutils literal notranslate"><span class="pre">try</span></code> 文を使って例外を捕捉します。</p>
+<p>エラーが発生した場合は、まず例外の種類とメッセージを確認し、次にトレースバックが示すファイルと行番号を確認して、該当する箇所のコードを見直す。原因を修正できない場合や、エラーが発生してもプログラムを続行させたい場合は、この後説明する <code class="docutils literal notranslate"><span class="pre">try</span></code> 文を使って例外を捕捉する。</p>
 </section>
 <section id="try">
 <h2>try 文による例外処理<a class="headerlink" href="#try" title="Link to this heading"></a></h2>
-<p>発生する可能性のある例外に対処するには、<code class="docutils literal notranslate"><span class="pre">try</span></code> 文を使用します。<code class="docutils literal notranslate"><span class="pre">try</span></code> ブロックの中で例外が発生すると、対応する <code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックの処理が実行されます。</p>
+<p>発生する可能性のある例外に対処するには、<code class="docutils literal notranslate"><span class="pre">try</span></code> 文を使用する。<code class="docutils literal notranslate"><span class="pre">try</span></code> ブロックの中で例外が発生すると、対応する <code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックの処理が実行される。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">try</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="n">result</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
 <span class="linenos">3</span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
@@ -168,7 +169,7 @@
 </section>
 <section id="else-finally">
 <h2><code class="docutils literal notranslate"><span class="pre">else</span></code> ブロックと <code class="docutils literal notranslate"><span class="pre">finally</span></code> ブロック<a class="headerlink" href="#else-finally" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">try</span></code> 文には、<code class="docutils literal notranslate"><span class="pre">else</span></code> ブロックと <code class="docutils literal notranslate"><span class="pre">finally</span></code> ブロックを追加できます。<code class="docutils literal notranslate"><span class="pre">else</span></code> ブロックは、例外が発生しなかったときにだけ実行され、<code class="docutils literal notranslate"><span class="pre">finally</span></code> ブロックは、例外の発生有無にかかわらず必ず実行されます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">try</span></code> 文には、<code class="docutils literal notranslate"><span class="pre">else</span></code> ブロックと <code class="docutils literal notranslate"><span class="pre">finally</span></code> ブロックを追加できる。<code class="docutils literal notranslate"><span class="pre">else</span></code> ブロックは、例外が発生しなかったときにだけ実行され、<code class="docutils literal notranslate"><span class="pre">finally</span></code> ブロックは、例外の発生有無にかかわらず必ず実行される。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">try</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="n">result</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">2</span>
 <span class="linenos">3</span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
@@ -182,9 +183,9 @@
 </section>
 <section id="id4">
 <h2>独自の例外クラス<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>Python では、<code class="docutils literal notranslate"><span class="pre">Exception</span></code> クラスを継承することで、独自の例外クラスを定義できます。プログラム固有のエラーを表現したい場合に利用します。</p>
+<p>Python では、<code class="docutils literal notranslate"><span class="pre">Exception</span></code> クラスを継承することで、独自の例外クラスを定義できる。プログラム固有のエラーを表現したい場合に利用する。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">class</span><span class="w"> </span><span class="nc">InvalidScoreError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数が正しい範囲外である場合に送出される例外です。&quot;&quot;&quot;</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数が 0 から 100 の範囲外である場合に送出する例外。&quot;&quot;&quot;</span>
 <span class="linenos">3</span>
 <span class="linenos">4</span><span class="k">def</span><span class="w"> </span><span class="nf">validate_score</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="linenos">5</span>    <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
@@ -192,7 +193,7 @@
 <span class="linenos">7</span>    <span class="k">return</span> <span class="n">score</span>
 </pre></div>
 </div>
-<p>定義した例外は、<code class="docutils literal notranslate"><span class="pre">raise</span></code> 文で送出し、呼び出し元の <code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックで受け取ります。</p>
+<p>定義した例外は、<code class="docutils literal notranslate"><span class="pre">raise</span></code> 文で送出し、呼び出し元の <code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックで受け取る。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">try</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="n">validate_score</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
 <span class="linenos">3</span><span class="k">except</span> <span class="n">InvalidScoreError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
@@ -202,34 +203,34 @@
 </section>
 <section id="assert">
 <h2>assert 文<a class="headerlink" href="#assert" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">assert</span></code> 文を使うと、プログラムの前提条件を確認できます。<code class="docutils literal notranslate"><span class="pre">assert</span></code> に続けて書いた条件式が偽であった場合、<code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> という例外が発生し、プログラムが停止します。条件式の後にカンマで区切ってメッセージを書くと、<code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> が発生した際にそのメッセージが表示されます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">assert</span></code> 文を使うと、プログラムの前提条件を確認できる。<code class="docutils literal notranslate"><span class="pre">assert</span></code> に続けて書いた条件式が偽であった場合、<code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> という例外が発生し、プログラムが停止する。条件式の後にカンマで区切ってメッセージを書くと、<code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> が発生した際にそのメッセージが表示される。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">calculate_average</span><span class="p">(</span><span class="n">scores</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;scores は空にできません。&quot;</span>
 <span class="linenos">3</span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>上記の例では、<code class="docutils literal notranslate"><span class="pre">scores</span></code> が空のリストであった場合に、<code class="docutils literal notranslate"><span class="pre">&quot;scores</span> <span class="pre">は空にできません。&quot;</span></code> というメッセージとともに <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> が発生します。<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文は、本来あり得ないはずの状態を検知するデバッグ用途で使用します。ユーザーの入力値を検証するような場面では、<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文ではなく、これまでに説明した <code class="docutils literal notranslate"><span class="pre">raise</span></code> 文と独自の例外クラスを使用してください。<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文は、Python の実行オプションによって無効化されることがあるため、必ず実行してほしい検証処理には向いていません。</p>
+<p>上記の例では、<code class="docutils literal notranslate"><span class="pre">scores</span></code> が空のリストであった場合に、<code class="docutils literal notranslate"><span class="pre">&quot;scores</span> <span class="pre">は空にできない。&quot;</span></code> というメッセージとともに <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文は、本来あり得ないはずの状態を検知するデバッグ用途で使用する。ユーザーの入力値を検証するような場面では、<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文ではなく、これまでに説明した <code class="docutils literal notranslate"><span class="pre">raise</span></code> 文と独自の例外クラスを使用する。<code class="docutils literal notranslate"><span class="pre">assert</span></code> 文は、Python を <code class="docutils literal notranslate"><span class="pre">-O</span></code> オプション付きで実行した場合などに無効化されるため、必ず実行したい検証処理には向いていない。</p>
 </section>
 <section id="id5">
 <h2>サンプルコード<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>例外処理の基本的な書き方をまとめたサンプルコードです。</p>
+<p>例外処理の基本的な書き方をまとめたサンプルコードである。</p>
 <p><a class="reference download internal" download="" href="../_downloads/d2ae33aaf8d0351f9f66c40f8413bf71/exceptions.py"><code class="xref download docutils literal notranslate"><span class="pre">exceptions.py</span></code></a></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;例外処理の基本的な書き方を示すサンプルです。&quot;&quot;&quot;</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;例外処理の基本的な書き方を示すサンプル。&quot;&quot;&quot;</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="k">class</span><span class="w"> </span><span class="nc">InvalidScoreError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数が正しい範囲外である場合に送出される例外です。&quot;&quot;&quot;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数が 0 から 100 の範囲外である場合に送出する例外。&quot;&quot;&quot;</span>
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span><span class="k">def</span><span class="w"> </span><span class="nf">validate_score</span><span class="p">(</span><span class="n">score</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="linenos"> 9</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数を検証し、0 から 100 の範囲外であれば例外を送出します。&quot;&quot;&quot;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数を検証し、0 から 100 の範囲外であれば例外を送出する。&quot;&quot;&quot;</span>
 <span class="linenos">10</span>    <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
 <span class="linenos">11</span>        <span class="k">raise</span> <span class="n">InvalidScoreError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;点数は 0 から 100 の範囲で指定してください: </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="linenos">12</span>    <span class="k">return</span> <span class="n">score</span>
 <span class="linenos">13</span>
 <span class="linenos">14</span>
 <span class="linenos">15</span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="linenos">16</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの整数を受け取り、除算した結果を返します。&quot;&quot;&quot;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;2 つの整数を受け取り、除算した結果を返す。&quot;&quot;&quot;</span>
 <span class="linenos">17</span>    <span class="k">try</span><span class="p">:</span>
 <span class="linenos">18</span>        <span class="n">result</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
 <span class="linenos">19</span>    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
@@ -242,7 +243,7 @@
 <span class="linenos">26</span>
 <span class="linenos">27</span>
 <span class="linenos">28</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos">29</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;例外処理の使用例を表示します。&quot;&quot;&quot;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;例外処理の使用例を表示する。&quot;&quot;&quot;</span>
 <span class="linenos">30</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;10 ÷ 2 =&quot;</span><span class="p">,</span> <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="linenos">31</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;10 ÷ 0 =&quot;</span><span class="p">,</span> <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="linenos">32</span>

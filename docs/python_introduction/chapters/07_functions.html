@@ -57,11 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#docstring">docstring（関数の説明文）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pass">pass 文</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">デフォルト引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">キーワード引数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#none">None を使ったオプション引数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">可変長引数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">可変長のキーワード引数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">ラムダ式（無名関数）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">サンプルコード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">可変長引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">可変長のキーワード引数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">ラムダ式（無名関数）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">サンプルコード</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="08_strings.html">第 8 章 文字列操作</a></li>
@@ -71,6 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="12_oop.html">第 12 章 クラスとオブジェクト指向</a></li>
 <li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめと次のステップ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
 </ul>
 
         </div>
@@ -100,11 +102,11 @@
 <h1>第 7 章 関数<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>関数とは<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>関数とは、一連の処理をひとまとまりにして、名前を付けたものです。同じ処理を何度も使う場合に関数として定義しておくと、コードの重複を減らし、修正が必要になったときも 1 箇所を直すだけで済みます。</p>
+<p>関数とは、一連の処理をひとまとまりにして、名前を付けたものである。同じ処理を何度も使う場合に関数として定義しておくと、コードの重複を減らし、修正が必要になったときも 1 箇所を直すだけで済む。</p>
 </section>
 <section id="id3">
 <h2>関数の定義と呼び出し<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>Python では、<code class="docutils literal notranslate"><span class="pre">def</span></code> キーワードを使って関数を定義します。処理の結果を呼び出し元に返したい場合は、<code class="docutils literal notranslate"><span class="pre">return</span></code> 文を使用します。</p>
+<p>Python では、<code class="docutils literal notranslate"><span class="pre">def</span></code> キーワードを使って関数を定義する。処理の結果を呼び出し元に返したい場合は、<code class="docutils literal notranslate"><span class="pre">return</span></code> 文を使用する。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
 <span class="linenos">3</span>
@@ -112,7 +114,8 @@
 <span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># 77.0</span>
 </pre></div>
 </div>
-<p>引数と戻り値には、次のように型ヒントを付けることもできます。型ヒントを付けることで、関数がどのような値を受け取り、どのような値を返すのかが明確になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">def</span></code> の後ろに関数名を書き、続く丸括弧 <code class="docutils literal notranslate"><span class="pre">()</span></code> の中に、関数が受け取る値を入れる変数を書く。この変数（この例では <code class="docutils literal notranslate"><span class="pre">celsius</span></code>）を引数と呼ぶ。関数を呼び出すと、呼び出し時に渡した値（この例では <code class="docutils literal notranslate"><span class="pre">25.0</span></code>）が引数に代入され、関数の本体の処理が実行される。<code class="docutils literal notranslate"><span class="pre">return</span></code> の後ろに書いた式の値は、戻り値として呼び出し元に返される。この例では、戻り値の <code class="docutils literal notranslate"><span class="pre">77.0</span></code> が変数 <code class="docutils literal notranslate"><span class="pre">result</span></code> に代入される。</p>
+<p>引数と戻り値には、次のように型ヒントを付けることもできる。型ヒントを付けることで、関数がどのような値を受け取り、どのような値を返すのかが明確になる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
 </pre></div>
@@ -120,30 +123,30 @@
 </section>
 <section id="docstring">
 <h2>docstring（関数の説明文）<a class="headerlink" href="#docstring" title="Link to this heading"></a></h2>
-<p>関数の定義の直後に、三重引用符（<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>）で囲んだ文字列を書くことがあります。これを docstring（ドキュメンテーション文字列）と呼び、その関数が何をするものかを説明するために使用します。</p>
+<p>関数の定義の直後に、三重引用符（<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>）で囲んだ文字列を書くことがある。これを docstring（ドキュメンテーション文字列）と呼び、その関数が何をするものかを説明するために使用する。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;摂氏温度を華氏温度に変換して返します。&quot;&quot;&quot;</span>
+<span class="linenos">2</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;摂氏温度を華氏温度に変換して返す。&quot;&quot;&quot;</span>
 <span class="linenos">3</span>    <span class="k">return</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
 </pre></div>
 </div>
-<p>docstring は、<code class="docutils literal notranslate"><span class="pre">#</span></code> で書くコメントとは異なり、<code class="docutils literal notranslate"><span class="pre">関数名.__doc__</span></code> として実行時に取得したり、<code class="docutils literal notranslate"><span class="pre">help(関数名)</span></code> で内容を表示したりできます。docstring は関数だけでなく、ファイルの先頭やクラスの定義の直後にも書けます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="sd">&quot;&quot;&quot;このファイル全体の説明を書きます。&quot;&quot;&quot;</span>
+<p>docstring は、<code class="docutils literal notranslate"><span class="pre">#</span></code> で書くコメントとは異なり、<code class="docutils literal notranslate"><span class="pre">関数名.__doc__</span></code> として実行時に取得したり、<code class="docutils literal notranslate"><span class="pre">help(関数名)</span></code> で内容を表示したりできる。docstring は関数だけでなく、ファイルの先頭やクラスの定義の直後にも書ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="sd">&quot;&quot;&quot;このファイル全体の説明を書く。&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<p>ファイルの先頭に書かれた docstring は、そのファイル（モジュール）全体の説明を表します。本資料のサンプルコードでは、ファイルの先頭とすべての関数に docstring を付けています。クラスに付ける docstring については、第 12 章「クラスとオブジェクト指向」で説明します。</p>
+<p>ファイルの先頭に書かれた docstring は、そのファイル（モジュール）全体の説明を表す。本資料のサンプルコードでは、ファイルの先頭とすべての関数に docstring を付けている。クラスに付ける docstring については、第 12 章「クラスとオブジェクト指向」で説明する。</p>
 </section>
 <section id="pass">
 <h2>pass 文<a class="headerlink" href="#pass" title="Link to this heading"></a></h2>
-<p>Python では、<code class="docutils literal notranslate"><span class="pre">if</span></code> 文や関数、クラスの本体を空にすることはできず、必ず何らかの文を書く必要があります。処理の内容をまだ決めていない場合の仮置きとして、何も処理を行わない <code class="docutils literal notranslate"><span class="pre">pass</span></code> 文を使用できます。</p>
+<p>Python では、<code class="docutils literal notranslate"><span class="pre">if</span></code> 文や関数、クラスの本体を空にすることはできず、必ず何らかの文を書く必要がある。処理の内容をまだ決めていない場合の仮置きとして、何も処理を行わない <code class="docutils literal notranslate"><span class="pre">pass</span></code> 文を使用できる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">not_implemented_yet</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">pass</span>  <span class="c1"># TODO: 後で処理を実装する</span>
 </pre></div>
 </div>
-<p>なお、関数やクラスの本体に docstring だけを書いた場合は、その docstring 自体が有効な文として扱われるため、<code class="docutils literal notranslate"><span class="pre">pass</span></code> を追加で書く必要はありません。本資料のサンプルコードでは、この理由から、本体が空になる箇所では <code class="docutils literal notranslate"><span class="pre">pass</span></code> の代わりに docstring を使用しています。</p>
+<p>なお、関数やクラスの本体に docstring だけを書いた場合は、その docstring 自体が有効な文として扱われるため、<code class="docutils literal notranslate"><span class="pre">pass</span></code> を追加で書く必要はない。本資料のサンプルコードでは、この理由から、本体が空になる箇所では <code class="docutils literal notranslate"><span class="pre">pass</span></code> の代わりに docstring を使用している。</p>
 </section>
 <section id="id4">
 <h2>デフォルト引数<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>引数にあらかじめ値を設定しておくと、呼び出し時にその引数を省略できます。これをデフォルト引数と呼びます。</p>
+<p>引数にあらかじめ値を設定しておくと、呼び出し時にその引数を省略できる。これをデフォルト引数と呼ぶ。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">introduce</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="s2">&quot;私は &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; です。年齢は &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; 歳です。&quot;</span>
 <span class="linenos">3</span>
@@ -152,9 +155,17 @@
 </pre></div>
 </div>
 </section>
+<section id="id5">
+<h2>キーワード引数<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>これまでの例のように、引数の値を順番に並べて渡す方法のほかに、<code class="docutils literal notranslate"><span class="pre">引数名=値</span></code> の形で引数を指定して渡す方法もある。この方法で渡す引数をキーワード引数と呼ぶ。キーワード引数を使うと、どの引数にどの値を渡しているかが分かりやすくなり、引数の順番を入れ替えて書くこともできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nb">print</span><span class="p">(</span><span class="n">introduce</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;田中&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">35</span><span class="p">))</span>  <span class="c1"># 私は 田中 です。年齢は 35 歳です。</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">introduce</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;田中&quot;</span><span class="p">))</span>  <span class="c1"># 同じ結果になる</span>
+</pre></div>
+</div>
+</section>
 <section id="none">
 <h2>None を使ったオプション引数<a class="headerlink" href="#none" title="Link to this heading"></a></h2>
-<p>第 4 章で説明した <code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code> のような型ヒントは、値が指定されないかもしれない引数のデフォルト値として <code class="docutils literal notranslate"><span class="pre">None</span></code> を使いたい場合によく使われます。</p>
+<p>第 4 章で説明した <code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></code> のような型ヒントは、値が指定されないかもしれない引数のデフォルト値として <code class="docutils literal notranslate"><span class="pre">None</span></code> を使いたい場合によく使われる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nickname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">if</span> <span class="n">nickname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <span class="linenos">3</span>        <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; です。&quot;</span>
@@ -164,11 +175,11 @@
 <span class="linenos">7</span><span class="nb">print</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="s2">&quot;田中&quot;</span><span class="p">,</span> <span class="s2">&quot;たなか&quot;</span><span class="p">))</span>  <span class="c1"># 田中（たなか）です。</span>
 </pre></div>
 </div>
-<p>引数 <code class="docutils literal notranslate"><span class="pre">nickname</span></code> を省略すると、デフォルト値の <code class="docutils literal notranslate"><span class="pre">None</span></code> が使われます。関数の内部では、<code class="docutils literal notranslate"><span class="pre">if</span></code> 文で <code class="docutils literal notranslate"><span class="pre">nickname</span></code> が <code class="docutils literal notranslate"><span class="pre">None</span></code> かどうかを判定し、処理を分けています。</p>
+<p>引数 <code class="docutils literal notranslate"><span class="pre">nickname</span></code> を省略すると、デフォルト値の <code class="docutils literal notranslate"><span class="pre">None</span></code> が使われる。関数の内部では、<code class="docutils literal notranslate"><span class="pre">if</span></code> 文で <code class="docutils literal notranslate"><span class="pre">nickname</span></code> が <code class="docutils literal notranslate"><span class="pre">None</span></code> かどうかを判定し、処理を分けている。</p>
 </section>
-<section id="id5">
-<h2>可変長引数<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>引数の数があらかじめ決まっていない場合は、<code class="docutils literal notranslate"><span class="pre">*</span></code> を付けた可変長引数を使用します。可変長引数は、関数の内部ではタプルとして扱われます。</p>
+<section id="id6">
+<h2>可変長引数<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>引数の数があらかじめ決まっていない場合は、<code class="docutils literal notranslate"><span class="pre">*</span></code> を付けた可変長引数を使用する。可変長引数は、関数の内部ではタプルとして扱われる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">total</span><span class="p">(</span><span class="o">*</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
 <span class="linenos">3</span>
@@ -176,9 +187,9 @@
 </pre></div>
 </div>
 </section>
-<section id="id6">
-<h2>可変長のキーワード引数<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<p>キーワード引数の数があらかじめ決まっていない場合は、<code class="docutils literal notranslate"><span class="pre">**</span></code> を付けた可変長のキーワード引数を使用します。可変長のキーワード引数は、関数の内部では辞書として扱われます。</p>
+<section id="id7">
+<h2>可変長のキーワード引数<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>キーワード引数の数があらかじめ決まっていない場合は、<code class="docutils literal notranslate"><span class="pre">**</span></code> を付けた可変長のキーワード引数を使用する。可変長のキーワード引数は、関数の内部では辞書として扱われる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">show_profile</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="n">info</span>
 <span class="linenos">3</span>
@@ -187,58 +198,58 @@
 </pre></div>
 </div>
 </section>
-<section id="id7">
-<h2>ラムダ式（無名関数）<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">lambda</span></code> を使うと、名前を付けずに、その場限りの小さな関数（無名関数）を作成できます。<code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">引数:</span> <span class="pre">式</span></code> という形式で書き、式を評価した結果がそのまま戻り値になります。</p>
+<section id="id8">
+<h2>ラムダ式（無名関数）<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">lambda</span></code> を使うと、名前を付けずに、その場限りの小さな関数（無名関数）を作成できる。<code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">引数:</span> <span class="pre">式</span></code> という形式で書き、式を評価した結果がそのまま戻り値になる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">add_one</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">number</span><span class="p">:</span> <span class="n">number</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">add_one</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 6</span>
 </pre></div>
 </div>
-<p>上記は、次の関数定義と同じ処理です。</p>
+<p>上記は、次の関数定義と同じ処理である。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span><span class="w"> </span><span class="nf">add_one</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="linenos">2</span>    <span class="k">return</span> <span class="n">number</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="linenos">3</span>
 <span class="linenos">4</span><span class="nb">print</span><span class="p">(</span><span class="n">add_one</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 6</span>
 </pre></div>
 </div>
-<p>ラムダ式は、<code class="docutils literal notranslate"><span class="pre">return</span></code> 文を書かずに 1 つの式だけで戻り値を表す点や、型ヒントを付けられない点が、<code class="docutils literal notranslate"><span class="pre">def</span></code> を使った通常の関数定義と異なります。複雑な処理を書きたい場合や、同じ処理を繰り返し呼び出したい場合は、<code class="docutils literal notranslate"><span class="pre">def</span></code> を使った通常の関数定義を使用してください。ラムダ式は、<code class="docutils literal notranslate"><span class="pre">sorted</span></code> 関数の <code class="docutils literal notranslate"><span class="pre">key</span></code> 引数のように、他の関数に処理の内容だけを短く渡したい場面でよく使われます。</p>
+<p>ラムダ式は、<code class="docutils literal notranslate"><span class="pre">return</span></code> 文を書かずに 1 つの式だけで戻り値を表す点や、型ヒントを付けられない点が、<code class="docutils literal notranslate"><span class="pre">def</span></code> を使った通常の関数定義と異なる。複雑な処理を書きたい場合や、同じ処理を繰り返し呼び出したい場合は、<code class="docutils literal notranslate"><span class="pre">def</span></code> を使った通常の関数定義を使用するとよい。ラムダ式は、<code class="docutils literal notranslate"><span class="pre">sorted</span></code> 関数の <code class="docutils literal notranslate"><span class="pre">key</span></code> 引数のように、他の関数に処理の内容だけを短く渡したい場面でよく使われる。</p>
 </section>
-<section id="id8">
-<h2>サンプルコード<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
-<p>関数の定義と、デフォルト引数や可変長引数、可変長のキーワード引数、<code class="docutils literal notranslate"><span class="pre">None</span></code> を使ったオプション引数など、さまざまな引数の使い方をまとめたサンプルコードです。</p>
+<section id="id9">
+<h2>サンプルコード<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>関数の定義と、デフォルト引数や可変長引数、可変長のキーワード引数、<code class="docutils literal notranslate"><span class="pre">None</span></code> を使ったオプション引数など、さまざまな引数の使い方をまとめたサンプルコードである。</p>
 <p><a class="reference download internal" download="" href="../_downloads/086529e7785ce5eb6bf074b9084386d4/functions.py"><code class="xref download docutils literal notranslate"><span class="pre">functions.py</span></code></a></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;関数の定義と引数の使い方を示すサンプルです。&quot;&quot;&quot;</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;関数の定義と引数の使い方を示すサンプル。&quot;&quot;&quot;</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="k">def</span><span class="w"> </span><span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;摂氏温度を華氏温度に変換して返します。&quot;&quot;&quot;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;摂氏温度を華氏温度に変換して返す。&quot;&quot;&quot;</span>
 <span class="linenos"> 6</span>    <span class="k">return</span> <span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">32</span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span><span class="k">def</span><span class="w"> </span><span class="nf">introduce</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="linenos">10</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;名前と年齢を受け取り、自己紹介の文字列を返します。&quot;&quot;&quot;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;名前と年齢を受け取り、自己紹介の文字列を返す。&quot;&quot;&quot;</span>
 <span class="linenos">11</span>    <span class="k">return</span> <span class="s2">&quot;私は &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; です。年齢は &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; 歳です。&quot;</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>
 <span class="linenos">14</span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nickname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;名前とニックネームを受け取り、挨拶の文字列を返します。&quot;&quot;&quot;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;名前とニックネームを受け取り、挨拶の文字列を返す。&quot;&quot;&quot;</span>
 <span class="linenos">16</span>    <span class="k">if</span> <span class="n">nickname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <span class="linenos">17</span>        <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; です。&quot;</span>
 <span class="linenos">18</span>    <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;（&quot;</span> <span class="o">+</span> <span class="n">nickname</span> <span class="o">+</span> <span class="s2">&quot;）です。&quot;</span>
 <span class="linenos">19</span>
 <span class="linenos">20</span>
 <span class="linenos">21</span><span class="k">def</span><span class="w"> </span><span class="nf">total</span><span class="p">(</span><span class="o">*</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="linenos">22</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;可変長引数として受け取った数値の合計を返します。&quot;&quot;&quot;</span>
+<span class="linenos">22</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;可変長引数として受け取った数値の合計を返す。&quot;&quot;&quot;</span>
 <span class="linenos">23</span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
 <span class="linenos">24</span>
 <span class="linenos">25</span>
 <span class="linenos">26</span><span class="k">def</span><span class="w"> </span><span class="nf">show_profile</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="linenos">27</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;可変長のキーワード引数として受け取った情報を辞書のまま返します。&quot;&quot;&quot;</span>
+<span class="linenos">27</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;可変長のキーワード引数として受け取った情報を辞書のまま返す。&quot;&quot;&quot;</span>
 <span class="linenos">28</span>    <span class="k">return</span> <span class="n">info</span>
 <span class="linenos">29</span>
 <span class="linenos">30</span>
 <span class="linenos">31</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos">32</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;関数の呼び出し例を表示します。&quot;&quot;&quot;</span>
+<span class="linenos">32</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;関数の呼び出し例を表示する。&quot;&quot;&quot;</span>
 <span class="linenos">33</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;摂氏 25 度は華氏&quot;</span><span class="p">,</span> <span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mf">25.0</span><span class="p">),</span> <span class="s2">&quot;度です。&quot;</span><span class="p">)</span>
 <span class="linenos">34</span>    <span class="nb">print</span><span class="p">(</span><span class="n">introduce</span><span class="p">(</span><span class="s2">&quot;鈴木&quot;</span><span class="p">))</span>
 <span class="linenos">35</span>    <span class="nb">print</span><span class="p">(</span><span class="n">introduce</span><span class="p">(</span><span class="s2">&quot;田中&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">))</span>

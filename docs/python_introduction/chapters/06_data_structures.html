@@ -69,6 +69,7 @@
 <li class="toctree-l1"><a class="reference internal" href="12_oop.html">第 12 章 クラスとオブジェクト指向</a></li>
 <li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめと次のステップ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
 </ul>
 
         </div>
@@ -98,7 +99,7 @@
 <h1>第 6 章 データ構造<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="data-structures-list">
 <span id="id2"></span><h2>リスト<a class="headerlink" href="#data-structures-list" title="Link to this heading"></a></h2>
-<p>第 5 章「制御構文」の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文で簡単に紹介したリストについて、ここで詳しく説明します。リストは、複数の値を順序付けて格納できるデータ構造です。角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> を使って作成し、要素の追加や変更、削除ができます。</p>
+<p>第 5 章「制御構文」の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文で簡単に紹介したリストについて、ここで詳しく説明する。リストは、複数の値を順序付けて格納できるデータ構造である。角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> を使って作成し、要素の追加や変更、削除ができる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;りんご&quot;</span><span class="p">,</span> <span class="s2">&quot;みかん&quot;</span><span class="p">,</span> <span class="s2">&quot;ぶどう&quot;</span><span class="p">]</span>
 <span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>       <span class="c1"># りんご（先頭の要素）</span>
 <span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>      <span class="c1"># ぶどう（末尾の要素）</span>
@@ -108,11 +109,11 @@
 <span class="linenos">7</span><span class="nb">print</span><span class="p">(</span><span class="n">fruits</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>リストのインデックスは 0 から始まる点に注意してください。</p>
+<p>リストの要素の位置を表す番号をインデックスと呼ぶ。インデックスは 0 から始まる点に注意が必要である。<code class="docutils literal notranslate"><span class="pre">fruits[-1]</span></code> のように負の数を指定すると、末尾から数えた位置の要素を取り出せる。</p>
 </section>
 <section id="id3">
 <h2>タプル<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>タプルは、リストと同じく複数の値を順序付けて格納できるデータ構造ですが、一度作成すると要素を変更できません。丸括弧 <code class="docutils literal notranslate"><span class="pre">()</span></code> を使って作成します。変更されては困る値をまとめておきたい場合に利用します。</p>
+<p>タプルは、リストと同じく複数の値を順序付けて格納できるデータ構造であるが、一度作成すると要素を変更できない。丸括弧 <code class="docutils literal notranslate"><span class="pre">()</span></code> を使って作成する。変更されては困る値をまとめておきたい場合に利用する。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">point</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 3</span>
 <span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 5</span>
@@ -121,7 +122,7 @@
 </section>
 <section id="id4">
 <h2>辞書<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>辞書は、キーと値の組み合わせでデータを格納するデータ構造です。波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使って作成し、キーを指定することで対応する値を取り出せます。</p>
+<p>辞書は、キーと値の組み合わせでデータを格納するデータ構造である。波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使って作成し、キーを指定することで対応する値を取り出せる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">person</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;佐藤&quot;</span><span class="p">,</span> <span class="s2">&quot;job&quot;</span><span class="p">:</span> <span class="s2">&quot;エンジニア&quot;</span><span class="p">}</span>
 <span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>  <span class="c1"># 佐藤</span>
 <span class="linenos">3</span>
@@ -129,11 +130,11 @@
 <span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>このように、辞書には文字列以外の値を持つキーを追加することもできます。値の型が混在する辞書に型ヒントを付ける場合は、第 4 章で説明した <code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">int</span></code> のような書き方を組み合わせて、<code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">int]</span></code> のように指定します。</p>
+<p>このように、辞書には、値が文字列以外のキーと値の組を追加することもできる。値の型が混在する辞書に型ヒントを付ける場合は、第 4 章で説明した <code class="docutils literal notranslate"><span class="pre">str</span> <span class="pre">|</span> <span class="pre">int</span></code> のような書き方を組み合わせて、<code class="docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">int]</span></code> のように指定する。</p>
 </section>
 <section id="id5">
 <h2>集合<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>集合は、重複しない値の集まりを表すデータ構造です。波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使って作成しますが、辞書とは異なりキーを持ちません。集合を利用すると、リストから重複した値を簡単に取り除けます。</p>
+<p>集合は、重複しない値の集まりを表すデータ構造である。波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使って作成するが、辞書とは異なりキーを持たない。集合を利用すると、リストから重複した値を簡単に取り除ける。なお、要素を持たない空の集合を作成する場合は <code class="docutils literal notranslate"><span class="pre">set()</span></code> と書く。<code class="docutils literal notranslate"><span class="pre">{}</span></code> と書くと、空の辞書が作成される。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="linenos">2</span><span class="n">unique_numbers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
 <span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="n">unique_numbers</span><span class="p">)</span>  <span class="c1"># {1, 2, 3}</span>
@@ -142,7 +143,7 @@
 </section>
 <section id="id6">
 <h2>内包表記<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<p>既存のリストの各要素に処理を行った結果から、新しいリストを作成したいことがあります。この処理は、<code class="docutils literal notranslate"><span class="pre">for</span></code> 文と <code class="docutils literal notranslate"><span class="pre">append</span></code> メソッドを使って、次のように書けます。</p>
+<p>既存のリストの各要素に処理を行った結果から、新しいリストを作成したいことがある。この処理は、<code class="docutils literal notranslate"><span class="pre">for</span></code> 文と <code class="docutils literal notranslate"><span class="pre">append</span></code> メソッドを使って、次のように書ける。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 <span class="linenos">2</span>
 <span class="linenos">3</span><span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
@@ -151,20 +152,20 @@
 <span class="linenos">6</span><span class="nb">print</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>  <span class="c1"># [1, 4, 9, 16, 25]</span>
 </pre></div>
 </div>
-<p>同じ処理は、リスト内包表記という書き方を使うと、次のように 1 行で書けます。</p>
+<p>同じ処理は、リスト内包表記という書き方を使うと、次のように 1 行で書ける。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 <span class="linenos">2</span><span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
 <span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>  <span class="c1"># [1, 4, 9, 16, 25]</span>
 </pre></div>
 </div>
-<p>角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の中に、<code class="docutils literal notranslate"><span class="pre">要素に対する処理</span> <span class="pre">for</span> <span class="pre">要素</span> <span class="pre">in</span> <span class="pre">リスト</span></code> という順序で書きます。どちらの書き方でも結果は同じですが、リスト内包表記のほうが簡潔に書けるため、Python ではよく使われます。</p>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code> の後ろに <code class="docutils literal notranslate"><span class="pre">if</span></code> を続けて書くと、条件に合う要素だけを取り出した新しいリストを作成できます。</p>
+<p>角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の中に、<code class="docutils literal notranslate"><span class="pre">要素に対する処理</span> <span class="pre">for</span> <span class="pre">要素</span> <span class="pre">in</span> <span class="pre">リスト</span></code> という順序で書く。どちらの書き方でも結果は同じであるが、リスト内包表記のほうが簡潔に書けるため、Python ではよく使われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> の後ろに <code class="docutils literal notranslate"><span class="pre">if</span></code> を続けて書くと、条件に合う要素だけを取り出した新しいリストを作成できる。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
 <span class="linenos">2</span><span class="n">even_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
 <span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="n">even_numbers</span><span class="p">)</span>  <span class="c1"># [2, 4, 6]</span>
 </pre></div>
 </div>
-<p>同様の書き方は、辞書や集合を作成する場合にも使えます。角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の代わりに波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使い、辞書の場合はキーと値の組を <code class="docutils literal notranslate"><span class="pre">キー:</span> <span class="pre">値</span></code> の形で書きます。</p>
+<p>同様の書き方は、辞書や集合を作成する場合にも使える。角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の代わりに波括弧 <code class="docutils literal notranslate"><span class="pre">{}</span></code> を使い、辞書の場合はキーと値の組を <code class="docutils literal notranslate"><span class="pre">キー:</span> <span class="pre">値</span></code> の形で書く。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="linenos">2</span>
 <span class="linenos">3</span><span class="n">squares_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">number</span><span class="p">:</span> <span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">}</span>
@@ -177,7 +178,7 @@
 </section>
 <section id="id7">
 <h2>型ヒントを付ける<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
-<p>リスト、タプル、辞書、集合にも、型ヒントを付けることができます。要素の型を角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の中に指定します。</p>
+<p>リスト、タプル、辞書、集合にも、型ヒントを付けることができる。要素の型を角括弧 <code class="docutils literal notranslate"><span class="pre">[]</span></code> の中に指定する。</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>データ構造</p></th>
@@ -210,47 +211,47 @@
 <span class="linenos">4</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>タプルの型ヒントは、要素の数だけ型を書き並べます。<code class="docutils literal notranslate"><span class="pre">tuple[int,</span> <span class="pre">int]</span></code> は、整数を 2 つ持つタプルであることを表します。同じ型の要素がいくつ入るか決まっていないタプルを表したい場合は、<code class="docutils literal notranslate"><span class="pre">tuple[int,</span> <span class="pre">...]</span></code> のように <code class="docutils literal notranslate"><span class="pre">...</span></code> を使用します。</p>
+<p>タプルの型ヒントは、要素の数だけ型を書き並べる。<code class="docutils literal notranslate"><span class="pre">tuple[int,</span> <span class="pre">int]</span></code> は、整数を 2 つ持つタプルであることを表す。同じ型の要素がいくつ入るか決まっていないタプルを表したい場合は、<code class="docutils literal notranslate"><span class="pre">tuple[int,</span> <span class="pre">...]</span></code> のように <code class="docutils literal notranslate"><span class="pre">...</span></code> を使用する。</p>
 </section>
 <section id="id8">
 <h2>データ構造の使い分け<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
-<p>それぞれのデータ構造には、次のような特徴があります。目的に応じて使い分けてください。</p>
+<p>それぞれのデータ構造には、次のような特徴がある。目的に応じて使い分けるとよい。</p>
 <ul class="simple">
-<li><p>順序が重要で、後から内容を変更したい場合はリストを使用します。</p></li>
-<li><p>順序が重要で、後から内容を変更したくない場合はタプルを使用します。</p></li>
-<li><p>キーと値の組み合わせでデータを管理したい場合は辞書を使用します。</p></li>
-<li><p>値の重複を許したくない場合、または重複を取り除きたい場合は集合を使用します。</p></li>
+<li><p>順序が重要で、後から内容を変更したい場合はリストを使用する。</p></li>
+<li><p>順序が重要で、後から内容を変更したくない場合はタプルを使用する。</p></li>
+<li><p>キーと値の組み合わせでデータを管理したい場合は辞書を使用する。</p></li>
+<li><p>値の重複を許したくない場合、または重複を取り除きたい場合は集合を使用する。</p></li>
 </ul>
 </section>
 <section id="id9">
 <h2>サンプルコード<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
-<p>リスト、タプル、辞書、集合の基本的な操作をまとめたサンプルコードです。平均点を求める <code class="docutils literal notranslate"><span class="pre">summarize_scores</span></code> 関数では、リストの要素の合計を求める <code class="docutils literal notranslate"><span class="pre">sum</span></code> 関数と、要素の個数を求める <code class="docutils literal notranslate"><span class="pre">len</span></code> 関数を組み合わせています。<code class="docutils literal notranslate"><span class="pre">squares_of</span></code>、<code class="docutils literal notranslate"><span class="pre">squares_dict_of</span></code>、<code class="docutils literal notranslate"><span class="pre">unique_squares_of</span></code> の 3 つの関数では、それぞれリスト内包表記、辞書内包表記、集合内包表記を使って新しいリスト、辞書、集合を作成しています。</p>
+<p>リスト、タプル、辞書、集合の基本的な操作をまとめたサンプルコードである。平均点を求める <code class="docutils literal notranslate"><span class="pre">summarize_scores</span></code> 関数では、リストの要素の合計を求める <code class="docutils literal notranslate"><span class="pre">sum</span></code> 関数と、要素の個数を求める <code class="docutils literal notranslate"><span class="pre">len</span></code> 関数を組み合わせている。<code class="docutils literal notranslate"><span class="pre">squares_of</span></code>、<code class="docutils literal notranslate"><span class="pre">squares_dict_of</span></code>、<code class="docutils literal notranslate"><span class="pre">unique_squares_of</span></code> の 3 つの関数では、それぞれリスト内包表記、辞書内包表記、集合内包表記を使って新しいリスト、辞書、集合を作成している。</p>
 <p><a class="reference download internal" download="" href="../_downloads/62c8a866346681b19c94b1ee956368c8/data_structures.py"><code class="xref download docutils literal notranslate"><span class="pre">data_structures.py</span></code></a></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;リスト、タプル、辞書、集合の基本的な操作を示すサンプルです。&quot;&quot;&quot;</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;リスト、タプル、辞書、集合の基本的な操作を示すサンプル。&quot;&quot;&quot;</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="k">def</span><span class="w"> </span><span class="nf">summarize_scores</span><span class="p">(</span><span class="n">scores</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数のリストを受け取り、平均点を返します。&quot;&quot;&quot;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;点数のリストを受け取り、平均点を返す。&quot;&quot;&quot;</span>
 <span class="linenos"> 6</span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span><span class="k">def</span><span class="w"> </span><span class="nf">squares_of</span><span class="p">(</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="linenos">10</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素を 2 乗したリストをリスト内包表記で返します。&quot;&quot;&quot;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素を 2 乗したリストをリスト内包表記で返す。&quot;&quot;&quot;</span>
 <span class="linenos">11</span>    <span class="k">return</span> <span class="p">[</span><span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>
 <span class="linenos">14</span><span class="k">def</span><span class="w"> </span><span class="nf">squares_dict_of</span><span class="p">(</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素とその 2 乗を対応させた辞書を辞書内包表記で返します。&quot;&quot;&quot;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素とその 2 乗を対応させた辞書を辞書内包表記で返す。&quot;&quot;&quot;</span>
 <span class="linenos">16</span>    <span class="k">return</span> <span class="p">{</span><span class="n">number</span><span class="p">:</span> <span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">}</span>
 <span class="linenos">17</span>
 <span class="linenos">18</span>
 <span class="linenos">19</span><span class="k">def</span><span class="w"> </span><span class="nf">unique_squares_of</span><span class="p">(</span><span class="n">numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="linenos">20</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素を 2 乗した値の集合を集合内包表記で返します。&quot;&quot;&quot;</span>
+<span class="linenos">20</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数のリストを受け取り、各要素を 2 乗した値の集合を集合内包表記で返す。&quot;&quot;&quot;</span>
 <span class="linenos">21</span>    <span class="k">return</span> <span class="p">{</span><span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">}</span>
 <span class="linenos">22</span>
 <span class="linenos">23</span>
 <span class="linenos">24</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos">25</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;代表的なデータ構造の使い方を表示します。&quot;&quot;&quot;</span>
+<span class="linenos">25</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;代表的なデータ構造の使い方を表示する。&quot;&quot;&quot;</span>
 <span class="linenos">26</span>    <span class="n">fruits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;りんご&quot;</span><span class="p">,</span> <span class="s2">&quot;みかん&quot;</span><span class="p">,</span> <span class="s2">&quot;ぶどう&quot;</span><span class="p">]</span>
 <span class="linenos">27</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;先頭の要素:&quot;</span><span class="p">,</span> <span class="n">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="linenos">28</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;末尾の要素:&quot;</span><span class="p">,</span> <span class="n">fruits</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>

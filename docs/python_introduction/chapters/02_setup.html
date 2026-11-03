@@ -47,12 +47,16 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">第 2 章 開発環境の準備</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#python">Python のインストール</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">インストールの確認</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python のインストール</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows">Windows の場合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macoslinux">macOS、Linux の場合</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">インストールの確認</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pip">pip の確認</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">エディターの準備</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">はじめてのプログラムを実行する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">サンプルコードの構成について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">エディターの準備</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">はじめてのプログラムを実行する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">サンプルコードの構成について</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03_basic_syntax.html">第 3 章 基本文法</a></li>
@@ -67,6 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="12_oop.html">第 12 章 クラスとオブジェクト指向</a></li>
 <li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめと次のステップ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
 </ul>
 
         </div>
@@ -96,40 +101,54 @@
 <h1>第 2 章 開発環境の準備<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="python">
 <h2>Python のインストール<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
-<p>Python でプログラムを書くには、まずお使いのパソコンに Python をインストールする必要があります。公式サイト（<a class="reference external" href="https://www.python.org/">https://www.python.org/</a>）からインストーラーをダウンロードし、画面の指示に従ってインストールしてください。Windows でインストールする場合は、インストール画面で表示される「Add Python to PATH」のチェックボックスを必ずオンにしてください。このチェックボックスをオンにすることで、コマンドラインからどのフォルダにいても python コマンドを実行できるようになります。</p>
+<p>Python でプログラムを書くには、まず使用するパソコンに Python をインストールする必要がある。インストール方法は OS によって異なる。</p>
+<section id="windows">
+<h3>Windows の場合<a class="headerlink" href="#windows" title="Link to this heading"></a></h3>
+<p>Windows では、Python 公式の「Python install manager」を使って Python をインストールする。Python install manager は、<a class="reference external" href="https://www.python.org/downloads/windows/">Python 公式サイトのダウンロードページ</a> または Microsoft Store から入手できる。Python install manager をインストールすると、コマンドラインで <code class="docutils literal notranslate"><span class="pre">python</span></code> コマンドと <code class="docutils literal notranslate"><span class="pre">py</span></code> コマンドを使えるようになる。</p>
+<p>Python install manager のインストール後、コマンドラインで次のコマンドを実行すると、指定したバージョンの Python（この例では Python 3.14）がインストールされる。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>py<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.14
+</pre></div>
+</div>
+<p>以前は、Python のバージョンごとに用意されたインストーラーを使い、インストール画面で「Add Python to PATH」のチェックボックスをオンにする方法が一般的だった。この従来のインストーラーは Python 3.16 以降では提供されなくなるため、本資料では Python install manager を使う方法を説明している。</p>
 </section>
-<section id="id2">
-<h2>インストールの確認<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>インストールが完了したら、コマンドラインで次のコマンドを実行し、バージョンが表示されることを確認してください。</p>
+<section id="macoslinux">
+<h3>macOS、Linux の場合<a class="headerlink" href="#macoslinux" title="Link to this heading"></a></h3>
+<p>macOS では、<a class="reference external" href="https://www.python.org/downloads/macos/">Python 公式サイトのダウンロードページ</a> からインストーラーをダウンロードし、画面の指示に従ってインストールする。Linux では、多くのディストリビューションで Python があらかじめインストールされているか、ディストリビューションのパッケージ管理ツールでインストールできる。</p>
+<p>macOS や Linux では、<code class="docutils literal notranslate"><span class="pre">python</span></code> コマンドの代わりに <code class="docutils literal notranslate"><span class="pre">python3</span></code> コマンドを使う場合が多い。本資料では <code class="docutils literal notranslate"><span class="pre">python</span></code> コマンドで説明するため、macOS や Linux では必要に応じて <code class="docutils literal notranslate"><span class="pre">python3</span></code> に読み替えること。</p>
+</section>
+</section>
+<section id="id4">
+<h2>インストールの確認<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>インストールが完了したら、コマンドラインで次のコマンドを実行し、バージョンが表示されることを確認する。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>--version
 <span class="go">Python 3.14.6</span>
 </pre></div>
 </div>
-<p>バージョン番号が表示されれば、インストールは正常に完了しています。表示されない場合は、パソコンを再起動してから、もう一度確認してください。</p>
+<p>表示されるバージョン番号は、インストールしたバージョンによって異なる。<code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.11</span></code> 以降のバージョン番号が表示されれば、本資料の内容を学習できる。コマンドが見つからないというエラーが表示された場合は、コマンドラインを開き直すか、パソコンを再起動してから、もう一度確認する。</p>
 </section>
 <section id="pip">
 <h2>pip の確認<a class="headerlink" href="#pip" title="Link to this heading"></a></h2>
-<p>Python には、外部ライブラリをインストールするための <code class="docutils literal notranslate"><span class="pre">pip</span></code> というツールが標準で付属しています。次のコマンドを実行し、バージョンが表示されることを確認してください。</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>--version
-<span class="go">pip 25.0 from ... (python 3.14)</span>
+<p>Python には、外部ライブラリをインストールするための <code class="docutils literal notranslate"><span class="pre">pip</span></code> というツールが標準で付属している。次のコマンドを実行し、バージョンが表示されることを確認する。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
+<span class="go">pip 26.2.2 from ... (python 3.14)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span></code> の具体的な使い方は、第 11 章「モジュールとパッケージ」で説明します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span></code> は、<code class="docutils literal notranslate"><span class="pre">python</span></code> コマンドで起動する Python に付属した <code class="docutils literal notranslate"><span class="pre">pip</span></code> を実行する書き方である。<code class="docutils literal notranslate"><span class="pre">pip</span></code> コマンドを直接実行する方法もあるが、複数のバージョンの Python がインストールされている場合に、意図しない Python の <code class="docutils literal notranslate"><span class="pre">pip</span></code> が実行されることがあるため、本資料では <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span></code> を使う。<code class="docutils literal notranslate"><span class="pre">pip</span></code> の具体的な使い方は、第 11 章「モジュールとパッケージ」で説明する。</p>
 </section>
-<section id="id3">
-<h2>エディターの準備<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>Python のプログラムは、テキストエディターで作成します。初心者の方には、無償で利用でき、豊富な拡張機能を持つ Visual Studio Code をお勧めします。Visual Studio Code に Python の拡張機能を追加すると、コードの色分けや入力補完、実行結果の確認などが行いやすくなります。</p>
-<p>Python のファイル（拡張子 <code class="docutils literal notranslate"><span class="pre">.py</span></code>）を保存する際は、文字コードを UTF-8 にしてください。UTF-8 は Python 3 の既定の文字コードであり、本資料のサンプルコードのように日本語のコメントや docstring を含む場合、ほかの文字コードで保存すると、実行時に文字化けや <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> が発生することがあります。Visual Studio Code をはじめとする多くのエディターでは、既定の保存形式が UTF-8 になっています。</p>
+<section id="id5">
+<h2>エディターの準備<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>Python のプログラムは、テキストエディターで作成する。初心者には、無償で利用でき、豊富な拡張機能を持つ Visual Studio Code が使いやすい。Visual Studio Code に Python の拡張機能を追加すると、コードの色分けや入力補完、実行結果の確認などが行いやすくなる。</p>
+<p>Python のファイル（拡張子 <code class="docutils literal notranslate"><span class="pre">.py</span></code>）を保存する際は、文字コードを UTF-8 にする。UTF-8 は Python のソースコードの既定の文字コードであり、本資料のサンプルコードのように日本語のコメントや docstring を含む場合、ほかの文字コードで保存すると、実行時に文字化けや <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> が発生することがある。Visual Studio Code をはじめとする多くのエディターでは、既定の保存形式が UTF-8 になっている。</p>
 </section>
-<section id="id4">
-<h2>はじめてのプログラムを実行する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>準備が整ったら、実際に簡単なプログラムを実行してみましょう。次のサンプルコードをダウンロードし、任意のフォルダに保存してください。</p>
+<section id="id6">
+<h2>はじめてのプログラムを実行する<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>準備が整ったら、実際に簡単なプログラムを実行してみよう。次のサンプルコードをダウンロードし、任意のフォルダに保存する。</p>
 <p><a class="reference download internal" download="" href="../_downloads/bcf98111471f9284890a0320848502f3/hello.py"><code class="xref download docutils literal notranslate"><span class="pre">hello.py</span></code></a></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;Python の環境構築が正しく完了しているかを確認するためのサンプルです。&quot;&quot;&quot;</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;Python の環境構築が正しく完了しているかを確認するためのサンプル。&quot;&quot;&quot;</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;コンソールに挨拶を表示します。&quot;&quot;&quot;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;コンソールに挨拶を表示する。&quot;&quot;&quot;</span>
 <span class="linenos"> 6</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, Python!&quot;</span><span class="p">)</span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span>
@@ -137,28 +156,28 @@
 <span class="linenos">10</span>    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>保存したファイルを、コマンドラインから次のように実行します。</p>
+<p>保存したファイルがあるフォルダで、コマンドラインから次のように実行する。</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>hello.py
 <span class="go">Hello, Python!</span>
 </pre></div>
 </div>
-<p>「Hello, Python!」という文字列が表示されれば、Python の実行環境は正しく準備できています。</p>
+<p>「Hello, Python!」という文字列が表示されれば、Python の実行環境は正しく準備できている。</p>
 </section>
-<section id="id5">
-<h2>サンプルコードの構成について<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>先ほどのサンプルコードをよく見ると、<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">main()</span> <span class="pre">-&gt;</span> <span class="pre">None:</span></code> という記述や、ファイルの先頭にある <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;...&quot;&quot;&quot;</span></code> という文字列、<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> という記述がありました。本資料のサンプルコードは、この後の章でも、すべて同じ構成で統一しています。ここでは、それぞれが何を表しているかを簡単に説明します。詳しい説明は、あわせて示す章で行います。</p>
+<section id="id7">
+<h2>サンプルコードの構成について<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>先ほどのサンプルコードには、ファイルの先頭にある <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;...&quot;&quot;&quot;</span></code> という文字列や、<code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">main()</span> <span class="pre">-&gt;</span> <span class="pre">None:</span></code> という記述、<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> という記述があった。本資料のサンプルコードは、この後の章でも、すべて同じ構成で統一している。ここでは、それぞれが何を表しているかを簡単に説明する。詳しい説明は、あわせて示す章で行う。</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">関数名(...)</span> <span class="pre">-&gt;</span> <span class="pre">型:</span></code></dt><dd><p>一連の処理をまとめた「関数」を定義する書き方です。定義方法や引数の書き方は、第 7 章「関数」で説明します。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;...&quot;&quot;&quot;</span></code></dt><dd><p>関数やファイルの説明を書く docstring である。書き方の詳細は、第 7 章「関数」で説明する。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;...&quot;&quot;&quot;</span></code></dt><dd><p>関数やファイルの説明を書く docstring です。書き方の詳細は、第 7 章「関数」で説明します。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">関数名(...)</span> <span class="pre">-&gt;</span> <span class="pre">型:</span></code></dt><dd><p>一連の処理をまとめた「関数」を定義する書き方である。定義方法や引数の書き方は、第 7 章「関数」で説明する。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">変数名:</span> <span class="pre">型</span> <span class="pre">=</span> <span class="pre">値</span></code></dt><dd><p>変数が持つ値の種類を示す型ヒントです。詳しくは、第 3 章「基本文法」で説明します。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">変数名:</span> <span class="pre">型</span> <span class="pre">=</span> <span class="pre">値</span></code></dt><dd><p>変数が持つ値の種類を示す型ヒントである。詳しくは、第 3 章「基本文法」で説明する。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code></dt><dd><p>ファイルが直接実行されたときにだけ、<code class="docutils literal notranslate"><span class="pre">main</span></code> 関数を呼び出すための書き方です。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code></dt><dd><p>ファイルが直接実行されたときにだけ、<code class="docutils literal notranslate"><span class="pre">main</span></code> 関数を呼び出すための書き方である。</p>
 </dd>
 </dl>
-<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> の仕組みについては、もう少し詳しく説明します。Python では、ファイルが直接実行されたときに、変数 <code class="docutils literal notranslate"><span class="pre">__name__</span></code> へ <code class="docutils literal notranslate"><span class="pre">&quot;__main__&quot;</span></code> という文字列が自動的に設定されます。一方、そのファイルが別のファイルから <code class="docutils literal notranslate"><span class="pre">import</span></code> された場合、<code class="docutils literal notranslate"><span class="pre">__name__</span></code> にはファイル名（モジュール名）が設定されます。この違いを利用することで、ファイルを直接実行したときにだけ <code class="docutils literal notranslate"><span class="pre">main</span></code> 関数を呼び出し、他のファイルから <code class="docutils literal notranslate"><span class="pre">import</span></code> されたときは呼び出さない、という制御ができます。</p>
-<p>サンプルコードの中には、<code class="docutils literal notranslate"><span class="pre">main</span></code> 関数以外にも、計算処理などをまとめた関数が定義されていることがあります。これらの関数も、呼び出すとその中に書かれた処理がまとめて実行される、という点は同じです。定義方法は第 7 章で詳しく説明しますので、それまでは大まかな動作のイメージを持てれば十分です。次の章から、Python の文法を順番に学んでいきましょう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> の仕組みについては、もう少し詳しく説明する。Python では、ファイルが直接実行されたときに、変数 <code class="docutils literal notranslate"><span class="pre">__name__</span></code> へ <code class="docutils literal notranslate"><span class="pre">&quot;__main__&quot;</span></code> という文字列が自動的に設定される。一方、そのファイルが別のファイルから <code class="docutils literal notranslate"><span class="pre">import</span></code> された場合、<code class="docutils literal notranslate"><span class="pre">__name__</span></code> にはモジュール名（拡張子を除いたファイル名）が設定される。この違いを利用することで、ファイルを直接実行したときにだけ <code class="docutils literal notranslate"><span class="pre">main</span></code> 関数を呼び出し、他のファイルから <code class="docutils literal notranslate"><span class="pre">import</span></code> されたときは呼び出さない、という制御ができる。</p>
+<p>サンプルコードの中には、<code class="docutils literal notranslate"><span class="pre">main</span></code> 関数以外にも、計算処理などをまとめた関数が定義されていることがある。これらの関数も、呼び出すとその中に書かれた処理がまとめて実行される、という点は同じである。定義方法は第 7 章で詳しく説明するため、それまでは大まかな動作のイメージを持てれば十分である。次の章から、Python の文法を順番に学んでいこう。</p>
 </section>
 </section>
 
