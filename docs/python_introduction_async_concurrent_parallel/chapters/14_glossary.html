@@ -1,0 +1,178 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>用語集 &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="参考文献" href="15_references.html" />
+    <link rel="prev" title="第 13 章 まとめ" href="13_summary.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">用語集</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>用語集<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>本書で使う主な用語を、五十音順（英字で始まる用語は末尾）にまとめる。</p>
+<dl class="simple glossary">
+<dt id="term-0">アムダールの法則<a class="headerlink" href="#term-0" title="Link to this term"></a></dt><dd><p>プログラムの一部だけを並列化したときの、全体の速度向上率の上限を表す法則。並列化できない部分の割合が大きいほど、コアを増やしても速くならない。詳しくは <a class="reference internal" href="02_concepts.html"><span class="doc">第 2 章 基本概念</span></a> を参照。</p>
+</dd>
+<dt id="term-1">イベントループ<a class="headerlink" href="#term-1" title="Link to this term"></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> の中心となる仕組み。実行できる状態のタスクを 1 つずつ実行し、<code class="docutils literal notranslate"><span class="pre">await</span></code> で中断したタスクは I/O の準備ができるまで待たせる。詳しくは <a class="reference internal" href="08_asyncio_basics.html"><span class="doc">第 8 章 asyncio による非同期処理（基礎）</span></a> を参照。</p>
+</dd>
+<dt id="term-2">競合状態<a class="headerlink" href="#term-2" title="Link to this term"></a></dt><dd><p>複数のスレッドが同じデータを同時に読み書きすることで、実行のタイミングによって結果が変わってしまう状態。race condition。詳しくは <a class="reference internal" href="05_threads.html"><span class="doc">第 5 章 スレッドによる並行処理</span></a> を参照。</p>
+</dd>
+<dt id="term-3">協調的マルチタスク<a class="headerlink" href="#term-3" title="Link to this term"></a></dt><dd><p>タスクが自分から制御を譲ることで切り替わる方式。<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> では <code class="docutils literal notranslate"><span class="pre">await</span></code> の箇所でだけタスクが切り替わる。</p>
+</dd>
+<dt id="term-4">コルーチン<a class="headerlink" href="#term-4" title="Link to this term"></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> で定義した関数（コルーチン関数）を呼び出したときに返されるオブジェクト。<code class="docutils literal notranslate"><span class="pre">await</span></code> されたり、タスクとして登録されたりしたときに実行される。</p>
+</dd>
+<dt id="term-5">サブインタプリタ<a class="headerlink" href="#term-5" title="Link to this term"></a></dt><dd><p>1 つのプロセスの中に作られる、互いに独立した Python のインタプリタ。Python 3.12 以降ではそれぞれが独立した GIL を持つ。詳しくは <a class="reference internal" href="10_new_options.html"><span class="doc">第 10 章 GIL を超える新しい選択肢</span></a> を参照。</p>
+</dd>
+<dt id="term-6">スレッド<a class="headerlink" href="#term-6" title="Link to this term"></a></dt><dd><p>プロセスの中で動く実行の単位。同じプロセスのスレッドはメモリを共有する。</p>
+</dd>
+<dt id="term-7">スレッドセーフ<a class="headerlink" href="#term-7" title="Link to this term"></a></dt><dd><p>複数のスレッドから同時に使っても、正しく動作すること。</p>
+</dd>
+<dt id="term-8">タスク<a class="headerlink" href="#term-8" title="Link to this term"></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> で、イベントループに登録されて並行に実行されるコルーチン。<code class="docutils literal notranslate"><span class="pre">asyncio.Task</span></code> クラスのオブジェクト。</p>
+</dd>
+<dt id="term-9">逐次処理<a class="headerlink" href="#term-9" title="Link to this term"></a></dt><dd><p>複数の処理を 1 つずつ順に実行すること。</p>
+</dd>
+<dt id="term-10">デッドロック<a class="headerlink" href="#term-10" title="Link to this term"></a></dt><dd><p>複数のスレッドが互いに相手の持つロックの解放を待ち、どのスレッドも先に進めなくなる状態。詳しくは <a class="reference internal" href="05_threads.html"><span class="doc">第 5 章 スレッドによる並行処理</span></a> を参照。</p>
+</dd>
+<dt id="term-11">排他制御<a class="headerlink" href="#term-11" title="Link to this term"></a></dt><dd><p>ある範囲の処理を、同時に 1 つのスレッドだけが実行できるようにする制御。ロックなどを使う。</p>
+</dd>
+<dt id="term-12">非同期処理<a class="headerlink" href="#term-12" title="Link to this term"></a></dt><dd><p>処理の完了を待たずに先に進み、完了したことを後から受け取る方式。本書では、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> の <code class="docutils literal notranslate"><span class="pre">async</span></code> / <code class="docutils literal notranslate"><span class="pre">await</span></code> 構文による並行処理を指す。</p>
+</dd>
+<dt id="term-13">ブロッキング<a class="headerlink" href="#term-13" title="Link to this term"></a></dt><dd><p>処理が完了するまで、呼び出したスレッドが止まること。</p>
+</dd>
+<dt id="term-14">プロセス<a class="headerlink" href="#term-14" title="Link to this term"></a></dt><dd><p>OS が管理するプログラムの実行単位。プロセスごとに独立したメモリ空間を持つ。</p>
+</dd>
+<dt id="term-15">並行処理<a class="headerlink" href="#term-15" title="Link to this term"></a></dt><dd><p>複数の処理を、それぞれが終わるのを待たずに切り替えながら進めること。同時に実行されているとは限らない。</p>
+</dd>
+<dt id="term-16">並列処理<a class="headerlink" href="#term-16" title="Link to this term"></a></dt><dd><p>複数の処理を、複数の CPU コアで物理的に同時に実行すること。</p>
+</dd>
+<dt id="term-17">ロック<a class="headerlink" href="#term-17" title="Link to this term"></a></dt><dd><p>排他制御のための仕組み。ロックを獲得したスレッドだけが、保護された範囲を実行できる。Python では <code class="docutils literal notranslate"><span class="pre">threading.Lock</span></code> などを使う。</p>
+</dd>
+<dt id="term-CPU">CPU バウンド<a class="headerlink" href="#term-CPU" title="Link to this term"></a></dt><dd><p>処理時間の大部分を CPU による計算が占める処理。並列処理によって複数のコアで計算すると速くなる。詳しくは <a class="reference internal" href="02_concepts.html"><span class="doc">第 2 章 基本概念</span></a> を参照。</p>
+</dd>
+<dt id="term-CPython">CPython<a class="headerlink" href="#term-CPython" title="Link to this term"></a></dt><dd><p>C 言語で実装された Python の公式の処理系。python.org で配布されている Python は CPython である。</p>
+</dd>
+<dt id="term-free-threaded">free-threaded ビルド<a class="headerlink" href="#term-free-threaded" title="Link to this term"></a></dt><dd><p>GIL を無効にした CPython。Python 3.13 で実験的に提供され、Python 3.14 で正式にサポートされた。詳しくは <a class="reference internal" href="10_new_options.html"><span class="doc">第 10 章 GIL を超える新しい選択肢</span></a> を参照。</p>
+</dd>
+<dt id="term-Future">Future<a class="headerlink" href="#term-Future" title="Link to this term"></a></dt><dd><p>実行を依頼したタスクの将来の結果を表すオブジェクト。<code class="docutils literal notranslate"><span class="pre">concurrent.futures.Future</span></code> と <code class="docutils literal notranslate"><span class="pre">asyncio.Future</span></code> がある。</p>
+</dd>
+<dt id="term-GIL">GIL<a class="headerlink" href="#term-GIL" title="Link to this term"></a></dt><dd><p>Global Interpreter Lock の略。CPython で、Python のバイトコードを実行できるスレッドを、ある時点で 1 つに制限するロック。詳しくは <a class="reference internal" href="03_gil.html"><span class="doc">第 3 章 CPython の実行モデルと GIL</span></a> を参照。</p>
+</dd>
+<dt id="term-I-O">I/O バウンド<a class="headerlink" href="#term-I-O" title="Link to this term"></a></dt><dd><p>処理時間の大部分を、ネットワークやファイルなどの入出力の完了を待つ時間が占める処理。並行処理によって待ち時間を重ねると速くなる。詳しくは <a class="reference internal" href="02_concepts.html"><span class="doc">第 2 章 基本概念</span></a> を参照。</p>
+</dd>
+<dt id="term-pickle">pickle<a class="headerlink" href="#term-pickle" title="Link to this term"></a></dt><dd><p>Python のオブジェクトをバイト列に変換（シリアライズ）する標準ライブラリのモジュール。プロセス間でのデータの受け渡しに使われる。</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="13_summary.html" class="btn btn-neutral float-left" title="第 13 章 まとめ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="15_references.html" class="btn btn-neutral float-right" title="参考文献" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 9 章 asyncio による非同期処理（実践） &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 10 章 GIL を超える新しい選択肢" href="10_new_options.html" />
+    <link rel="prev" title="第 8 章 asyncio による非同期処理（基礎）" href="08_asyncio_basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 9 章 asyncio による非同期処理（実践）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">同時実行数の制限</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">キューによる仕事の分配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">ブロッキングする処理との組み合わせ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">キャンセルと後始末</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">よくある誤り</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">asyncio が向く場面・向かない場面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 9 章 asyncio による非同期処理（実践）</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="asyncio">
+<h1>第 9 章 asyncio による非同期処理（実践）<a class="headerlink" href="#asyncio" title="Link to this heading"></a></h1>
+<p>この章では、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> を実際のプログラムで使うときに必要になる技術を説明する。同時実行数の制限、キューによる仕事の分配、ブロッキングする処理との組み合わせ、キャンセルと後始末、ネットワーク通信を扱う。</p>
+<section id="id1">
+<h2>同時実行数の制限<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> では、タスクを作るだけで数千の処理を同時に開始できる。しかし、接続先のサーバーに数千の要求を一度に送ると、相手に過大な負荷をかけたり、接続を拒否されたりする。開けるファイルやソケットの数にも OS の上限がある。そのため、実際のプログラムでは同時に実行する数を制限する必要がある。</p>
+<p>同時実行数の制限には <code class="docutils literal notranslate"><span class="pre">asyncio.Semaphore</span></code> を使う。<code class="docutils literal notranslate"><span class="pre">Semaphore(4)</span></code> は、<code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> ブロックに同時に入れるタスクを 4 つまでに制限する。5 つ目のタスクは、どれかのタスクがブロックを抜けるまで待たされる。</p>
+<p>次のサンプルでは、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のストリームを使ってローカルに TCP のエコーサーバーを起動し、12 個のクライアントから接続する。同時に接続するクライアントは <code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> で 4 つまでに制限する。</p>
+<p><a class="reference download internal" download="" href="../_downloads/173b26d47d84e67f2c6ea6e67b5159f3/echo_semaphore.py"><code class="xref download docutils literal notranslate"><span class="pre">echo_semaphore.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+<span class="linenos">11</span><span class="n">CLIENTS</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="linenos">12</span><span class="n">LIMIT</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">class</span><span class="w"> </span><span class="nc">Stats</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;サーバーが同時に処理している接続数を記録する。&quot;&quot;&quot;</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">19</span>        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">20</span>        <span class="bp">self</span><span class="o">.</span><span class="n">peak</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">reader</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamReader</span><span class="p">,</span> <span class="n">writer</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamWriter</span><span class="p">,</span> <span class="n">stats</span><span class="p">:</span> <span class="n">Stats</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">24</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;受け取った 1 行を 0.5 秒後にそのまま送り返す。&quot;&quot;&quot;</span>
+<span class="linenos">25</span>    <span class="n">stats</span><span class="o">.</span><span class="n">current</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">26</span>    <span class="n">stats</span><span class="o">.</span><span class="n">peak</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">peak</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">28</span>        <span class="n">line</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="linenos">29</span>        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># 時間のかかる処理の代わり</span>
+<span class="linenos">30</span>        <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="linenos">31</span>        <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">drain</span><span class="p">()</span>
+<span class="linenos">32</span>    <span class="k">finally</span><span class="p">:</span>
+<span class="linenos">33</span>        <span class="n">stats</span><span class="o">.</span><span class="n">current</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="linenos">34</span>        <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos">35</span>        <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">client</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">39</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>  <span class="c1"># 同時に LIMIT 個を超えて接続しない</span>
+<span class="linenos">40</span>        <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="linenos">41</span>        <span class="k">try</span><span class="p">:</span>
+<span class="linenos">42</span>            <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;こんにちは </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="linenos">43</span>            <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">drain</span><span class="p">()</span>
+<span class="linenos">44</span>            <span class="n">reply</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="linenos">45</span>        <span class="k">finally</span><span class="p">:</span>
+<span class="linenos">46</span>            <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos">47</span>            <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
+<span class="linenos">48</span>    <span class="k">return</span> <span class="n">reply</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">52</span>    <span class="n">stats</span> <span class="o">=</span> <span class="n">Stats</span><span class="p">()</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">on_connect</span><span class="p">(</span><span class="n">reader</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamReader</span><span class="p">,</span> <span class="n">writer</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamWriter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">55</span>        <span class="k">await</span> <span class="n">handle</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">stats</span><span class="p">)</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span>    <span class="n">server</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">start_server</span><span class="p">(</span><span class="n">on_connect</span><span class="p">,</span> <span class="n">HOST</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># ポート 0 で空いているポートを使う</span>
+<span class="linenos">58</span>    <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">sockets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">59</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">server</span><span class="p">:</span>
+<span class="linenos">60</span>        <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">LIMIT</span><span class="p">)</span>
+<span class="linenos">61</span>        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">62</span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">group</span><span class="p">:</span>
+<span class="linenos">63</span>            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">client</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CLIENTS</span><span class="p">)]</span>
+<span class="linenos">64</span>        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span>    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+<span class="linenos">67</span>        <span class="nb">print</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+<span class="linenos">68</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;同時接続数の最大: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">peak</span><span class="si">}</span><span class="s2">, 経過時間: </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span>
+<span class="linenos">71</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">72</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すると、次のような結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>こんにちは 0
+こんにちは 1
+（中略）
+こんにちは 11
+同時接続数の最大: 4, 経過時間: 1.6 秒
+</pre></div>
+</div>
+<p>サーバーは 1 件の要求に 0.5 秒かけて応答する。12 件を 4 件ずつ処理するため、全体は約 1.5 秒になる。同時接続数の最大が 4 になっていることから、<code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> による制限が効いていることが分かる。</p>
+<p>このサンプルで使っているストリームの API は次のとおりである。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 17 </span><span class="caption-text">asyncio のストリームの主な API</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>API</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.start_server(handler,</span> <span class="pre">host,</span> <span class="pre">port)</span></code></p></td>
+<td><p>TCP サーバーを起動する。接続があるたびに、<code class="docutils literal notranslate"><span class="pre">handler(reader,</span> <span class="pre">writer)</span></code> が新しいタスクとして実行される。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">asyncio.open_connection(host,</span> <span class="pre">port)</span></code></p></td>
+<td><p>TCP サーバーに接続し、<code class="docutils literal notranslate"><span class="pre">StreamReader</span></code> と <code class="docutils literal notranslate"><span class="pre">StreamWriter</span></code> の組を返す。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">reader.readline()</span></code>、<code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">reader.read()</span></code></p></td>
+<td><p>データを受信する。データが届くまでの間、他のタスクが実行される。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">writer.write(data)</span></code> と <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">writer.drain()</span></code></p></td>
+<td><p>データを送信する。<code class="docutils literal notranslate"><span class="pre">write()</span></code> は送信用のバッファにデータを入れるだけなので、<code class="docutils literal notranslate"><span class="pre">drain()</span></code> でバッファに空きができるまで待つ。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">writer.close()</span></code> と <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">writer.wait_closed()</span></code></p></td>
+<td><p>接続を閉じ、閉じ終わるまで待つ。</p></td>
+</tr>
+</tbody>
+</table>
+<p>実務で HTTP の通信を行う場合は、<code class="docutils literal notranslate"><span class="pre">aiohttp</span></code> や <code class="docutils literal notranslate"><span class="pre">httpx</span></code> などの非同期に対応した HTTP クライアントのライブラリを使うのが一般的である。標準ライブラリの <code class="docutils literal notranslate"><span class="pre">urllib.request</span></code> は同期的な API なので、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> から使う場合は後で説明する <code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code> を使う。</p>
+</section>
+<section id="id2">
+<h2>キューによる仕事の分配<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio.Queue</span></code> は、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のタスク間でデータを受け渡すためのキューである。<code class="docutils literal notranslate"><span class="pre">queue.Queue</span></code> と同じように使えるが、<code class="docutils literal notranslate"><span class="pre">get()</span></code> や <code class="docutils literal notranslate"><span class="pre">put()</span></code> は <code class="docutils literal notranslate"><span class="pre">await</span></code> で待つコルーチンになっている。決まった数のワーカータスクに仕事を分配する場合に使う。</p>
+<p><a class="reference download internal" download="" href="../_downloads/586d750aadef79ea09251476895164ba/worker_queue.py"><code class="xref download docutils literal notranslate"><span class="pre">worker_queue.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">worker</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">jobs</span><span class="p">:</span> <span class="s2">&quot;asyncio.Queue[int]&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">11</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos">12</span>        <span class="n">number</span> <span class="o">=</span> <span class="k">await</span> <span class="n">jobs</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="linenos">13</span>        <span class="k">try</span><span class="p">:</span>
+<span class="linenos">14</span>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>  <span class="c1"># I/O 処理の代わり</span>
+<span class="linenos">15</span>            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> が仕事 </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2"> を処理した&quot;</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="k">finally</span><span class="p">:</span>
+<span class="linenos">17</span>            <span class="n">jobs</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>  <span class="c1"># 処理が終わったことをキューに知らせる</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">21</span>    <span class="n">jobs</span><span class="p">:</span> <span class="s2">&quot;asyncio.Queue[int]&quot;</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="linenos">22</span>    <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="linenos">23</span>        <span class="n">jobs</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>    <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">26</span>    <span class="n">workers</span> <span class="o">=</span> <span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">worker</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ワーカー </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">jobs</span><span class="p">,</span> <span class="n">results</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="k">await</span> <span class="n">jobs</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># すべての仕事で task_done() が呼ばれるまで待つ</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">:</span>
+<span class="linenos">31</span>        <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>  <span class="c1"># 無限ループで待ち続けているワーカーを終了させる</span>
+<span class="linenos">32</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">workers</span><span class="p">,</span> <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">38</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>このサンプルのポイントは次のとおりである。</p>
+<ul class="simple">
+<li><p>ワーカーは <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">True</span></code> のループで仕事を取り出し続ける。仕事を 1 つ処理し終えるたびに <code class="docutils literal notranslate"><span class="pre">task_done()</span></code> を呼ぶ。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jobs.join()</span></code> は、キューに入れたすべての仕事で <code class="docutils literal notranslate"><span class="pre">task_done()</span></code> が呼ばれるまで待つ。</p></li>
+<li><p>すべての仕事が終わった後、ワーカーは次の仕事を <code class="docutils literal notranslate"><span class="pre">get()</span></code> で待ち続けているため、<code class="docutils literal notranslate"><span class="pre">cancel()</span></code> で終了させる。キャンセルされたタスクは <code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> で終わるため、<code class="docutils literal notranslate"><span class="pre">gather(...,</span> <span class="pre">return_exceptions=True)</span></code> で終了を待つ。</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio.Semaphore</span></code> を使う方法と比べると、ワーカーの数だけタスクを作れば済むため、仕事の数が非常に多い場合でもタスクの数を抑えられる。</p>
+</section>
+<section id="id3">
+<h2>ブロッキングする処理との組み合わせ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="08_asyncio_basics.html"><span class="doc">第 8 章 asyncio による非同期処理（基礎）</span></a> で説明したとおり、コルーチンの中でブロッキングする処理を呼ぶと、その間はイベントループ全体が止まる。次のサンプルでは、0.2 秒ごとに経過時間を表示するタスク（<code class="docutils literal notranslate"><span class="pre">heartbeat()</span></code>）と、1 秒かかるブロッキングする処理（<code class="docutils literal notranslate"><span class="pre">blocking_io()</span></code>）を並行に実行する。</p>
+<p><a class="reference download internal" download="" href="../_downloads/49829854b408bf5cdbcd2a0ab0e966fa/blocking_call.py"><code class="xref download docutils literal notranslate"><span class="pre">blocking_call.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">class</span><span class="w"> </span><span class="nc">Clock</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;開始からの経過時間を付けてメッセージを表示する。&quot;&quot;&quot;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">18</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2"> 秒: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">def</span><span class="w"> </span><span class="nf">blocking_io</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;同期 API しか持たないライブラリの呼び出しを、time.sleep() で模擬する。&quot;&quot;&quot;</span>
+<span class="linenos">23</span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="k">return</span> <span class="s2">&quot;同期処理の結果&quot;</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">heartbeat</span><span class="p">(</span><span class="n">clock</span><span class="p">:</span> <span class="n">Clock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">28</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+<span class="linenos">29</span>        <span class="n">clock</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;heartbeat&quot;</span><span class="p">)</span>
+<span class="linenos">30</span>        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">call_directly</span><span class="p">(</span><span class="n">clock</span><span class="p">:</span> <span class="n">Clock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">34</span>    <span class="n">clock</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;blocking_io() を直接呼ぶ&quot;</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="n">clock</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">blocking_io</span><span class="p">())</span>  <span class="c1"># この 1 秒間、イベントループは止まる</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">call_in_thread</span><span class="p">(</span><span class="n">clock</span><span class="p">:</span> <span class="n">Clock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">39</span>    <span class="n">clock</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;blocking_io() を asyncio.to_thread() で呼ぶ&quot;</span><span class="p">)</span>
+<span class="linenos">40</span>    <span class="n">clock</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span><span class="n">blocking_io</span><span class="p">))</span>  <span class="c1"># 別のスレッドで実行し、完了を await で待つ</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">44</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 直接呼ぶ場合 ---&quot;</span><span class="p">)</span>
+<span class="linenos">45</span>    <span class="n">clock</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">()</span>
+<span class="linenos">46</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">(</span><span class="n">clock</span><span class="p">),</span> <span class="n">call_directly</span><span class="p">(</span><span class="n">clock</span><span class="p">))</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- asyncio.to_thread() を使う場合 ---&quot;</span><span class="p">)</span>
+<span class="linenos">49</span>    <span class="n">clock</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">()</span>
+<span class="linenos">50</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">(</span><span class="n">clock</span><span class="p">),</span> <span class="n">call_in_thread</span><span class="p">(</span><span class="n">clock</span><span class="p">))</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">54</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すると、次の結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>--- 直接呼ぶ場合 ---
+ 0.0 秒: heartbeat
+ 0.0 秒: blocking_io() を直接呼ぶ
+ 1.0 秒: 同期処理の結果
+ 1.0 秒: heartbeat
+ 1.2 秒: heartbeat
+ 1.4 秒: heartbeat
+ 1.6 秒: heartbeat
+ 1.8 秒: heartbeat
+--- asyncio.to_thread() を使う場合 ---
+ 0.0 秒: heartbeat
+ 0.0 秒: blocking_io() を asyncio.to_thread() で呼ぶ
+ 0.2 秒: heartbeat
+ 0.4 秒: heartbeat
+ 0.6 秒: heartbeat
+ 0.8 秒: heartbeat
+ 1.0 秒: 同期処理の結果
+ 1.0 秒: heartbeat
+</pre></div>
+</div>
+<p>直接呼ぶ場合は、<code class="docutils literal notranslate"><span class="pre">blocking_io()</span></code> が実行されている 1 秒間、<code class="docutils literal notranslate"><span class="pre">heartbeat()</span></code> の表示が止まっている。<code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code> を使う場合は、<code class="docutils literal notranslate"><span class="pre">blocking_io()</span></code> が別のスレッドで実行されるため、その間も <code class="docutils literal notranslate"><span class="pre">heartbeat()</span></code> が動き続けている。</p>
+<p>ブロッキングする処理を <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> から呼ぶ方法を次にまとめる。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 18 </span><span class="caption-text">ブロッキングする処理を asyncio から呼ぶ方法</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">asyncio.to_thread(func,</span> <span class="pre">*args)</span></code></p></td>
+<td><p>同期的な I/O を行う関数を、別のスレッドで実行する。同期的な API しか持たないライブラリを使う場合に使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">loop.run_in_executor(executor,</span> <span class="pre">func,</span> <span class="pre">*args)</span></code></p></td>
+<td><p>指定した <code class="docutils literal notranslate"><span class="pre">Executor</span></code> で関数を実行する。<code class="docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code> を指定すれば、CPU バウンドな処理を別のプロセスで実行できる（<a class="reference internal" href="12_case_studies.html"><span class="doc">第 12 章 ケーススタディ</span></a> で使う）。</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">loop</span></code> は <code class="docutils literal notranslate"><span class="pre">asyncio.get_running_loop()</span></code> で取得する。<code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code> も内部では既定の <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> を使っている。</p>
+<p>コルーチンの中で次のような処理を呼んでいないか、注意が必要である。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code>（代わりに <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">asyncio.sleep()</span></code> を使う）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requests</span></code> や <code class="docutils literal notranslate"><span class="pre">urllib.request</span></code> などの同期的な HTTP クライアント</p></li>
+<li><p>同期的なデータベースのドライバー</p></li>
+<li><p>時間のかかる CPU バウンドな計算</p></li>
+<li><p>大きなファイルの読み書き</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>キャンセルと後始末<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Task.cancel()</span></code> を呼ぶと、そのタスクが <code class="docutils literal notranslate"><span class="pre">await</span></code> で中断している箇所に <code class="docutils literal notranslate"><span class="pre">asyncio.CancelledError</span></code> が送出される。<code class="docutils literal notranslate"><span class="pre">asyncio.timeout()</span></code> や <code class="docutils literal notranslate"><span class="pre">TaskGroup</span></code> も、内部でこの仕組みを使ってタスクをキャンセルしている。</p>
+<p>タスクがキャンセルされても資源を確実に解放できるよう、後始末は <code class="docutils literal notranslate"><span class="pre">try</span></code> ... <code class="docutils literal notranslate"><span class="pre">finally</span></code> や <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> で書く。</p>
+<p><a class="reference download internal" download="" href="../_downloads/58f30402cdafa030583e19f72160072d/cancellation.py"><code class="xref download docutils literal notranslate"><span class="pre">cancellation.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">class</span><span class="w"> </span><span class="nc">Connection</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;後始末が必要な資源の例。&quot;&quot;&quot;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">14</span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="linenos">15</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 接続を開いた&quot;</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">18</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: 接続を閉じた&quot;</span><span class="p">)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">long_running</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">22</span>    <span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="linenos">23</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">24</span>        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+<span class="linenos">25</span>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="linenos">26</span>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: ステップ </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="k">finally</span><span class="p">:</span>
+<span class="linenos">28</span>        <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># キャンセルされた場合も必ず実行される</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">32</span>    <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">long_running</span><span class="p">(</span><span class="s2">&quot;タスク&quot;</span><span class="p">))</span>
+<span class="linenos">33</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+<span class="linenos">36</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">37</span>        <span class="k">await</span> <span class="n">task</span>
+<span class="linenos">38</span>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+<span class="linenos">39</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;キャンセルされた: cancelled() = </span><span class="si">{</span><span class="n">task</span><span class="o">.</span><span class="n">cancelled</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">43</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すると、次の結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>タスク: 接続を開いた
+タスク: ステップ 1
+タスク: ステップ 2
+タスク: ステップ 3
+タスク: 接続を閉じた
+キャンセルされた: cancelled() = True
+</pre></div>
+</div>
+<p>1 秒後に <code class="docutils literal notranslate"><span class="pre">cancel()</span></code> が呼ばれると、<code class="docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code> で待っていたタスクに <code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> が送出され、<code class="docutils literal notranslate"><span class="pre">finally</span></code> で接続が閉じられる。キャンセルについて、次の点に注意する。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> は <code class="docutils literal notranslate"><span class="pre">Exception</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">BaseException</span></code> を継承している。そのため、<code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">Exception:</span></code> では捕まらない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> を捕まえた場合は、後始末をした後に必ず送出し直す。握りつぶすと、キャンセルが正しく伝わらない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">await</span></code> していない間（CPU バウンドな計算の最中など）は、キャンセルは届かない。次に <code class="docutils literal notranslate"><span class="pre">await</span></code> したときに初めて <code class="docutils literal notranslate"><span class="pre">CancelledError</span></code> が送出される。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>よくある誤り<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> を使い始めたときに起こしやすい誤りを次にまとめる。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 19 </span><span class="caption-text">asyncio でよくある誤り</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>誤り</p></th>
+<th class="head"><p>説明と対策</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">await</span></code> を付け忘れる</p></td>
+<td><p>コルーチン関数を <code class="docutils literal notranslate"><span class="pre">await</span></code> せずに呼ぶと、コルーチンが作られるだけで実行されない。<code class="docutils literal notranslate"><span class="pre">RuntimeWarning:</span> <span class="pre">coroutine</span> <span class="pre">'...'</span> <span class="pre">was</span> <span class="pre">never</span> <span class="pre">awaited</span></code> という警告が出る。mypy などの型チェッカーでも検出できる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>コルーチンの中でブロッキングする処理を呼ぶ</p></td>
+<td><p>イベントループ全体が止まる。<code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code> などで別のスレッドやプロセスに任せる。</p></td>
+</tr>
+<tr class="row-even"><td><p>作ったタスクの参照を保持しない</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code> の戻り値を保持しないと、タスクが途中で消えることがある。<code class="docutils literal notranslate"><span class="pre">TaskGroup</span></code> を使うか、戻り値を保持する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>タスクの例外を確認しない</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create_task()</span></code> で作ったタスクを待たずに放置すると、タスクの中で発生した例外に気付けない。<code class="docutils literal notranslate"><span class="pre">TaskGroup</span></code> を使えば、例外は必ず呼び出し元に伝わる。</p></td>
+</tr>
+<tr class="row-even"><td><p>タイムアウトを設定しない</p></td>
+<td><p>相手が応答しないと、タスクが永久に待ち続ける。ネットワーク通信には <code class="docutils literal notranslate"><span class="pre">asyncio.timeout()</span></code> を設定する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>スレッドから asyncio のオブジェクトを直接操作する</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のオブジェクトの多くはスレッドセーフではない。別のスレッドからイベントループに処理を依頼する場合は、<code class="docutils literal notranslate"><span class="pre">asyncio.run_coroutine_threadsafe()</span></code> や <code class="docutils literal notranslate"><span class="pre">loop.call_soon_threadsafe()</span></code> を使う。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id6">
+<h2>asyncio が向く場面・向かない場面<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 20 </span><span class="caption-text">asyncio が向く場面・向かない場面</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>向く場面</p></th>
+<th class="head"><p>向かない場面</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>数百から数千以上のネットワーク接続を同時に扱う（Web サーバー、クローラー、チャットサーバーなど）</p></td>
+<td><p>CPU バウンドな処理（プロセスを使う）</p></td>
+</tr>
+<tr class="row-odd"><td><p>非同期に対応したライブラリ（<code class="docutils literal notranslate"><span class="pre">aiohttp</span></code>、<code class="docutils literal notranslate"><span class="pre">httpx</span></code>、非同期のデータベースドライバーなど）を使える</p></td>
+<td><p>使いたいライブラリが同期的な API しか持たず、<code class="docutils literal notranslate"><span class="pre">to_thread()</span></code> で包む箇所が多くなる</p></td>
+</tr>
+<tr class="row-even"><td><p>タイムアウトやキャンセルを細かく制御したい</p></td>
+<td><p>既存の大きな同期的なプログラムの一部だけを並行化したい（スレッドのほうが変更が少ない）</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="08_asyncio_basics.html" class="btn btn-neutral float-left" title="第 8 章 asyncio による非同期処理（基礎）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="10_new_options.html" class="btn btn-neutral float-right" title="第 10 章 GIL を超える新しい選択肢" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

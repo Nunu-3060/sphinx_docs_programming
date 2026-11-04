@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 2 章 基本概念 &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 3 章 CPython の実行モデルと GIL" href="03_gil.html" />
+    <link rel="prev" title="第 1 章 はじめに" href="01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 2 章 基本概念</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">逐次処理・並行処理・並列処理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">同期処理と非同期処理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpu-i-o">CPU バウンドと I/O バウンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">プロセス・スレッド・コルーチン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">並列化による高速化の限界</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 2 章 基本概念</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>第 2 章 基本概念<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、本書全体で使う用語を定義する。「並行」「並列」「非同期」という言葉は、文献や人によって使い方が少しずつ異なる。本書では以下の定義で用語を統一する。</p>
+<section id="id2">
+<h2>逐次処理・並行処理・並列処理<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>複数の処理（以下、タスクと呼ぶ）を実行する方法は、大きく次の 3 つに分けられる。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-number">表 2 </span><span class="caption-text">処理の実行方法</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>用語</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>逐次処理（sequential）</p></td>
+<td><p>タスクを 1 つずつ順に実行する。前のタスクが終わるまで、次のタスクは始まらない。</p></td>
+</tr>
+<tr class="row-odd"><td><p>並行処理（concurrent）</p></td>
+<td><p>複数のタスクを、それぞれが終わるのを待たずに進める。ある時点で実際に実行されているタスクが 1 つだけであっても、切り替えながら進めていれば並行処理である。</p></td>
+</tr>
+<tr class="row-even"><td><p>並列処理（parallel）</p></td>
+<td><p>複数のタスクを、複数の CPU コアで物理的に同時に実行する。</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#fig-execution-models"><span class="std std-numref">図 1</span></a> に、3 つのタスク A、B、C を実行する様子を示す。</p>
+<figure class="align-default" id="id7">
+<span id="fig-execution-models"></span><a class="reference internal image-reference" href="../_images/execution_models.png"><img alt="逐次処理・並行処理・並列処理の時系列の比較" src="../_images/execution_models.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 1 </span><span class="caption-text">逐次処理・並行処理・並列処理の比較</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>並行処理は「複数のタスクを扱う構造」を、並列処理は「複数のタスクを同時に実行する仕組み」を表す言葉である。並列処理は並行処理の一種であり、並行処理であっても並列処理であるとは限らない。たとえば、CPU コアが 1 つしかない計算機でも、OS がタスクを細かく切り替えることで並行処理はできる。しかし、同時に実行されているタスクは常に 1 つなので、並列処理ではない。</p>
+<p>ここで重要なのは、<strong>並行処理だけでは CPU の計算量は減らない</strong>という点である。<a class="reference internal" href="#fig-execution-models"><span class="std std-numref">図 1</span></a> の並行処理では、タスクを切り替えているだけで、全体が終わるまでの時間は逐次処理と変わらない（実際には切り替えの手間の分だけ遅くなる）。並行処理で全体の時間が短くなるのは、次に説明する「待ち時間」がある場合である。</p>
+</section>
+<section id="id3">
+<h2>同期処理と非同期処理<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ある処理を呼び出したとき、その処理が完了するまで呼び出し元が先に進まない方式を <strong>同期処理（synchronous）</strong> という。一方、処理の完了を待たずに呼び出し元が先に進み、完了したことを後から受け取る方式を <strong>非同期処理（asynchronous）</strong> という。</p>
+<p>これと似た用語に、ブロッキングとノンブロッキングがある。</p>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-number">表 3 </span><span class="caption-text">ブロッキングとノンブロッキング</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>用語</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ブロッキング（blocking）</p></td>
+<td><p>処理が完了するまで、呼び出したスレッドが止まる。たとえば <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> や、通常のファイル読み込み、ソケットの受信は、データがそろうまでスレッドを止める。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ノンブロッキング（non-blocking）</p></td>
+<td><p>処理がすぐに完了できない場合でも、スレッドを止めずにすぐに戻る。</p></td>
+</tr>
+</tbody>
+</table>
+<p>非同期処理は、ノンブロッキングな操作と「完了したら知らせる仕組み」を組み合わせて実現されることが多い。Python の <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> は、この仕組みを使って 1 つのスレッドの中で多数のタスクを並行に進める（<a class="reference internal" href="08_asyncio_basics.html"><span class="doc">第 8 章 asyncio による非同期処理（基礎）</span></a> で詳しく説明する）。</p>
+<p>本書では、<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のように <code class="docutils literal notranslate"><span class="pre">async</span></code> / <code class="docutils literal notranslate"><span class="pre">await</span></code> 構文を使って並行に処理を進めることを「非同期処理」と呼ぶ。非同期処理は並行処理を実現する方法の 1 つである。</p>
+</section>
+<section id="cpu-i-o">
+<h2>CPU バウンドと I/O バウンド<a class="headerlink" href="#cpu-i-o" title="Link to this heading"></a></h2>
+<p>並行処理や並列処理を検討するとき、最初に確認すべきことは「その処理の時間は何に使われているか」である。処理は、時間の使われ方によって次の 2 つに分けられる。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 4 </span><span class="caption-text">CPU バウンドと I/O バウンド</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分類</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CPU バウンド</p></td>
+<td><p>処理時間の大部分を CPU による計算が占める。CPU が速くなれば処理も速くなる。</p></td>
+<td><p>数値計算、画像処理、圧縮、暗号化、大量のデータの集計</p></td>
+</tr>
+<tr class="row-odd"><td><p>I/O バウンド</p></td>
+<td><p>処理時間の大部分を入出力（I/O）の完了を待つ時間が占める。待っている間、CPU はほとんど使われない。</p></td>
+<td><p>Web API の呼び出し、データベースへの問い合わせ、ファイルの読み書き、ユーザーの入力待ち</p></td>
+</tr>
+</tbody>
+</table>
+<p>この違いは、経過時間（wall-clock time）と CPU 時間を比べると分かる。経過時間は処理の開始から終了までに実際に経過した時間であり、CPU 時間はそのうち CPU が実際にプログラムを実行していた時間である。次のサンプルでは、<code class="docutils literal notranslate"><span class="pre">time.perf_counter()</span></code> で経過時間を、<code class="docutils literal notranslate"><span class="pre">time.process_time()</span></code> で CPU 時間を測っている。</p>
+<p><a class="reference download internal" download="" href="../_downloads/e496fdd07c810fca254688b53b162c77/cpu_vs_io.py"><code class="xref download docutils literal notranslate"><span class="pre">cpu_vs_io.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 8</span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">def</span><span class="w"> </span><span class="nf">cpu_bound</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数の 2 乗の総和を計算する（CPU を使い続ける処理）。&quot;&quot;&quot;</span>
+<span class="linenos">13</span>    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">14</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5_000_000</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>
+<span class="linenos">16</span>    <span class="k">return</span> <span class="n">total</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">def</span><span class="w"> </span><span class="nf">io_bound</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">20</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;I/O の待ち時間を time.sleep() で模擬する（CPU をほとんど使わない処理）。&quot;&quot;&quot;</span>
+<span class="linenos">21</span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="k">def</span><span class="w"> </span><span class="nf">measure</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">object</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">25</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;func を 1 回実行し、経過時間と CPU 時間を表示する。&quot;&quot;&quot;</span>
+<span class="linenos">26</span>    <span class="n">wall_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">27</span>    <span class="n">cpu_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+<span class="linenos">28</span>    <span class="n">func</span><span class="p">()</span>
+<span class="linenos">29</span>    <span class="n">wall</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">wall_start</span>
+<span class="linenos">30</span>    <span class="n">cpu</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">cpu_start</span>
+<span class="linenos">31</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 経過時間 </span><span class="si">{</span><span class="n">wall</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒, CPU 時間 </span><span class="si">{</span><span class="n">cpu</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">35</span>    <span class="n">measure</span><span class="p">(</span><span class="s2">&quot;CPU バウンド&quot;</span><span class="p">,</span> <span class="n">cpu_bound</span><span class="p">)</span>
+<span class="linenos">36</span>    <span class="n">measure</span><span class="p">(</span><span class="s2">&quot;I/O バウンド&quot;</span><span class="p">,</span> <span class="n">io_bound</span><span class="p">)</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">40</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>実行すると、次のような結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CPU バウンド: 経過時間 0.50 秒, CPU 時間 0.50 秒
+I/O バウンド: 経過時間 0.50 秒, CPU 時間 0.00 秒
+</pre></div>
+</div>
+<p>CPU バウンドな処理では経過時間と CPU 時間がほぼ等しく、I/O バウンドな処理では CPU 時間がほぼ 0 になっている。I/O バウンドな処理の待ち時間は、CPU にとっては「空き時間」である。この空き時間に別のタスクを進めれば、全体の時間を短くできる。これが並行処理によって速くなる仕組みである。<a class="reference internal" href="#fig-async-wait"><span class="std std-numref">図 2</span></a> に、3 つの要求を送って応答を受け取る処理を、同期的に実行した場合と非同期に実行した場合を示す。</p>
+<figure class="align-default" id="id10">
+<span id="fig-async-wait"></span><a class="reference internal image-reference" href="../_images/async_wait.png"><img alt="同期的な実行と非同期な実行で応答待ちが重なる様子" src="../_images/async_wait.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 2 </span><span class="caption-text">I/O の待ち時間を重ねることによる時間の短縮</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>一方、CPU バウンドな処理には空き時間が無い。CPU バウンドな処理を速くするには、複数の CPU コアで同時に計算する並列処理が必要になる。</p>
+<p>実際のプログラムでは、CPU バウンドな部分と I/O バウンドな部分が混在していることが多い。その場合は、どちらの時間が支配的かを計測して確認する。計測の方法は <a class="reference internal" href="11_debugging.html"><span class="doc">第 11 章 デバッグと性能計測</span></a> で説明する。</p>
+</section>
+<section id="id4">
+<h2>プロセス・スレッド・コルーチン<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>Python で並行処理や並列処理を行うための実行単位には、プロセス、スレッド、コルーチンの 3 つがある。</p>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-number">表 5 </span><span class="caption-text">プロセス・スレッド・コルーチン</span><a class="headerlink" href="#id11" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 28.0%" />
+<col style="width: 28.0%" />
+<col style="width: 28.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>プロセス</p></th>
+<th class="head"><p>スレッド</p></th>
+<th class="head"><p>コルーチン</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>管理する主体</p></td>
+<td><p>OS</p></td>
+<td><p>OS</p></td>
+<td><p>Python のプログラム（イベントループ）</p></td>
+</tr>
+<tr class="row-odd"><td><p>メモリ空間</p></td>
+<td><p>プロセスごとに独立</p></td>
+<td><p>同じプロセス内のスレッドで共有</p></td>
+<td><p>同じスレッド内のコルーチンで共有</p></td>
+</tr>
+<tr class="row-even"><td><p>切り替えのタイミング</p></td>
+<td><p>OS が決める</p></td>
+<td><p>OS が決める（Python ではさらに GIL の制約を受ける）</p></td>
+<td><p>コルーチン自身が <code class="docutils literal notranslate"><span class="pre">await</span></code> で制御を返したとき</p></td>
+</tr>
+<tr class="row-odd"><td><p>作成の負荷</p></td>
+<td><p>大きい</p></td>
+<td><p>中程度</p></td>
+<td><p>小さい</p></td>
+</tr>
+<tr class="row-even"><td><p>並列に実行できるか</p></td>
+<td><p>できる</p></td>
+<td><p>通常の Python ではできない（<a class="reference internal" href="03_gil.html"><span class="doc">第 3 章 CPython の実行モデルと GIL</span></a> を参照）</p></td>
+<td><p>できない</p></td>
+</tr>
+<tr class="row-odd"><td><p>Python の主なモジュール</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code>、<code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">threading</span></code>、<code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#fig-units"><span class="std std-numref">図 3</span></a> に、3 つの実行単位の関係を示す。プロセスは OS が管理する独立したメモリ空間を持ち、その中で 1 つ以上のスレッドが動く。<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のコルーチンは、1 つのスレッドの中でイベントループによって切り替えられる。</p>
+<figure class="align-center" id="id12">
+<span id="fig-units"></span><div class="graphviz"><object data="../_images/graphviz-fa8484588bdd5c78561fe12c6fb7b977c1da8a10.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph units {
+    graph [rankdir=TB, compound=true, nodesep=0.3, ranksep=0.3, bgcolor=&quot;transparent&quot;];
+    node [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#ffffff&quot;, color=&quot;#8a8984&quot;, fontsize=11];
+    edge [color=&quot;#8a8984&quot;];
+
+    subgraph cluster_p1 {
+        label=&quot;プロセス 1（独立したメモリ空間）&quot;;
+        style=&quot;rounded&quot;; color=&quot;#2a78d6&quot;; fontsize=11;
+        mem1 [label=&quot;共有されるメモリ（変数・オブジェクト）&quot;, fillcolor=&quot;#e8f1fb&quot;];
+        subgraph cluster_t1 {
+            label=&quot;スレッド 1（イベントループ）&quot;; style=&quot;rounded,dashed&quot;; color=&quot;#8a8984&quot;;
+            c1 [label=&quot;コルーチン A&quot;]; c2 [label=&quot;コルーチン B&quot;]; c3 [label=&quot;コルーチン C&quot;];
+        }
+        t2 [label=&quot;スレッド 2&quot;];
+    }
+    subgraph cluster_p2 {
+        label=&quot;プロセス 2（独立したメモリ空間）&quot;;
+        style=&quot;rounded&quot;; color=&quot;#eb6834&quot;; fontsize=11;
+        mem2 [label=&quot;プロセス 2 のメモリ&quot;, fillcolor=&quot;#fdeee7&quot;];
+        t3 [label=&quot;スレッド 1&quot;];
+    }
+    mem1 -&gt; c2 [style=invis];
+    mem2 -&gt; t3 [style=invis];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 3 </span><span class="caption-text">プロセス・スレッド・コルーチンの関係</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>スレッドはメモリを共有するため、データの受け渡しが簡単である反面、複数のスレッドが同じデータを同時に書き換えると不整合が起きる（<a class="reference internal" href="05_threads.html"><span class="doc">第 5 章 スレッドによる並行処理</span></a> で説明する）。プロセスはメモリが独立しているため、このような問題は起きにくいが、データの受け渡しにはコピーが必要になる（<a class="reference internal" href="06_processes.html"><span class="doc">第 6 章 プロセスによる並列処理</span></a> で説明する）。</p>
+</section>
+<section id="id5">
+<h2>並列化による高速化の限界<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>並列処理で CPU コアを増やしても、処理時間がコア数に反比例して短くなるとは限らない。プログラムの中には、データの準備や結果の集計など、並列化できない部分が必ず残るためである。</p>
+<p>プログラム全体の処理時間のうち、並列化できる部分の割合を <span class="math notranslate nohighlight">\(p\)</span> とし、その部分を <span class="math notranslate nohighlight">\(n\)</span> 個のコアで実行するとき、全体の速度向上率 <span class="math notranslate nohighlight">\(S\)</span> は次の式で表される。これをアムダールの法則という。</p>
+<div class="math notranslate nohighlight">
+\[S = \frac{1}{(1 - p) + \dfrac{p}{n}}\]</div>
+<p>たとえば、処理の 90 % を並列化できる場合（<span class="math notranslate nohighlight">\(p = 0.9\)</span>）、コアを 16 個使っても速度向上率は約 6.4 倍にとどまり、コアをいくら増やしても 10 倍を超えることはない。さらに実際には、プロセスの起動やデータの受け渡しにも時間がかかる。並列化を検討するときは、並列化できない部分と、並列化のために増える処理の両方に注意する必要がある。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01_introduction.html" class="btn btn-neutral float-left" title="第 1 章 はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03_gil.html" class="btn btn-neutral float-right" title="第 3 章 CPython の実行モデルと GIL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

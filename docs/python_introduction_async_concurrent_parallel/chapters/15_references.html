@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>参考文献 &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="用語集" href="14_glossary.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">参考文献</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python 公式ドキュメント</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pep">PEP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">書籍</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">参考文献</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>参考文献<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="python">
+<h2>Python 公式ドキュメント<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/concurrent.futures.html">concurrent.futures --- 並列タスク実行</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/threading.html">threading --- スレッドベースの並列処理</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/multiprocessing.html">multiprocessing --- プロセスベースの並列処理</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/multiprocessing.shared_memory.html">multiprocessing.shared_memory --- Shared memory for direct access across processes</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/queue.html">queue --- 同期キュークラス</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/asyncio.html">asyncio --- 非同期 I/O</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/asyncio-dev.html">asyncio を使った開発</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/concurrent.interpreters.html">concurrent.interpreters --- Multiple interpreters in the same process</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/howto/free-threading-python.html">Python support for free threading</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/library/unittest.html">unittest --- ユニットテストフレームワーク</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/ja/3/whatsnew/3.11.html">Python 3.11 の新機能</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/whatsnew/3.14.html">What's New In Python 3.14</a></p></li>
+</ul>
+</section>
+<section id="pep">
+<h2>PEP<a class="headerlink" href="#pep" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://peps.python.org/pep-0492/">PEP 492 -- Coroutines with async and await syntax</a></p></li>
+<li><p><a class="reference external" href="https://peps.python.org/pep-0654/">PEP 654 -- Exception Groups and except*</a></p></li>
+<li><p><a class="reference external" href="https://peps.python.org/pep-0684/">PEP 684 -- A Per-Interpreter GIL</a></p></li>
+<li><p><a class="reference external" href="https://peps.python.org/pep-0703/">PEP 703 -- Making the Global Interpreter Lock Optional in CPython</a></p></li>
+<li><p><a class="reference external" href="https://peps.python.org/pep-0734/">PEP 734 -- Multiple Interpreters in the Stdlib</a></p></li>
+<li><p><a class="reference external" href="https://peps.python.org/pep-0779/">PEP 779 -- Criteria for supported status for free-threaded Python</a></p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>書籍<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Matthew Fowler 著、『Python Concurrency with asyncio』、Manning Publications、2022 年</p></li>
+<li><p>Luciano Ramalho 著、『Fluent Python 第 2 版』、O'Reilly Media、2022 年（第 19 章から第 21 章で並行処理と非同期処理を扱っている）</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="14_glossary.html" class="btn btn-neutral float-left" title="用語集" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

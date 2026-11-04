@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 12 章 ケーススタディ &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 13 章 まとめ" href="13_summary.html" />
+    <link rel="prev" title="第 11 章 デバッグと性能計測" href="11_debugging.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 12 章 ケーススタディ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#url">多数の URL からのデータ取得</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">課題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">手法の選択</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">実装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">大量のデータの一括処理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">課題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">手法の選択</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">実装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#i-o-cpu">I/O と CPU の処理が混在するパイプライン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">課題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">手法の選択</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">実装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">要点</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 12 章 ケーススタディ</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>第 12 章 ケーススタディ<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、3 つの題材を通して、処理の性質から手法を選び、実装するまでの流れを確認する。いずれのサンプルも、標準ライブラリだけで、外部のネットワークを使わずに動作する。</p>
+<section id="url">
+<h2>多数の URL からのデータ取得<a class="headerlink" href="#url" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>課題<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Web API から 40 件のデータを取得したい。1 件ずつ取得すると、応答を待つ時間が積み重なって時間がかかる。ただし、相手のサーバーに負荷をかけないよう、同時に送る要求は 10 件までにしたい。また、応答が遅い要求があっても、全体が止まらないようにしたい。</p>
+</section>
+<section id="id3">
+<h3>手法の選択<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>処理時間の大半は応答を待つ時間であり、I/O バウンドである。同時に扱う要求の数は数十件程度なのでスレッドでも実現できるが、ここでは同時実行数の制限とタイムアウトを簡潔に書ける <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> を選ぶ。</p>
+</section>
+<section id="id4">
+<h3>実装<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>サンプルでは、取得先の Web API の代わりに、同じプログラムの中で簡単な HTTP サーバーを起動する。サーバーは id によって応答までの時間を変え、10 件に 1 件は 2 秒かかる。クライアントは <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> のストリームで HTTP の要求を送り、1 件ごとに 1 秒のタイムアウトを設定する。</p>
+<p><a class="reference download internal" download="" href="../_downloads/2a1a55eec055d5dcb4ba0caa0b331b8a/fetch_many.py"><code class="xref download docutils literal notranslate"><span class="pre">fetch_many.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 11</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 12</span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="linenos"> 13</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 14</span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="linenos"> 15</span>
+<span class="linenos"> 16</span><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+<span class="linenos"> 17</span><span class="n">REQUESTS</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="linenos"> 18</span><span class="n">CONCURRENCY</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="linenos"> 19</span><span class="n">TIMEOUT_SECONDS</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span>
+<span class="linenos"> 22</span><span class="c1"># ---- サーバー側（取得先の Web API の代わり） ----</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="k">def</span><span class="w"> </span><span class="nf">response_delay</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos"> 25</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;id ごとに応答までの時間を変える。10 件に 1 件は TIMEOUT_SECONDS より遅い。&quot;&quot;&quot;</span>
+<span class="linenos"> 26</span>    <span class="k">if</span> <span class="n">item_id</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+<span class="linenos"> 27</span>        <span class="k">return</span> <span class="mf">2.0</span>
+<span class="linenos"> 28</span>    <span class="k">return</span> <span class="p">(</span><span class="n">item_id</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
+<span class="linenos"> 29</span>
+<span class="linenos"> 30</span>
+<span class="linenos"> 31</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_http</span><span class="p">(</span><span class="n">reader</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamReader</span><span class="p">,</span> <span class="n">writer</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">StreamWriter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 32</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 33</span>        <span class="n">request_line</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="linenos"> 34</span>        <span class="k">while</span> <span class="p">(</span><span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="linenos"> 35</span>            <span class="k">pass</span>  <span class="c1"># ヘッダーは読み飛ばす</span>
+<span class="linenos"> 36</span>        <span class="n">path</span> <span class="o">=</span> <span class="n">request_line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 例: &quot;GET /items/3 HTTP/1.1&quot;</span>
+<span class="linenos"> 37</span>        <span class="n">item_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos"> 38</span>        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">response_delay</span><span class="p">(</span><span class="n">item_id</span><span class="p">))</span>
+<span class="linenos"> 39</span>        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">item_id</span> <span class="o">*</span> <span class="n">item_id</span><span class="p">})</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+<span class="linenos"> 40</span>        <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;HTTP/1.1 200 OK</span><span class="se">\r\n</span><span class="s2">Content-Type: application/json</span><span class="se">\r\n</span><span class="s2">Content-Length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="si">}</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span>
+<span class="linenos"> 41</span>        <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="n">body</span><span class="p">)</span>
+<span class="linenos"> 42</span>        <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">drain</span><span class="p">()</span>
+<span class="linenos"> 43</span>    <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
+<span class="linenos"> 44</span>        <span class="k">pass</span>  <span class="c1"># クライアントがタイムアウトで切断した場合など</span>
+<span class="linenos"> 45</span>    <span class="k">finally</span><span class="p">:</span>
+<span class="linenos"> 46</span>        <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos"> 47</span>
+<span class="linenos"> 48</span>
+<span class="linenos"> 49</span><span class="c1"># ---- クライアント側 ----</span>
+<span class="linenos"> 50</span>
+<span class="linenos"> 51</span><span class="nd">@dataclass</span>
+<span class="linenos"> 52</span><span class="k">class</span><span class="w"> </span><span class="nc">Result</span><span class="p">:</span>
+<span class="linenos"> 53</span>    <span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span>
+<span class="linenos"> 54</span>    <span class="n">value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos"> 55</span>    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="linenos"> 56</span>
+<span class="linenos"> 57</span>
+<span class="linenos"> 58</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">http_get_json</span><span class="p">(</span><span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="linenos"> 59</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;HTTP/1.1 の GET リクエストを送り、JSON の本文を辞書として返す。&quot;&quot;&quot;</span>
+<span class="linenos"> 60</span>    <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="linenos"> 61</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 62</span>        <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GET </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> HTTP/1.1</span><span class="se">\r\n</span><span class="s2">Host: </span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="se">\r\n</span><span class="s2">Connection: close</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="linenos"> 63</span>        <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">drain</span><span class="p">()</span>
+<span class="linenos"> 64</span>        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>  <span class="c1"># Connection: close なので、サーバーが閉じるまで読む</span>
+<span class="linenos"> 65</span>    <span class="k">finally</span><span class="p">:</span>
+<span class="linenos"> 66</span>        <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos"> 67</span>        <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
+<span class="linenos"> 68</span>    <span class="n">_</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 69</span>    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="linenos"> 70</span>    <span class="k">return</span> <span class="n">data</span>
+<span class="linenos"> 71</span>
+<span class="linenos"> 72</span>
+<span class="linenos"> 73</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Result</span><span class="p">:</span>
+<span class="linenos"> 74</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+<span class="linenos"> 75</span>        <span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 76</span>            <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">TIMEOUT_SECONDS</span><span class="p">):</span>
+<span class="linenos"> 77</span>                <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">http_get_json</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/items/</span><span class="si">{</span><span class="n">item_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 78</span>        <span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
+<span class="linenos"> 79</span>            <span class="k">return</span> <span class="n">Result</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s2">&quot;タイムアウト&quot;</span><span class="p">)</span>
+<span class="linenos"> 80</span>        <span class="k">except</span> <span class="p">(</span><span class="ne">ConnectionError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+<span class="linenos"> 81</span>            <span class="k">return</span> <span class="n">Result</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+<span class="linenos"> 82</span>    <span class="k">return</span> <span class="n">Result</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
+<span class="linenos"> 83</span>
+<span class="linenos"> 84</span>
+<span class="linenos"> 85</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 86</span>    <span class="n">server</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">start_server</span><span class="p">(</span><span class="n">handle_http</span><span class="p">,</span> <span class="n">HOST</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 87</span>    <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">sockets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos"> 88</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">server</span><span class="p">:</span>
+<span class="linenos"> 89</span>        <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">CONCURRENCY</span><span class="p">)</span>
+<span class="linenos"> 90</span>        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos"> 91</span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">group</span><span class="p">:</span>
+<span class="linenos"> 92</span>            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">fetch</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">REQUESTS</span><span class="p">)]</span>
+<span class="linenos"> 93</span>        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="linenos"> 94</span>
+<span class="linenos"> 95</span>    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">]</span>
+<span class="linenos"> 96</span>    <span class="n">succeeded</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">error</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]</span>
+<span class="linenos"> 97</span>    <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+<span class="linenos"> 98</span>    <span class="n">sequential</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">response_delay</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">TIMEOUT_SECONDS</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">REQUESTS</span><span class="p">))</span>
+<span class="linenos"> 99</span>
+<span class="linenos">100</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;成功: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">succeeded</span><span class="p">)</span><span class="si">}</span><span class="s2"> 件, 失敗: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span><span class="si">}</span><span class="s2"> 件&quot;</span><span class="p">)</span>
+<span class="linenos">101</span>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">failed</span><span class="p">:</span>
+<span class="linenos">102</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  id=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">item_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">103</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;経過時間: </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> 秒（1 件ずつ取得した場合の待ち時間の合計: </span><span class="si">{</span><span class="n">sequential</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> 秒）&quot;</span><span class="p">)</span>
+<span class="linenos">104</span>
+<span class="linenos">105</span>
+<span class="linenos">106</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">107</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>実行すると、次の結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>成功: 36 件, 失敗: 4 件
+  id=9: タイムアウト
+  id=19: タイムアウト
+  id=29: タイムアウト
+  id=39: タイムアウト
+経過時間: 1.8 秒（1 件ずつ取得した場合の待ち時間の合計: 10.4 秒）
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>要点<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch()</span></code> は、<code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> で同時実行数を制限し、その中で <code class="docutils literal notranslate"><span class="pre">asyncio.timeout()</span></code> によって 1 件ごとの待ち時間を制限している。<code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> の外側でタイムアウトを設定すると、順番を待っている時間もタイムアウトの対象になってしまうため、順序に注意する。</p></li>
+<li><p>失敗した要求は例外を送出せず、<code class="docutils literal notranslate"><span class="pre">Result</span></code> の <code class="docutils literal notranslate"><span class="pre">error</span></code> に記録している。<code class="docutils literal notranslate"><span class="pre">TaskGroup</span></code> の中で例外を送出すると他のタスクがすべてキャンセルされるため、一部の失敗を許容したい場合は、このようにタスクの中で例外を処理する。</p></li>
+<li><p>1 件ずつ取得すると待ち時間だけで 10 秒以上かかるところを、約 1.8 秒で取得できた。</p></li>
+</ul>
+<p>実務では、HTTP の通信は <code class="docutils literal notranslate"><span class="pre">aiohttp</span></code> や <code class="docutils literal notranslate"><span class="pre">httpx</span></code> などのライブラリを使い、ステータスコードの確認や再試行（<a class="reference internal" href="11_debugging.html"><span class="doc">第 11 章 デバッグと性能計測</span></a> の <code class="docutils literal notranslate"><span class="pre">retry()</span></code> を参照）も加える。</p>
+</section>
+</section>
+<section id="id6">
+<h2>大量のデータの一括処理<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<section id="id7">
+<h3>課題<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>マンデルブロ集合の画像（800 × 600 画素）を計算したい。画素ごとに複素数の計算を最大 200 回繰り返すため、Python で書くと時間がかかる。</p>
+</section>
+<section id="id8">
+<h3>手法の選択<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>処理時間の大半は Python で書かれた計算であり、CPU バウンドである。各行の計算は他の行に依存しないため、行ごとに分けて並列に計算できる。<code class="docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code> を選ぶ。</p>
+</section>
+<section id="id9">
+<h3>実装<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p><a class="reference download internal" download="" href="../_downloads/1edcf5c24b88c2746a58e0741f802f73/mandelbrot_batch.py"><code class="xref download docutils literal notranslate"><span class="pre">mandelbrot_batch.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 9</span><span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+<span class="linenos">10</span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="linenos">13</span><span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="linenos">14</span><span class="n">MAX_ITERATIONS</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">def</span><span class="w"> </span><span class="nf">compute_row</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;y 行目の各画素について、発散するまでの反復回数を明るさ（0〜255）に変換して返す。&quot;&quot;&quot;</span>
+<span class="linenos">19</span>    <span class="n">imaginary</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">HEIGHT</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.4</span> <span class="o">-</span> <span class="mf">1.2</span>
+<span class="linenos">20</span>    <span class="n">row</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">WIDTH</span><span class="p">)</span>
+<span class="linenos">21</span>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">WIDTH</span><span class="p">):</span>
+<span class="linenos">22</span>        <span class="n">c</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">((</span><span class="n">x</span> <span class="o">/</span> <span class="n">WIDTH</span><span class="p">)</span> <span class="o">*</span> <span class="mf">3.2</span> <span class="o">-</span> <span class="mf">2.2</span><span class="p">,</span> <span class="n">imaginary</span><span class="p">)</span>
+<span class="linenos">23</span>        <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="n">j</span>
+<span class="linenos">24</span>        <span class="n">iterations</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">25</span>        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">2.0</span> <span class="ow">and</span> <span class="n">iterations</span> <span class="o">&lt;</span> <span class="n">MAX_ITERATIONS</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">c</span>
+<span class="linenos">27</span>            <span class="n">iterations</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">28</span>        <span class="n">row</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">iterations</span> <span class="o">*</span> <span class="mi">255</span> <span class="o">//</span> <span class="n">MAX_ITERATIONS</span>
+<span class="linenos">29</span>    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="k">def</span><span class="w"> </span><span class="nf">save_pgm</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">33</span>    <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;P5</span><span class="se">\n</span><span class="si">{</span><span class="n">WIDTH</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">HEIGHT</span><span class="si">}</span><span class="se">\n</span><span class="s2">255</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
+<span class="linenos">34</span>    <span class="n">path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">38</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">39</span>    <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_row</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">)]</span>
+<span class="linenos">40</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;逐次: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">43</span>    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<span class="linenos">44</span>        <span class="c1"># 1 行ずつ送ると受け渡しの回数が増えるため、chunksize でまとめて送る</span>
+<span class="linenos">45</span>        <span class="n">chunksize</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">//</span> <span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">))</span>
+<span class="linenos">46</span>        <span class="n">parallel_rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">compute_row</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">),</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">chunksize</span><span class="p">))</span>
+<span class="linenos">47</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;プロセス: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒 (chunksize=</span><span class="si">{</span><span class="n">chunksize</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span>    <span class="k">assert</span> <span class="n">parallel_rows</span> <span class="o">==</span> <span class="n">rows</span>
+<span class="linenos">50</span>    <span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;mandelbrot.pgm&quot;</span><span class="p">)</span>
+<span class="linenos">51</span>    <span class="n">save_pgm</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">parallel_rows</span><span class="p">)</span>
+<span class="linenos">52</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="s2"> に保存した&quot;</span><span class="p">)</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">56</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>実行すると、次のような結果になり、実行したディレクトリに <code class="docutils literal notranslate"><span class="pre">mandelbrot.pgm</span></code> が保存される。PGM は白黒の画像形式であり、GIMP などの画像編集ソフトで表示できる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>逐次: 5.44 秒
+プロセス: 1.38 秒 (chunksize=9)
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>要点<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compute_row()</span></code> は 1 行分の計算をする関数で、引数は行番号、戻り値は 800 バイトの <code class="docutils literal notranslate"><span class="pre">bytes</span></code> である。受け渡すデータが小さいため、プロセス間の受け渡しの負荷が小さい。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chunksize</span></code> は、コア数の 4 倍程度の塊に分かれるように計算している。塊が大きすぎると、計算量の多い行（集合の内部の行）が特定のプロセスに偏り、早く終わったプロセスが遊んでしまう。塊が小さすぎると、受け渡しの回数が増える。</p></li>
+<li><p>逐次処理の結果と並列処理の結果が一致することを <code class="docutils literal notranslate"><span class="pre">assert</span></code> で確認している。並列化したときは、結果が変わっていないことを必ず確認する。</p></li>
+</ul>
+</section>
+</section>
+<section id="i-o-cpu">
+<h2>I/O と CPU の処理が混在するパイプライン<a class="headerlink" href="#i-o-cpu" title="Link to this heading"></a></h2>
+<section id="id11">
+<h3>課題<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>12 件のデータをネットワークから取得し、それぞれを解析したい。取得には 1 件あたり 0.3 秒の待ち時間があり、解析は CPU バウンドな計算である。</p>
+</section>
+<section id="id12">
+<h3>手法の選択<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<p>取得は I/O バウンド、解析は CPU バウンドである。1 つの手法では両方を効率よく処理できないため、取得には <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> を、解析にはプロセスを使い、<code class="docutils literal notranslate"><span class="pre">loop.run_in_executor()</span></code> で組み合わせる。</p>
+</section>
+<section id="id13">
+<h3>実装<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<p><a class="reference download internal" download="" href="../_downloads/7560b987399f46d9edff9c45ef21c8e0/pipeline.py"><code class="xref download docutils literal notranslate"><span class="pre">pipeline.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">11</span><span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">ITEMS</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="linenos">14</span><span class="n">CONCURRENCY</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="linenos">18</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;データの取得を模擬する（0.3 秒かかる I/O）。&quot;&quot;&quot;</span>
+<span class="linenos">19</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;data-</span><span class="si">{</span><span class="n">item_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">24</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;データの解析を模擬する（CPU バウンド）。ハッシュ値を繰り返し計算する。&quot;&quot;&quot;</span>
+<span class="linenos">25</span>    <span class="n">digest</span> <span class="o">=</span> <span class="n">data</span>
+<span class="linenos">26</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200_000</span><span class="p">):</span>
+<span class="linenos">27</span>        <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">digest</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="linenos">28</span>    <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_blocking</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">32</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;解析をイベントループの中で直接実行する（悪い例）。解析中は他のタスクがすべて止まる。&quot;&quot;&quot;</span>
+<span class="linenos">33</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+<span class="linenos">34</span>        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">download</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="k">return</span> <span class="n">analyze</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_offloaded</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">,</span> <span class="n">executor</span><span class="p">:</span> <span class="n">ProcessPoolExecutor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="linenos">39</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;解析をプロセスプールで実行する。解析中も他のタスクの取得は進む。&quot;&quot;&quot;</span>
+<span class="linenos">40</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+<span class="linenos">41</span>        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">download</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+<span class="linenos">42</span>    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+<span class="linenos">43</span>    <span class="k">return</span> <span class="k">await</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span><span class="n">executor</span><span class="p">,</span> <span class="n">analyze</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">47</span>    <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">CONCURRENCY</span><span class="p">)</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">50</span>    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">group</span><span class="p">:</span>
+<span class="linenos">51</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ITEMS</span><span class="p">):</span>
+<span class="linenos">52</span>            <span class="n">group</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_blocking</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">))</span>
+<span class="linenos">53</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;イベントループの中で解析: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<span class="linenos">56</span>        <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c1"># プロセスの起動を計測から除くため、先に一度使っておく</span>
+<span class="linenos">57</span>        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">58</span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">group</span><span class="p">:</span>
+<span class="linenos">59</span>            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_offloaded</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">semaphore</span><span class="p">,</span> <span class="n">executor</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ITEMS</span><span class="p">)]</span>
+<span class="linenos">60</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;プロセスプールで解析: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">61</span>
+<span class="linenos">62</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;解析結果の例: </span><span class="si">{</span><span class="n">tasks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span>
+<span class="linenos">65</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">66</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>執筆環境では次の結果になった。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>イベントループの中で解析: 3.79 秒
+プロセスプールで解析: 1.36 秒
+解析結果の例: 6ea8810e6841
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>要点<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">process_blocking()</span></code> は、解析をイベントループの中で直接実行する悪い例である。解析の間はイベントループが止まるため、他のタスクの取得も進まない。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">process_offloaded()</span></code> は、<code class="docutils literal notranslate"><span class="pre">loop.run_in_executor()</span></code> で解析をプロセスプールに任せる。解析の結果を <code class="docutils literal notranslate"><span class="pre">await</span></code> で待つ間もイベントループは動き続けるため、他のタスクの取得が進み、さらに複数の解析が並列に実行される。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analyze()</span></code> で使っている <code class="docutils literal notranslate"><span class="pre">hashlib.sha256()</span></code> は、大きなデータを処理する間は GIL を解放するが、このサンプルのように 32 バイトの小さなデータを繰り返し処理する場合はほとんど解放しない。そのため、スレッド（<code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code>）ではなくプロセスを使っている。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code> は <code class="docutils literal notranslate"><span class="pre">asyncio.run()</span></code> の中で作成し、<code class="docutils literal notranslate"><span class="pre">with</span></code> 文で確実に終了させている。</p></li>
+</ul>
+<p>このように、1 つのプログラムの中でも、処理の部分ごとに性質を見極めて手法を使い分けることが重要である。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="11_debugging.html" class="btn btn-neutral float-left" title="第 11 章 デバッグと性能計測" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="13_summary.html" class="btn btn-neutral float-right" title="第 13 章 まとめ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

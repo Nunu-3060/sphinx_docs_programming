@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 5 章 スレッドによる並行処理 &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 6 章 プロセスによる並列処理" href="06_processes.html" />
+    <link rel="prev" title="第 4 章 手法の選び方" href="04_choosing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_choosing.html">第 4 章 手法の選び方</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 5 章 スレッドによる並行処理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">スレッドの作成と実行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">競合状態</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">ロックによる排他制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">デッドロック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#queue">Queue による生産者・消費者パターン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">デーモンスレッド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">スレッドを使うときの指針</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">スレッドが向く場面・向かない場面</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 5 章 スレッドによる並行処理</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>第 5 章 スレッドによる並行処理<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、<code class="docutils literal notranslate"><span class="pre">threading</span></code> モジュールを使ったスレッドによる並行処理を説明する。<a class="reference internal" href="03_gil.html"><span class="doc">第 3 章 CPython の実行モデルと GIL</span></a> で説明したとおり、通常の Python ではスレッドは I/O バウンドな処理に向いている。</p>
+<section id="id2">
+<h2>スレッドの作成と実行<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>スレッドは <code class="docutils literal notranslate"><span class="pre">threading.Thread</span></code> クラスで作成する。<code class="docutils literal notranslate"><span class="pre">target</span></code> 引数にスレッドで実行する関数を、<code class="docutils literal notranslate"><span class="pre">args</span></code> 引数にその関数に渡す引数をタプルで指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 6</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 開始&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># ダウンロードの代わり</span>
+<span class="linenos"> 8</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 終了&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">download</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="linenos">12</span><span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">13</span>    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># スレッドの実行を開始する</span>
+<span class="linenos">14</span><span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">15</span>    <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># スレッドが終了するまで待つ</span>
+<span class="linenos">16</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;すべて終了&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">start()</span></code> メソッドでスレッドの実行が始まり、<code class="docutils literal notranslate"><span class="pre">join()</span></code> メソッドでスレッドの終了を待つ。3 つのスレッドはそれぞれ 1 秒待つが、待ち時間が重なるため、全体は約 1 秒で終わる。</p>
+<p>スレッドで実行した関数の戻り値は、<code class="docutils literal notranslate"><span class="pre">Thread</span></code> クラスからは受け取れない。戻り値が必要な場合や、多数のタスクを扱う場合は、<a class="reference internal" href="07_futures.html"><span class="doc">第 7 章 concurrent.futures による統一的な書き方</span></a> で説明する <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> を使うほうが簡単である。<code class="docutils literal notranslate"><span class="pre">Thread</span></code> クラスを直接使うのは、長時間動き続けるスレッドを作る場合など、スレッドの寿命を自分で管理したい場合である。</p>
+</section>
+<section id="id3">
+<h2>競合状態<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>スレッドは同じプロセスのメモリを共有するため、複数のスレッドから同じデータを読み書きできる。しかし、複数のスレッドが同じデータを同時に書き換えると、実行のタイミングによって結果が変わることがある。このような状態を <strong>競合状態（race condition）</strong> という。</p>
+<p>次のサンプルでは、4 つのスレッドがそれぞれ 1000 回ずつカウンターを 1 増やす。期待される結果は 4000 である。</p>
+<p><a class="reference download internal" download="" href="../_downloads/6cca954dc8605ba99878d197caaf91dc/race_condition.py"><code class="xref download docutils literal notranslate"><span class="pre">race_condition.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 9</span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">THREADS</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="linenos">12</span><span class="n">TIMES</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="k">class</span><span class="w"> </span><span class="nc">Counter</span><span class="p">:</span>
+<span class="linenos">16</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;複数のスレッドから更新されるカウンター。&quot;&quot;&quot;</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">19</span>        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">20</span>        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="k">def</span><span class="w"> </span><span class="nf">increment_unsafe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">23</span>        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">24</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 読み出しと書き込みの間で、他のスレッドに切り替わりやすくする</span>
+<span class="linenos">25</span>        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>    <span class="k">def</span><span class="w"> </span><span class="nf">increment_safe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">28</span>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+<span class="linenos">29</span>            <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">30</span>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">31</span>            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">increment</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">35</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;THREADS 個のスレッドで、それぞれ increment を TIMES 回呼び出す。&quot;&quot;&quot;</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>    <span class="k">def</span><span class="w"> </span><span class="nf">worker</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">38</span>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TIMES</span><span class="p">):</span>
+<span class="linenos">39</span>            <span class="n">increment</span><span class="p">()</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span>    <span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">THREADS</span><span class="p">)]</span>
+<span class="linenos">42</span>    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">43</span>        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">44</span>    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">45</span>        <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">49</span>    <span class="n">expected</span> <span class="o">=</span> <span class="n">THREADS</span> <span class="o">*</span> <span class="n">TIMES</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="linenos">52</span>    <span class="n">run</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">increment_unsafe</span><span class="p">)</span>
+<span class="linenos">53</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lock なし: </span><span class="si">{</span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> (期待値 </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="linenos">56</span>    <span class="n">run</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">increment_safe</span><span class="p">)</span>
+<span class="linenos">57</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lock あり: </span><span class="si">{</span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> (期待値 </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">61</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>実行すると、次のような結果になる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Lock なし: 1172 (期待値 4000)
+Lock あり: 4000 (期待値 4000)
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">increment_unsafe()</span></code> では、あるスレッドが値を読み出してから書き込むまでの間に、別のスレッドが同じ値を読み出して書き込むことがある。その結果、2 回分の増加が 1 回分しか反映されず、更新が失われる。このサンプルでは、問題を再現しやすくするため、読み出しと書き込みの間に <code class="docutils literal notranslate"><span class="pre">time.sleep(0)</span></code> を入れて、他のスレッドに切り替わりやすくしている。<code class="docutils literal notranslate"><span class="pre">time.sleep(0)</span></code> が無くても、切り替わるタイミングによっては同じ問題が起こる。発生の頻度が低いだけで、問題があることに変わりはない。</p>
+<p>競合状態による不具合は、発生するかどうかが実行のタイミングに依存するため、テストで見つけにくく、再現も難しい。共有するデータを書き換える処理は、次に説明するロックで保護する必要がある。</p>
+</section>
+<section id="id4">
+<h2>ロックによる排他制御<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">threading.Lock</span></code> は、ある範囲のコードを同時に 1 つのスレッドしか実行できないようにする仕組みである。このような制御を <strong>排他制御</strong> という。<code class="docutils literal notranslate"><span class="pre">with</span></code> 文で <code class="docutils literal notranslate"><span class="pre">Lock</span></code> を使うと、ブロックに入るときにロックを獲得し、ブロックを抜けるときに解放する。例外が発生した場合もロックは解放される。</p>
+<p>上のサンプルの <code class="docutils literal notranslate"><span class="pre">increment_safe()</span></code> では、値の読み出しから書き込みまでを <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">self._lock:</span></code> で囲んでいる。あるスレッドがこのブロックを実行している間、他のスレッドはブロックの入り口で待たされるため、更新が失われない。</p>
+<p>ロックで保護する範囲は、必要な処理だけに絞る。ロックを持ったまま時間のかかる I/O を行うと、他のスレッドが待たされ、並行処理の利点が失われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">threading</span></code> モジュールには、<code class="docutils literal notranslate"><span class="pre">Lock</span></code> のほかにも次のような同期の仕組みがある。</p>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-number">表 8 </span><span class="caption-text">threading モジュールの主な同期の仕組み</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>クラス</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Lock</span></code></p></td>
+<td><p>同時に 1 つのスレッドだけが実行できる範囲を作る。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RLock</span></code></p></td>
+<td><p>ロックを獲得したスレッドが、解放する前に同じロックをもう一度獲得できる <code class="docutils literal notranslate"><span class="pre">Lock</span></code>。ロックを獲得するメソッドから、同じロックを獲得する別のメソッドを呼ぶ場合に使う。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Semaphore</span></code></p></td>
+<td><p>同時に実行できるスレッドの数を、指定した数までに制限する。接続先のサーバーへの同時接続数を制限する場合などに使う。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Event</span></code></p></td>
+<td><p>あるスレッドから他のスレッドへ、「準備ができた」「停止せよ」などの合図を送る。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Condition</span></code></p></td>
+<td><p>「キューにデータが入った」など、ある条件が満たされるまでスレッドを待たせる。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h2>デッドロック<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>複数のロックを使う場合は、<strong>デッドロック</strong> に注意する必要がある。デッドロックとは、複数のスレッドが互いに相手の持つロックの解放を待ち、どのスレッドも先に進めなくなる状態である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">lock_a</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="linenos"> 4</span><span class="n">lock_b</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">worker1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos"> 8</span>    <span class="k">with</span> <span class="n">lock_a</span><span class="p">:</span>
+<span class="linenos"> 9</span>        <span class="k">with</span> <span class="n">lock_b</span><span class="p">:</span>  <span class="c1"># worker2 が lock_b を持っていると、ここで待ち続ける</span>
+<span class="linenos">10</span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;worker1&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">def</span><span class="w"> </span><span class="nf">worker2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">14</span>    <span class="k">with</span> <span class="n">lock_b</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="k">with</span> <span class="n">lock_a</span><span class="p">:</span>  <span class="c1"># worker1 が lock_a を持っていると、ここで待ち続ける</span>
+<span class="linenos">16</span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;worker2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">worker1()</span></code> が <code class="docutils literal notranslate"><span class="pre">lock_a</span></code> を、<code class="docutils literal notranslate"><span class="pre">worker2()</span></code> が <code class="docutils literal notranslate"><span class="pre">lock_b</span></code> を獲得した時点で、両者は互いのロックの解放を待ち続ける。デッドロックを防ぐには、次の方法がある。</p>
+<ul class="simple">
+<li><p><strong>ロックを獲得する順序をすべてのスレッドで統一する。</strong>上の例では、<code class="docutils literal notranslate"><span class="pre">worker2()</span></code> も <code class="docutils literal notranslate"><span class="pre">lock_a</span></code>、<code class="docutils literal notranslate"><span class="pre">lock_b</span></code> の順に獲得すれば、デッドロックは起こらない。</p></li>
+<li><p><strong>ロックを持ったまま、別のロックを獲得する処理を呼ばない。</strong>ロックを 1 つしか使わない設計にできないかを検討する。</p></li>
+<li><p><strong>タイムアウトを設定する。</strong><code class="docutils literal notranslate"><span class="pre">lock.acquire(timeout=1.0)</span></code> のように獲得の待ち時間に上限を設けると、少なくとも永久に止まることは防げる。</p></li>
+</ul>
+</section>
+<section id="queue">
+<h2>Queue による生産者・消費者パターン<a class="headerlink" href="#queue" title="Link to this heading"></a></h2>
+<p>ロックを正しく使い続けるのは難しい。スレッド間でデータを受け渡す場合は、共有データを直接書き換える代わりに、<code class="docutils literal notranslate"><span class="pre">queue.Queue</span></code> を使うとよい。<code class="docutils literal notranslate"><span class="pre">Queue</span></code> はスレッドから安全に使えるように作られており、内部で排他制御を行っている。</p>
+<p>データを作るスレッド（生産者）が <code class="docutils literal notranslate"><span class="pre">Queue</span></code> にデータを入れ、データを処理するスレッド（消費者）が <code class="docutils literal notranslate"><span class="pre">Queue</span></code> から取り出す構成を、<strong>生産者・消費者パターン</strong> という。</p>
+<p><a class="reference download internal" download="" href="../_downloads/06e71b9adedf66408d325f57213a24e3/producer_consumer.py"><code class="xref download docutils literal notranslate"><span class="pre">producer_consumer.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">queue</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="n">CONSUMERS</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="linenos">13</span><span class="n">JOBS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">def</span><span class="w"> </span><span class="nf">producer</span><span class="p">(</span><span class="n">jobs</span><span class="p">:</span> <span class="s2">&quot;queue.Queue[int | None]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">17</span>    <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">JOBS</span><span class="p">):</span>
+<span class="linenos">18</span>        <span class="n">jobs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>  <span class="c1"># キューが満杯のときは空きができるまで待つ</span>
+<span class="linenos">19</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[生産者] 仕事 </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2"> を追加した&quot;</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CONSUMERS</span><span class="p">):</span>
+<span class="linenos">21</span>        <span class="n">jobs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># 番兵</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="k">def</span><span class="w"> </span><span class="nf">consumer</span><span class="p">(</span><span class="n">jobs</span><span class="p">:</span> <span class="s2">&quot;queue.Queue[int | None]&quot;</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">lock</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">25</span>    <span class="n">name</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+<span class="linenos">26</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos">27</span>        <span class="n">number</span> <span class="o">=</span> <span class="n">jobs</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># キューが空のときは仕事が入るまで待つ</span>
+<span class="linenos">28</span>        <span class="k">if</span> <span class="n">number</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">29</span>            <span class="k">break</span>
+<span class="linenos">30</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># 時間のかかる I/O 処理の代わり</span>
+<span class="linenos">31</span>        <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+<span class="linenos">32</span>            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">number</span> <span class="o">*</span> <span class="n">number</span><span class="p">)</span>
+<span class="linenos">33</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">] 仕事 </span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2"> を処理した&quot;</span><span class="p">)</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">37</span>    <span class="n">jobs</span><span class="p">:</span> <span class="s2">&quot;queue.Queue[int | None]&quot;</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">38</span>    <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">39</span>    <span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span>    <span class="n">consumers</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">42</span>        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">consumer</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">lock</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;消費者 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">43</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CONSUMERS</span><span class="p">)</span>
+<span class="linenos">44</span>    <span class="p">]</span>
+<span class="linenos">45</span>    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">consumers</span><span class="p">:</span>
+<span class="linenos">46</span>        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">49</span>    <span class="n">producer</span><span class="p">(</span><span class="n">jobs</span><span class="p">)</span>
+<span class="linenos">50</span>    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">consumers</span><span class="p">:</span>
+<span class="linenos">51</span>        <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">52</span>    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;結果: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">55</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;経過時間: </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span>
+<span class="linenos">58</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">59</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>このサンプルのポイントは次のとおりである。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Queue(maxsize=3)</span></code> のように上限を指定すると、キューが満杯のとき <code class="docutils literal notranslate"><span class="pre">put()</span></code> は空きができるまで待つ。生産が消費より速い場合でも、キューにデータがたまり続けてメモリを使い果たすことを防げる。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get()</span></code> はキューが空のとき、データが入るまで待つ。消費者は、データが来るのを待つためのループやロックを自分で書く必要がない。</p></li>
+<li><p>仕事が無くなったことを伝えるため、消費者の数だけ番兵（<code class="docutils literal notranslate"><span class="pre">None</span></code>）を入れている。Python 3.13 以降では、<code class="docutils literal notranslate"><span class="pre">Queue.shutdown()</span></code> メソッドでキューを閉じる方法もある。</p></li>
+<li><p>結果のリスト <code class="docutils literal notranslate"><span class="pre">results</span></code> は複数のスレッドから書き換えるため、<code class="docutils literal notranslate"><span class="pre">Lock</span></code> で保護している。</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>デーモンスレッド<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>Python のプログラムは、通常、すべてのスレッドが終了するまで終了しない。<code class="docutils literal notranslate"><span class="pre">Thread(target=...,</span> <span class="pre">daemon=True)</span></code> のようにデーモンスレッドとして作成したスレッドは、デーモンでないスレッドがすべて終了した時点で、処理の途中であっても強制的に終了される。</p>
+<p>デーモンスレッドは、終了時に後始末を行う機会が無いため、ファイルの書き込みなど途中で止まると困る処理には使わない。スレッドを確実に止めたい場合は、<code class="docutils literal notranslate"><span class="pre">Event</span></code> などで停止の合図を送り、スレッド自身にループを抜けさせる。</p>
+</section>
+<section id="id7">
+<h2>スレッドを使うときの指針<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p>スレッドを使うときは、次の指針に従うと不具合を減らせる。</p>
+<ul class="simple">
+<li><p>スレッド間で書き換え可能なデータを共有することは、できるだけ避ける。データの受け渡しには <code class="docutils literal notranslate"><span class="pre">Queue</span></code> を使う。</p></li>
+<li><p>共有が避けられない場合は、データとそれを保護するロックを 1 つのクラスにまとめ、クラスの外からはロックを意識せずに使えるようにする。</p></li>
+<li><p>ライブラリのオブジェクトをスレッド間で共有する場合は、そのオブジェクトがスレッドセーフかどうかをドキュメントで確認する。たとえば標準ライブラリの <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> の接続オブジェクトは、既定では作成したスレッド以外から使えない。</p></li>
+<li><p>戻り値や例外を受け取る必要がある場合は、<code class="docutils literal notranslate"><span class="pre">Thread</span></code> クラスを直接使わず、<a class="reference internal" href="07_futures.html"><span class="doc">第 7 章 concurrent.futures による統一的な書き方</span></a> で説明する <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> を使う。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>スレッドが向く場面・向かない場面<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-number">表 9 </span><span class="caption-text">スレッドが向く場面・向かない場面</span><a class="headerlink" href="#id10" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>向く場面</p></th>
+<th class="head"><p>向かない場面</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>同期的な API しか持たないライブラリを使った I/O（HTTP クライアント、データベースのドライバーなど）を並行に実行する</p></td>
+<td><p>Python で書かれた CPU バウンドな処理を速くする（プロセスを使う）</p></td>
+</tr>
+<tr class="row-odd"><td><p>GUI アプリケーションで、時間のかかる処理を画面の更新と並行して行う</p></td>
+<td><p>数千以上の接続を同時に扱う（<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> を使う）</p></td>
+</tr>
+<tr class="row-even"><td><p>GIL を解放する C 拡張（NumPy など）の計算を並列に実行する</p></td>
+<td><p>多数のスレッドが同じデータを頻繁に書き換える</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04_choosing.html" class="btn btn-neutral float-left" title="第 4 章 手法の選び方" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06_processes.html" class="btn btn-neutral float-right" title="第 6 章 プロセスによる並列処理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

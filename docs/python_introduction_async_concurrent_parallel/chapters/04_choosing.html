@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 4 章 手法の選び方 &mdash; Python による非同期処理・並行処理・並列処理</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0b9d710c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=19757887"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="第 5 章 スレッドによる並行処理" href="05_threads.html" />
+    <link rel="prev" title="第 3 章 CPython の実行モデルと GIL" href="03_gil.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Python による非同期処理・並行処理・並列処理
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">第 1 章 はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_concepts.html">第 2 章 基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_gil.html">第 3 章 CPython の実行モデルと GIL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">第 4 章 手法の選び方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">判断の手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">手法ごとの比較</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">同じ処理を 4 通りで実行する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">並行化しないという選択肢</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_threads.html">第 5 章 スレッドによる並行処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_processes.html">第 6 章 プロセスによる並列処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_futures.html">第 7 章 concurrent.futures による統一的な書き方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_asyncio_basics.html">第 8 章 asyncio による非同期処理（基礎）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_asyncio_practice.html">第 9 章 asyncio による非同期処理（実践）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_new_options.html">第 10 章 GIL を超える新しい選択肢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_debugging.html">第 11 章 デバッグと性能計測</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_case_studies.html">第 12 章 ケーススタディ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_summary.html">第 13 章 まとめ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_glossary.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_references.html">参考文献</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Python による非同期処理・並行処理・並列処理</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第 4 章 手法の選び方</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>第 4 章 手法の選び方<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>この章では、ここまでの内容をもとに、処理の性質から手法を選ぶ判断基準を示す。各手法の実装方法は次章以降で説明するが、まずこの章で「どの手法を、どのような場面で使うのか」の全体像をつかんでほしい。</p>
+<section id="id2">
+<h2>判断の手順<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#fig-decision"><span class="std std-numref">図 5</span></a> に、手法を選ぶ手順を示す。</p>
+<figure class="align-center" id="id6">
+<span id="fig-decision"></span><div class="graphviz"><object data="../_images/graphviz-13e9db5bc3816e76e1d468a09622cd9fe7e380c4.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph decision {
+    graph [rankdir=TB, nodesep=0.35, ranksep=0.35, bgcolor=&quot;transparent&quot;];
+    node [fontsize=11, color=&quot;#8a8984&quot;];
+    edge [color=&quot;#8a8984&quot;, fontsize=10];
+
+    start [shape=box, style=&quot;rounded&quot;, label=&quot;処理が遅い・\n多数の処理を同時に扱いたい&quot;];
+    measure [shape=diamond, label=&quot;計測して\nボトルネックを\n特定したか&quot;];
+    do_measure [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#f1f0ec&quot;, label=&quot;まず計測する\n（第 11 章）&quot;];
+    improve [shape=diamond, label=&quot;アルゴリズムや\nライブラリの改善で\n十分か&quot;];
+    no_concurrency [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#f1f0ec&quot;, label=&quot;並行化しない&quot;];
+    kind [shape=diamond, label=&quot;時間の大半は\n何に使われているか&quot;];
+    count [shape=diamond, label=&quot;同時に扱う数が\n数百以上、または\n非同期ライブラリを\n使えるか&quot;];
+    asyncio [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f1fb&quot;, color=&quot;#2a78d6&quot;, label=&quot;asyncio\n（第 8・9 章）&quot;];
+    thread [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#e8f1fb&quot;, color=&quot;#2a78d6&quot;, label=&quot;スレッド\n（第 5・7 章）&quot;];
+    gil [shape=diamond, label=&quot;計算は GIL を\n解放する C 拡張\n（NumPy など）か&quot;];
+    process [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#fdeee7&quot;, color=&quot;#eb6834&quot;, label=&quot;プロセス\n（第 6・7 章）&quot;];
+    thread2 [shape=box, style=&quot;rounded,filled&quot;, fillcolor=&quot;#fdeee7&quot;, color=&quot;#eb6834&quot;, label=&quot;スレッドでも\n並列に実行できる&quot;];
+
+    start -&gt; measure;
+    measure -&gt; do_measure [label=&quot;いいえ&quot;];
+    do_measure -&gt; measure;
+    measure -&gt; improve [label=&quot;はい&quot;];
+    improve -&gt; no_concurrency [label=&quot;はい&quot;];
+    improve -&gt; kind [label=&quot;いいえ&quot;];
+    kind -&gt; count [label=&quot;I/O の待ち時間&quot;];
+    kind -&gt; gil [label=&quot;CPU の計算&quot;];
+    count -&gt; asyncio [label=&quot;はい&quot;];
+    count -&gt; thread [label=&quot;いいえ&quot;];
+    gil -&gt; thread2 [label=&quot;はい&quot;];
+    gil -&gt; process [label=&quot;いいえ&quot;];
+}</p></object></div>
+<figcaption>
+<p><span class="caption-number">図 5 </span><span class="caption-text">手法を選ぶ手順</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>判断のポイントは次の 3 つである。</p>
+<ol class="arabic simple">
+<li><p><strong>まず計測する。</strong>「遅いのは通信のせいだろう」といった推測で手法を選ぶと、効果の無い変更をすることになりやすい。どこに時間がかかっているかを計測してから判断する。</p></li>
+<li><p><strong>CPU の計算か、I/O の待ち時間か。</strong>I/O の待ち時間が支配的なら並行処理（スレッドまたは <code class="docutils literal notranslate"><span class="pre">asyncio</span></code>）を、CPU の計算が支配的なら並列処理（プロセス）を選ぶ。</p></li>
+<li><p><strong>I/O バウンドな処理では、規模と既存のコードで選ぶ。</strong>同時に扱う数が数十程度で、既存のコードやライブラリが同期的に書かれているならスレッドが手軽である。数百から数千の接続を同時に扱う場合や、非同期に対応したライブラリを使える場合は <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> が向いている。</p></li>
+</ol>
+</section>
+<section id="id3">
+<h2>手法ごとの比較<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-number">表 7 </span><span class="caption-text">手法ごとの比較</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 28.0%" />
+<col style="width: 28.0%" />
+<col style="width: 28.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>スレッド</p></th>
+<th class="head"><p>プロセス</p></th>
+<th class="head"><p>asyncio</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>向いている処理</p></td>
+<td><p>I/O バウンド</p></td>
+<td><p>CPU バウンド</p></td>
+<td><p>I/O バウンド（特に多数の接続）</p></td>
+</tr>
+<tr class="row-odd"><td><p>並列に実行できるか</p></td>
+<td><p>できない（GIL を解放する C 拡張を除く）</p></td>
+<td><p>できる</p></td>
+<td><p>できない</p></td>
+</tr>
+<tr class="row-even"><td><p>同時に扱える数の目安</p></td>
+<td><p>数十から数百</p></td>
+<td><p>CPU のコア数程度</p></td>
+<td><p>数千以上</p></td>
+</tr>
+<tr class="row-odd"><td><p>起動の負荷</p></td>
+<td><p>中程度</p></td>
+<td><p>大きい（特に Windows と macOS）</p></td>
+<td><p>小さい</p></td>
+</tr>
+<tr class="row-even"><td><p>データの共有</p></td>
+<td><p>メモリを共有する。排他制御が必要</p></td>
+<td><p>共有しない。pickle によるコピーで受け渡す</p></td>
+<td><p>メモリを共有する。切り替わる場所が <code class="docutils literal notranslate"><span class="pre">await</span></code> に限られるため、排他制御が必要な場面は少ない</p></td>
+</tr>
+<tr class="row-odd"><td><p>既存の同期的なコードとの相性</p></td>
+<td><p>よい（そのまま呼び出せる）</p></td>
+<td><p>よい（ただし関数と引数は pickle できる必要がある）</p></td>
+<td><p>悪い（ブロッキングする関数を呼ぶとイベントループが止まる）</p></td>
+</tr>
+<tr class="row-even"><td><p>デバッグの難しさ</p></td>
+<td><p>難しい（切り替わる場所が予測できない）</p></td>
+<td><p>中程度（プロセスごとに独立している）</p></td>
+<td><p>中程度（切り替わる場所は <code class="docutils literal notranslate"><span class="pre">await</span></code> に限られる）</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>同じ処理を 4 通りで実行する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>実際に、CPU バウンドな処理と I/O バウンドな処理を、逐次・スレッド・プロセス・<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> の 4 通りで実行して比べてみる。次のサンプルでは、それぞれの処理を 8 個ずつ実行し、経過時間を表示する。</p>
+<p><a class="reference download internal" download="" href="../_downloads/6ff5c1f272084fa5e6e88de621ec0d73/benchmark.py"><code class="xref download docutils literal notranslate"><span class="pre">benchmark.py</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">11</span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Coroutine</span>
+<span class="linenos">12</span><span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">ThreadPoolExecutor</span>
+<span class="linenos">13</span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="n">TASKS</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="linenos">16</span><span class="n">CPU_LOOPS</span> <span class="o">=</span> <span class="mi">3_000_000</span>
+<span class="linenos">17</span><span class="n">IO_MILLISECONDS</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="n">Task</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">object</span><span class="p">]</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="k">def</span><span class="w"> </span><span class="nf">cpu_task</span><span class="p">(</span><span class="n">loops</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">23</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;整数の 2 乗の総和を計算する（CPU バウンド）。&quot;&quot;&quot;</span>
+<span class="linenos">24</span>    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">25</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">loops</span><span class="p">):</span>
+<span class="linenos">26</span>        <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>
+<span class="linenos">27</span>    <span class="k">return</span> <span class="n">total</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="k">def</span><span class="w"> </span><span class="nf">io_task</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">31</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;指定したミリ秒だけ待つ（I/O バウンドの模擬）。&quot;&quot;&quot;</span>
+<span class="linenos">32</span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">milliseconds</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="linenos">33</span>    <span class="k">return</span> <span class="n">milliseconds</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">cpu_task_async</span><span class="p">(</span><span class="n">loops</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">37</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;cpu_task をそのままコルーチンにしたもの。await する箇所が無いため、他のタスクに切り替わらない。&quot;&quot;&quot;</span>
+<span class="linenos">38</span>    <span class="k">return</span> <span class="n">cpu_task</span><span class="p">(</span><span class="n">loops</span><span class="p">)</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">io_task_async</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">42</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;asyncio.sleep() で待つ。待っている間は他のタスクが実行される。&quot;&quot;&quot;</span>
+<span class="linenos">43</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">milliseconds</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="linenos">44</span>    <span class="k">return</span> <span class="n">milliseconds</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="k">def</span><span class="w"> </span><span class="nf">run_sequential</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="n">Task</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">48</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TASKS</span><span class="p">):</span>
+<span class="linenos">49</span>        <span class="n">task</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="k">def</span><span class="w"> </span><span class="nf">run_threads</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="n">Task</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">53</span>    <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">TASKS</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<span class="linenos">54</span>        <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">*</span> <span class="n">TASKS</span><span class="p">))</span>
+<span class="linenos">55</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="k">def</span><span class="w"> </span><span class="nf">run_processes</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="n">Task</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">58</span>    <span class="n">workers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">TASKS</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">59</span>    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+<span class="linenos">60</span>        <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">*</span> <span class="n">TASKS</span><span class="p">))</span>
+<span class="linenos">61</span>
+<span class="linenos">62</span>
+<span class="linenos">63</span><span class="k">def</span><span class="w"> </span><span class="nf">run_asyncio</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">64</span>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">runner</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">65</span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">group</span><span class="p">:</span>
+<span class="linenos">66</span>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TASKS</span><span class="p">):</span>
+<span class="linenos">67</span>                <span class="n">group</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">task</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
+<span class="linenos">68</span>
+<span class="linenos">69</span>    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">runner</span><span class="p">())</span>
+<span class="linenos">70</span>
+<span class="linenos">71</span>
+<span class="linenos">72</span><span class="k">def</span><span class="w"> </span><span class="nf">measure</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="linenos">73</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;func の実行にかかった時間（秒）を返す。&quot;&quot;&quot;</span>
+<span class="linenos">74</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">75</span>    <span class="n">func</span><span class="p">()</span>
+<span class="linenos">76</span>    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="linenos">77</span>
+<span class="linenos">78</span>
+<span class="linenos">79</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">80</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CPU コア数: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="si">}</span><span class="s2">, タスク数: </span><span class="si">{</span><span class="n">TASKS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">81</span>    <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">82</span>        <span class="p">(</span><span class="s2">&quot;逐次&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_sequential</span><span class="p">(</span><span class="n">cpu_task</span><span class="p">,</span> <span class="n">CPU_LOOPS</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_sequential</span><span class="p">(</span><span class="n">io_task</span><span class="p">,</span> <span class="n">IO_MILLISECONDS</span><span class="p">)),</span>
+<span class="linenos">83</span>        <span class="p">(</span><span class="s2">&quot;スレッド&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_threads</span><span class="p">(</span><span class="n">cpu_task</span><span class="p">,</span> <span class="n">CPU_LOOPS</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_threads</span><span class="p">(</span><span class="n">io_task</span><span class="p">,</span> <span class="n">IO_MILLISECONDS</span><span class="p">)),</span>
+<span class="linenos">84</span>        <span class="p">(</span><span class="s2">&quot;プロセス&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_processes</span><span class="p">(</span><span class="n">cpu_task</span><span class="p">,</span> <span class="n">CPU_LOOPS</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_processes</span><span class="p">(</span><span class="n">io_task</span><span class="p">,</span> <span class="n">IO_MILLISECONDS</span><span class="p">)),</span>
+<span class="linenos">85</span>        <span class="p">(</span><span class="s2">&quot;asyncio&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_asyncio</span><span class="p">(</span><span class="n">cpu_task_async</span><span class="p">,</span> <span class="n">CPU_LOOPS</span><span class="p">),</span>
+<span class="linenos">86</span>         <span class="k">lambda</span><span class="p">:</span> <span class="n">run_asyncio</span><span class="p">(</span><span class="n">io_task_async</span><span class="p">,</span> <span class="n">IO_MILLISECONDS</span><span class="p">)),</span>
+<span class="linenos">87</span>    <span class="p">]</span>
+<span class="linenos">88</span>    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cpu_run</span><span class="p">,</span> <span class="n">io_run</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+<span class="linenos">89</span>        <span class="n">cpu_seconds</span> <span class="o">=</span> <span class="n">measure</span><span class="p">(</span><span class="n">cpu_run</span><span class="p">)</span>
+<span class="linenos">90</span>        <span class="n">io_seconds</span> <span class="o">=</span> <span class="n">measure</span><span class="p">(</span><span class="n">io_run</span><span class="p">)</span>
+<span class="linenos">91</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: CPU バウンド </span><span class="si">{</span><span class="n">cpu_seconds</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒, I/O バウンド </span><span class="si">{</span><span class="n">io_seconds</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="linenos">92</span>
+<span class="linenos">93</span>
+<span class="linenos">94</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">95</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cpu_task()</span></code> は整数の 2 乗の総和を計算する CPU バウンドな処理、<code class="docutils literal notranslate"><span class="pre">io_task()</span></code> は <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> で 0.5 秒待つ I/O バウンドな処理である。<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> で実行する場合は、<code class="docutils literal notranslate"><span class="pre">await</span></code> を含むコルーチン版の関数（<code class="docutils literal notranslate"><span class="pre">cpu_task_async()</span></code>、<code class="docutils literal notranslate"><span class="pre">io_task_async()</span></code>）を使っている。</p>
+<p>執筆環境（Windows 11、CPU 16 コア、Python 3.14.6）で実行した結果を <a class="reference internal" href="#fig-benchmark"><span class="std std-numref">図 6</span></a> に示す。この結果は執筆環境でのものであり、目安である。</p>
+<figure class="align-default" id="id8">
+<span id="fig-benchmark"></span><a class="reference internal image-reference" href="../_images/benchmark.png"><img alt="逐次・スレッド・プロセス・asyncio の経過時間の比較" src="../_images/benchmark.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">図 6 </span><span class="caption-text">CPU バウンドと I/O バウンドの処理の経過時間（執筆環境での結果）</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>この結果から、次のことが読み取れる。</p>
+<ul class="simple">
+<li><p><strong>CPU バウンドな処理</strong></p>
+<ul>
+<li><p>プロセスだけが逐次処理より速くなった。8 個のタスクが複数のコアで並列に実行されたためである。8 倍速くならないのは、プロセスの起動とデータの受け渡しに時間がかかるためである。</p></li>
+<li><p>スレッドは逐次処理より遅くなった。GIL によって同時に 1 つのスレッドしか実行できないうえ、GIL の受け渡しに時間がかかるためである。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> は逐次処理とほぼ同じである。<code class="docutils literal notranslate"><span class="pre">cpu_task_async()</span></code> には <code class="docutils literal notranslate"><span class="pre">await</span></code> が無いため、タスクは切り替わらずに 1 つずつ実行される。</p></li>
+</ul>
+</li>
+<li><p><strong>I/O バウンドな処理</strong></p>
+<ul>
+<li><p>スレッドと <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> は、8 個の待ち時間が重なり、約 0.5 秒で終わった。</p></li>
+<li><p>プロセスも速くなったが、プロセスの起動に時間がかかるため、スレッドや <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> より遅い。I/O バウンドな処理にプロセスを使う利点は無い。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h2>並行化しないという選択肢<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>並行処理や並列処理は、プログラムを複雑にする。実行の順序が毎回変わるため、不具合の再現や原因の特定も難しくなる。導入する前に、次の方法で十分に速くならないかを検討するとよい。</p>
+<ul class="simple">
+<li><p><strong>アルゴリズムやデータ構造を見直す。</strong>計算量を減らす改善は、コア数を増やすより大きな効果があることが多い。</p></li>
+<li><p><strong>I/O の回数を減らす。</strong>データベースへの問い合わせをまとめる、結果をキャッシュするなど、待ち時間そのものを減らす。</p></li>
+<li><p><strong>最適化されたライブラリを使う。</strong>数値計算なら NumPy など、C 言語で実装されたライブラリを使うと、Python のループより大幅に速くなることが多い。</p></li>
+<li><p><strong>外部の仕組みに任せる。</strong>Web サーバーのワーカープロセスや、ジョブキュー、バッチ処理の基盤など、並行処理を提供する仕組みがすでにあれば、それを使う。</p></li>
+</ul>
+<p>これらの方法を検討しても足りない場合に、本書で説明する手法を使う。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03_gil.html" class="btn btn-neutral float-left" title="第 3 章 CPython の実行モデルと GIL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05_threads.html" class="btn btn-neutral float-right" title="第 5 章 スレッドによる並行処理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Nunu_3060.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
