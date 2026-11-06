@@ -97,24 +97,24 @@
 <section id="list-append-list-extend">
 <h2>list.append / list.extend<a class="headerlink" href="#list-append-list-extend" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">append</span></code> はリストの末尾に要素を 1 つだけ追加する。<code class="docutils literal notranslate"><span class="pre">extend</span></code> はイテラブル（別のリストやタプルなど）を受け取り、その要素をすべて末尾に追加する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[1, 2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[1, 2, 3, 4, 5, 6]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">4</span><span class="go">[1, 2, 3, 4]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">7</span><span class="go">[1, 2, 3, 4, 5, 6]</span>
 </pre></div>
 </div>
 <p>よくある間違いとして、複数の要素を追加したいのに <code class="docutils literal notranslate"><span class="pre">append</span></code> を使ってしまい、リストそのものが 1 つの要素として追加されてしまうケースがある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[1, 2, 3, [4, 5]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[1, 2, 3, 4, 5]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">4</span><span class="go">[1, 2, 3, [4, 5]]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">8</span><span class="go">[1, 2, 3, 4, 5]</span>
 </pre></div>
 </div>
 <p>「複数の要素をまとめて追加したい」場合は <code class="docutils literal notranslate"><span class="pre">extend</span></code> を、「1 つの要素（リストそのものを含む）を追加したい」場合は <code class="docutils literal notranslate"><span class="pre">append</span></code> を使う、と区別すると分かりやすい。</p>
@@ -122,102 +122,102 @@
 <section id="list-insert">
 <h2>list.insert<a class="headerlink" href="#list-insert" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">insert(index,</span> <span class="pre">value)</span></code> は指定したインデックスの位置に要素を挿入する。それ以降の要素は 1 つずつ後ろにずれる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;blueberry&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">[&#39;apple&#39;, &#39;blueberry&#39;, &#39;banana&#39;, &#39;cherry&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;avocado&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">[&#39;avocado&#39;, &#39;apple&#39;, &#39;blueberry&#39;, &#39;banana&#39;, &#39;cherry&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;blueberry&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos">4</span><span class="go">[&#39;apple&#39;, &#39;blueberry&#39;, &#39;banana&#39;, &#39;cherry&#39;]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;avocado&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos">7</span><span class="go">[&#39;avocado&#39;, &#39;apple&#39;, &#39;blueberry&#39;, &#39;banana&#39;, &#39;cherry&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="list-remove-list-pop">
 <h2>list.remove / list.pop<a class="headerlink" href="#list-remove-list-pop" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">remove(value)</span></code> は指定した値と最初に一致する要素を削除する。値そのもので指定するため、リスト内に見つからない場合は <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が発生する。一方 <code class="docutils literal notranslate"><span class="pre">pop(index)</span></code> はインデックスで指定した要素を削除し、その値を返す。引数を省略すると末尾の要素を取り出す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[10, 30, 20]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">999</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">ValueError</span>: <span class="n">list.remove(x): x not in list</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-<span class="go">30</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[10, 20]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[20]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos"> 4</span><span class="go">[10, 30, 20]</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">999</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos"> 8</span><span class="gr">ValueError</span>: <span class="n">list.remove(x): x not in list</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="linenos">12</span><span class="go">30</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">14</span><span class="go">[10, 20]</span>
+<span class="linenos">15</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">16</span><span class="go">10</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">18</span><span class="go">[20]</span>
 </pre></div>
 </div>
 </section>
 <section id="list-sort-list-reverse">
 <h2>list.sort / list.reverse<a class="headerlink" href="#list-sort-list-reverse" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">sort</span></code> はリストの要素をその場で並べ替える。<code class="docutils literal notranslate"><span class="pre">reverse</span></code> はリストの要素の順序をその場で反転する。いずれも戻り値は <code class="docutils literal notranslate"><span class="pre">None</span></code> で、元のリスト自体が変更される点に注意する。新しい並べ替え済みのリストを別に得たい場合は、組み込み関数 <code class="docutils literal notranslate"><span class="pre">sorted()</span></code> を使う（こちらは元のリストを変更せず、並べ替えた新しいリストを返す）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[1, 1, 2, 3, 4, 5, 6, 9]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[9, 6, 5, 4, 3, 2, 1, 1]</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">new_list</span>
-<span class="go">[1, 2, 3]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>
-<span class="go">[3, 1, 2]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos"> 4</span><span class="go">[1, 1, 2, 3, 4, 5, 6, 9]</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos"> 7</span><span class="go">[9, 6, 5, 4, 3, 2, 1, 1]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_list</span>
+<span class="linenos">12</span><span class="go">[1, 2, 3]</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>
+<span class="linenos">14</span><span class="go">[3, 1, 2]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">sort</span></code> には <code class="docutils literal notranslate"><span class="pre">key</span></code> と <code class="docutils literal notranslate"><span class="pre">reverse</span></code> というキーワード引数がある。<code class="docutils literal notranslate"><span class="pre">key</span></code> には各要素から並べ替えの基準となる値を取り出す関数を渡し、<code class="docutils literal notranslate"><span class="pre">reverse=True</span></code> を指定すると降順に並べ替える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;fig&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span>
-<span class="go">[&#39;fig&#39;, &#39;kiwi&#39;, &#39;apple&#39;, &#39;banana&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span>
-<span class="go">[&#39;banana&#39;, &#39;apple&#39;, &#39;kiwi&#39;, &#39;fig&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;kiwi&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;fig&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span>
+<span class="linenos">4</span><span class="go">[&#39;fig&#39;, &#39;kiwi&#39;, &#39;apple&#39;, &#39;banana&#39;]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span>
+<span class="linenos">7</span><span class="go">[&#39;banana&#39;, &#39;apple&#39;, &#39;kiwi&#39;, &#39;fig&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="list-index-list-count">
 <h2>list.index / list.count<a class="headerlink" href="#list-index-list-count" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">index(value)</span></code> は指定した値と最初に一致する要素のインデックスを返す。見つからない場合は <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">count(value)</span></code> は指定した値がリスト中に出現する回数を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">ValueError</span>: <span class="n">&#39;z&#39; is not in list</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
-<span class="go">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="go">0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">]</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="go">1</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos"> 7</span><span class="gr">ValueError</span>: <span class="n">&#39;z&#39; is not in list</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="go">2</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="linenos">11</span><span class="go">0</span>
 </pre></div>
 </div>
 </section>
 <section id="list-clear-list-copy">
 <h2>list.clear / list.copy<a class="headerlink" href="#list-clear-list-copy" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">clear</span></code> はリストの要素をすべて削除し、空のリストにする。<code class="docutils literal notranslate"><span class="pre">copy</span></code> はリストの浅いコピー（shallow copy）を作成して返す。スライス <code class="docutils literal notranslate"><span class="pre">lst[:]</span></code> でも同じ結果が得られるが、<code class="docutils literal notranslate"><span class="pre">copy</span></code> の方が意図が明確になる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[]</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span>
-<span class="go">[1, 2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>          <span class="c1"># コピー先への変更は元のリストに影響しない</span>
-<span class="go">[1, 2, 3]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos"> 4</span><span class="go">[]</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span>
+<span class="linenos">10</span><span class="go">[1, 2, 3, 4]</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>          <span class="c1"># コピー先への変更は元のリストに影響しない</span>
+<span class="linenos">12</span><span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -228,27 +228,27 @@
 <section id="id1">
 <h2>スライス操作<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">lst[start:stop:step]</span></code> の形式でリストの一部分を取り出すことができる。スライスは元のリストを変更せず、新しいリストを返す点に注意する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
-<span class="go">[2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">[0, 1, 2]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
-<span class="go">[7, 8, 9]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
-<span class="go">[0, 2, 4, 6, 8]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="linenos"> 3</span><span class="go">[2, 3, 4]</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="linenos"> 5</span><span class="go">[0, 1, 2]</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
+<span class="linenos"> 7</span><span class="go">[7, 8, 9]</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
+<span class="linenos"> 9</span><span class="go">[0, 2, 4, 6, 8]</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">11</span><span class="go">[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span>
 </pre></div>
 </div>
 <p>一方、スライスに対して代入を行うと、元のリストの該当部分をその場で置き換えることができる。置き換える要素の個数は、元の範囲の長さと一致していなくてもよい。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[0, 10, 20, 30, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
-<span class="go">[0, 3, 4]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">4</span><span class="go">[0, 10, 20, 30, 3, 4]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="linenos">7</span><span class="go">[0, 3, 4]</span>
 </pre></div>
 </div>
 </section>

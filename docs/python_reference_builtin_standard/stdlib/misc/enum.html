@@ -67,6 +67,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#intenum">IntEnum</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">メンバーの比較</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#flag-intflag">Flag と IntFlag によるビットフラグ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#strenum">StrEnum</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">Enum の反復処理</a></li>
 </ul>
 </li>
@@ -75,6 +76,7 @@
 <li class="toctree-l3"><a class="reference internal" href="uuid.html">uuid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="copy.html">copy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="secrets.html">secrets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ast.html">ast</a></li>
 </ul>
 </li>
 </ul>
@@ -108,111 +110,126 @@
              
   <section id="enum">
 <h1>enum<a class="headerlink" href="#enum" title="Link to this heading"></a></h1>
-<p>名前の付いた定数の集合（列挙型）を定義するためのモジュール。
-文字列やマジックナンバーを直接使う代わりに列挙型を使うことで、
-意図が明確になり、誤った値の使用を型チェッカや実行時エラーで
-検出しやすくなる。</p>
+<p>名前の付いた定数の集合（列挙型）を定義するためのモジュール。文字列やマジックナンバーを直接使う代わりに列挙型を使うことで、意図が明確になり、誤った値の使用を型チェッカや実行時エラーで検出しやすくなる。</p>
 <section id="id1">
 <h2>Enum の基本<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Enum</span></code> を継承したクラスに、メンバーとその値を定義する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
-<span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">name</span>
-<span class="s1">&#39;RED&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span>
-<span class="mi">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos"> 5</span>    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="linenos"> 6</span>    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="linenos"> 9</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span>
+<span class="linenos">10</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">name</span>
+<span class="linenos">11</span><span class="s1">&#39;RED&#39;</span>
+<span class="linenos">12</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">13</span><span class="mi">1</span>
 </pre></div>
 </div>
 </section>
 <section id="auto">
 <h2>auto() による自動採番<a class="headerlink" href="#auto" title="Link to this heading"></a></h2>
 <p>値そのものに意味がなく、区別さえできればよい場合は <code class="docutils literal notranslate"><span class="pre">auto()</span></code> を使うと、1 から始まる連番などが自動的に割り当てられる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">PENDING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">RUNNING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">DONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Status</span><span class="o">.</span><span class="n">RUNNING</span><span class="o">.</span><span class="n">value</span>
-<span class="mi">2</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="n">PENDING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">5</span>    <span class="n">RUNNING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">6</span>    <span class="n">DONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos">7</span>
+<span class="linenos">8</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Status</span><span class="o">.</span><span class="n">RUNNING</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">9</span><span class="mi">2</span>
 </pre></div>
 </div>
 </section>
 <section id="intenum">
 <h2>IntEnum<a class="headerlink" href="#intenum" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> はメンバーが <code class="docutils literal notranslate"><span class="pre">int</span></code> としても振る舞う列挙型。整数との比較や
-演算が必要な場面で使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Priority</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-    <span class="n">LOW</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">HIGH</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span> <span class="o">==</span> <span class="mi">3</span>
-<span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span> <span class="o">&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span>
-<span class="kc">True</span>
+<p><code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> はメンバーが <code class="docutils literal notranslate"><span class="pre">int</span></code> としても振る舞う列挙型。整数との比較や演算が必要な場面で使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">Priority</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="n">LOW</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos"> 5</span>    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="linenos"> 6</span>    <span class="n">HIGH</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="linenos"> 9</span><span class="kc">True</span>
+<span class="linenos">10</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span> <span class="o">&gt;</span> <span class="n">Priority</span><span class="o">.</span><span class="n">LOW</span>
+<span class="linenos">11</span><span class="kc">True</span>
+<span class="linenos">12</span><span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="n">Priority</span><span class="o">.</span><span class="n">HIGH</span><span class="p">)</span>
+<span class="linenos">13</span><span class="s1">&#39;3&#39;</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Python 3.11 から、<code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> のメンバーの <code class="docutils literal notranslate"><span class="pre">str()</span></code> や <code class="docutils literal notranslate"><span class="pre">format()</span></code>（f-string での埋め込みを含む）の結果は、<code class="docutils literal notranslate"><span class="pre">'Priority.HIGH'</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">'3'</span></code> のように値そのものを表す文字列になった。通常の <code class="docutils literal notranslate"><span class="pre">Enum</span></code> の <code class="docutils literal notranslate"><span class="pre">str()</span></code> は従来どおり <code class="docutils literal notranslate"><span class="pre">'Color.RED'</span></code> の形式である。</p>
 </div>
 </section>
 <section id="id2">
 <h2>メンバーの比較<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>同じ列挙型のメンバー同士は <code class="docutils literal notranslate"><span class="pre">==</span></code> や <code class="docutils literal notranslate"><span class="pre">is</span></code> で比較できる。異なる列挙型や
-単純な値とは、<code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> などの特殊なケースを除き等しくならない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="ow">is</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="go">False</span>
+<p>同じ列挙型のメンバー同士は <code class="docutils literal notranslate"><span class="pre">==</span></code> や <code class="docutils literal notranslate"><span class="pre">is</span></code> で比較できる。異なる列挙型や単純な値とは、<code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> などの特殊なケースを除き等しくならない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="ow">is</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="linenos">4</span><span class="go">True</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="linenos">6</span><span class="go">False</span>
 </pre></div>
 </div>
 </section>
 <section id="flag-intflag">
 <h2>Flag と IntFlag によるビットフラグ<a class="headerlink" href="#flag-intflag" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Flag</span></code>/<code class="docutils literal notranslate"><span class="pre">IntFlag</span></code> は、<code class="docutils literal notranslate"><span class="pre">|</span></code> 演算子でメンバーを組み合わせられる列挙型。権限フラグなど、複数の値を同時に持たせたい場合に使う。<code class="docutils literal notranslate"><span class="pre">IntFlag</span></code> は <code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> と同様に <code class="docutils literal notranslate"><span class="pre">int</span></code> としても振る舞う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flag</span><span class="p">,</span> <span class="n">auto</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Permission</span><span class="p">(</span><span class="n">Flag</span><span class="p">):</span>
-    <span class="n">READ</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">WRITE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">EXECUTE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">Permission</span><span class="o">.</span><span class="n">READ</span> <span class="o">|</span> <span class="n">Permission</span><span class="o">.</span><span class="n">WRITE</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">perm</span>
-<span class="o">&lt;</span><span class="n">Permission</span><span class="o">.</span><span class="n">READ</span><span class="o">|</span><span class="n">WRITE</span><span class="p">:</span> <span class="mi">3</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Permission</span><span class="o">.</span><span class="n">READ</span> <span class="ow">in</span> <span class="n">perm</span>
-<span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Permission</span><span class="o">.</span><span class="n">EXECUTE</span> <span class="ow">in</span> <span class="n">perm</span>
-<span class="kc">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flag</span><span class="p">,</span> <span class="n">auto</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">Permission</span><span class="p">(</span><span class="n">Flag</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="n">READ</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos"> 5</span>    <span class="n">WRITE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos"> 6</span>    <span class="n">EXECUTE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="o">&gt;&gt;&gt;</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">Permission</span><span class="o">.</span><span class="n">READ</span> <span class="o">|</span> <span class="n">Permission</span><span class="o">.</span><span class="n">WRITE</span>
+<span class="linenos"> 9</span><span class="o">&gt;&gt;&gt;</span> <span class="n">perm</span>
+<span class="linenos">10</span><span class="o">&lt;</span><span class="n">Permission</span><span class="o">.</span><span class="n">READ</span><span class="o">|</span><span class="n">WRITE</span><span class="p">:</span> <span class="mi">3</span><span class="o">&gt;</span>
+<span class="linenos">11</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Permission</span><span class="o">.</span><span class="n">READ</span> <span class="ow">in</span> <span class="n">perm</span>
+<span class="linenos">12</span><span class="kc">True</span>
+<span class="linenos">13</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Permission</span><span class="o">.</span><span class="n">EXECUTE</span> <span class="ow">in</span> <span class="n">perm</span>
+<span class="linenos">14</span><span class="kc">False</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>Python 3.11 以降では、値が文字列となる列挙型として <code class="docutils literal notranslate"><span class="pre">StrEnum</span></code> も
-利用できる（メンバーがそのまま <code class="docutils literal notranslate"><span class="pre">str</span></code> としても振る舞う）。また、
-誤って同じ値を持つメンバー（エイリアス）を定義してしまうミスを
-防ぎたい場合は、クラスに <code class="docutils literal notranslate"><span class="pre">&#64;unique</span></code> デコレータを付けると、値が
-重複した時点で <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が発生するようになる。</p>
+<p>誤って同じ値を持つメンバー（エイリアス）を定義してしまうミスを防ぎたい場合は、クラスに <code class="docutils literal notranslate"><span class="pre">&#64;unique</span></code> デコレータを付けると、値が重複している場合にクラス定義の時点で <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が発生するようになる。</p>
+</div>
+</section>
+<section id="strenum">
+<h2>StrEnum<a class="headerlink" href="#strenum" title="Link to this heading"></a></h2>
+<p>Python 3.11 で追加された <code class="docutils literal notranslate"><span class="pre">StrEnum</span></code> は、メンバーが <code class="docutils literal notranslate"><span class="pre">str</span></code> としても振る舞う列挙型である。<code class="docutils literal notranslate"><span class="pre">IntEnum</span></code> の文字列版にあたり、文字列との比較や、文字列を受け取る API への受け渡しをそのまま行える。<code class="docutils literal notranslate"><span class="pre">auto()</span></code> を使うと、メンバー名を小文字にした文字列が値になる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">Method</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="n">GET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos"> 5</span>    <span class="n">POST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Method</span><span class="o">.</span><span class="n">GET</span>
+<span class="linenos"> 8</span><span class="o">&lt;</span><span class="n">Method</span><span class="o">.</span><span class="n">GET</span><span class="p">:</span> <span class="s1">&#39;get&#39;</span><span class="o">&gt;</span>
+<span class="linenos"> 9</span><span class="o">&gt;&gt;&gt;</span> <span class="n">Method</span><span class="o">.</span><span class="n">GET</span> <span class="o">==</span> <span class="s2">&quot;get&quot;</span>
+<span class="linenos">10</span><span class="kc">True</span>
+<span class="linenos">11</span><span class="o">&gt;&gt;&gt;</span> <span class="sa">f</span><span class="s2">&quot;method=</span><span class="si">{</span><span class="n">Method</span><span class="o">.</span><span class="n">POST</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">12</span><span class="s1">&#39;method=post&#39;</span>
+</pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>Enum の反復処理<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>列挙型クラス自体をイテレートすると、定義順にすべてのメンバーを取得できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="go">RED 1</span>
-<span class="go">GREEN 2</span>
-<span class="go">BLUE 3</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">RED 1</span>
+<span class="linenos">4</span><span class="go">GREEN 2</span>
+<span class="linenos">5</span><span class="go">BLUE 3</span>
 </pre></div>
 </div>
 </section>

@@ -98,40 +98,40 @@
              
   <section id="pandas">
 <h1>pandas とは<a class="headerlink" href="#pandas" title="Link to this heading"></a></h1>
-<p>pandas は、表形式のデータを扱うための Python ライブラリです。CSV や Excel のようなデータを読み込み、集計・加工・分析するための機能が豊富に用意されています。</p>
+<p>pandas は、表形式のデータを扱うための Python ライブラリである。CSV や Excel のようなデータを読み込み、集計・加工・分析するための機能が豊富に用意されている。</p>
 <p>公式サイト: <a class="reference external" href="https://pandas.pydata.org/">pandas</a></p>
 <section id="id2">
 <h2>主なデータ構造<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>pandas には、主に 2 つのデータ構造があります。</p>
+<p>pandas には、主に 2 つのデータ構造がある。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Series</span></code>: ラベル（インデックス）付きの 1 次元配列</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>: 複数の <code class="docutils literal notranslate"><span class="pre">Series</span></code> を列として持つ、表形式の 2 次元データ</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-<span class="c1"># 0    10</span>
-<span class="c1"># 1    20</span>
-<span class="c1"># 2    30</span>
-<span class="c1"># dtype: int64</span>
-
-<span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">],</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">]})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="c1">#     name  age</span>
-<span class="c1"># 0  Alice   30</span>
-<span class="c1"># 1    Bob   25</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="linenos"> 4</span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="c1"># 0    10</span>
+<span class="linenos"> 6</span><span class="c1"># 1    20</span>
+<span class="linenos"> 7</span><span class="c1"># 2    30</span>
+<span class="linenos"> 8</span><span class="c1"># dtype: int64</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">],</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">]})</span>
+<span class="linenos">11</span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">12</span><span class="c1">#     name  age</span>
+<span class="linenos">13</span><span class="c1"># 0  Alice   30</span>
+<span class="linenos">14</span><span class="c1"># 1    Bob   25</span>
 </pre></div>
 </div>
 </section>
 <section id="numpy">
 <h2>numpy との関係<a class="headerlink" href="#numpy" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> や <code class="docutils literal notranslate"><span class="pre">Series</span></code> の内部データは numpy の <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> で保持されています。そのため、numpy で学んだ配列操作や集約関数の考え方の多くがそのまま活かせます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-<span class="c1"># array([30, 25])</span>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> や <code class="docutils literal notranslate"><span class="pre">Series</span></code> の数値データは、内部で numpy の <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> として保持されている（文字列の列は pandas 3.0 以降、専用の <code class="docutils literal notranslate"><span class="pre">str</span></code> 型で保持される）。そのため、numpy で学んだ配列操作や集約関数の考え方の多くがそのまま活かせる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="linenos">2</span><span class="c1"># array([30, 25])</span>
 </pre></div>
 </div>
-<p>次のページから、<code class="docutils literal notranslate"><span class="pre">Series</span></code> と <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> の基本的な使い方を見ていきます。</p>
+<p>次のページから、<code class="docutils literal notranslate"><span class="pre">Series</span></code> と <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> の基本的な使い方を見ていく。</p>
 </section>
 </section>
 

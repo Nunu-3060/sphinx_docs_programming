@@ -60,6 +60,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#glob">glob によるパターン検索</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#read-text-write-text">read_text / write_text</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mkdir-unlink-rmdir-rename">mkdir / unlink / rmdir / rename によるパスの作成・変更</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#copy-move">copy / move によるコピー・移動</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parent-name-suffix">parent / name / suffix</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#with-name-with-suffix-with-stem">with_name / with_suffix / with_stem</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#resolve">resolve</a></li>
@@ -119,140 +120,153 @@
 <section id="path">
 <h2>Path の生成<a class="headerlink" href="#path" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Path</span></code> にパス文字列を渡してオブジェクトを生成する。引数なしで呼ぶとカレントディレクトリを表す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
-<span class="go">WindowsPath(&#39;source/index.rst&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-<span class="go">WindowsPath(&#39;G:/python/standard&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
+<span class="linenos">4</span><span class="go">WindowsPath(&#39;source/index.rst&#39;)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="linenos">6</span><span class="go">WindowsPath(&#39;G:/python/standard&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>/ 演算子によるパスの結合<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">/</span></code> 演算子でパスを結合できる。<code class="docutils literal notranslate"><span class="pre">os.path.join</span></code> より直感的に書ける。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">/</span> <span class="s2">&quot;stdlib&quot;</span> <span class="o">/</span> <span class="s2">&quot;os.rst&quot;</span>
-<span class="go">WindowsPath(&#39;source/stdlib/os.rst&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">/</span> <span class="s2">&quot;stdlib&quot;</span> <span class="o">/</span> <span class="s2">&quot;os.rst&quot;</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;source/stdlib/os.rst&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="joinpath">
 <h2>joinpath<a class="headerlink" href="#joinpath" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">joinpath</span></code> メソッドでもパスを結合できる。<code class="docutils literal notranslate"><span class="pre">/</span></code> 演算子と異なり、複数のセグメントを一度の呼び出しでまとめて渡せる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">base</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;stdlib&quot;</span><span class="p">,</span> <span class="s2">&quot;os.rst&quot;</span><span class="p">)</span>
-<span class="go">WindowsPath(&#39;source/stdlib/os.rst&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;stdlib&quot;</span><span class="p">,</span> <span class="s2">&quot;os.rst&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;source/stdlib/os.rst&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="exists-is-file-is-dir">
 <h2>exists / is_file / is_dir<a class="headerlink" href="#exists-is-file-is-dir" title="Link to this heading"></a></h2>
 <p>パスの存在確認や、ファイル・ディレクトリの種別判定を行う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">True</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
+<span class="linenos">5</span><span class="go">True</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
+<span class="linenos">7</span><span class="go">False</span>
 </pre></div>
 </div>
 </section>
 <section id="iterdir">
 <h2>iterdir によるディレクトリ内一覧<a class="headerlink" href="#iterdir" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">iterdir</span></code> はディレクトリ直下のエントリを <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトのイテレータとして返す。<code class="docutils literal notranslate"><span class="pre">os.listdir</span></code> や <code class="docutils literal notranslate"><span class="pre">os.scandir</span></code> に対応する pathlib の機能。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
-<span class="go">[&#39;stdlib&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
+<span class="linenos">2</span><span class="go">[&#39;stdlib&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="walk">
 <h2>walk によるディレクトリツリーの再帰的な走査<a class="headerlink" href="#walk" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Path.walk()``（Python</span> <span class="pre">3.12</span> <span class="pre">以降）は</span> <span class="pre">:func:`os.walk`</span> <span class="pre">に対応する</span> <span class="pre">pathlib</span> <span class="pre">のメソッドで、ディレクトリツリーを再帰的にたどりながら</span> <span class="pre">``(ディレクトリパス,</span> <span class="pre">サブディレクトリ名のリスト,</span> <span class="pre">ファイル名のリスト)</span></code> のタプルを生成する。<code class="docutils literal notranslate"><span class="pre">os.walk</span></code> と異なり、ディレクトリパスは文字列ではなく <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトとして得られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">walk</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">))</span>
+<p><code class="docutils literal notranslate"><span class="pre">Path.walk()</span></code>（Python 3.12 以降）は <code class="docutils literal notranslate"><span class="pre">os.walk</span></code> に対応する pathlib のメソッドで、ディレクトリツリーを再帰的にたどりながら <code class="docutils literal notranslate"><span class="pre">(ディレクトリパス,</span> <span class="pre">サブディレクトリ名のリスト,</span> <span class="pre">ファイル名のリスト)</span></code> のタプルを生成する。<code class="docutils literal notranslate"><span class="pre">os.walk</span></code> と異なり、ディレクトリパスは文字列ではなく <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトとして得られる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">walk</span><span class="p">():</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
 <section id="glob">
 <h2>glob によるパターン検索<a class="headerlink" href="#glob" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">glob</span></code> でワイルドカードにマッチするパスを列挙する。<code class="docutils literal notranslate"><span class="pre">**</span></code> を使うと再帰的に検索できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.rst&quot;</span><span class="p">))</span>
-<span class="go">[WindowsPath(&#39;source/stdlib/os.rst&#39;), WindowsPath(&#39;source/stdlib/pathlib.rst&#39;)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.rst&quot;</span><span class="p">))</span>
+<p><code class="docutils literal notranslate"><span class="pre">glob</span></code> でワイルドカードにマッチするパスを <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトのイテレータとして列挙する。<code class="docutils literal notranslate"><span class="pre">**</span></code> を使うと再帰的に検索できる。パターンの先頭に <code class="docutils literal notranslate"><span class="pre">**/</span></code> を付ける代わりに <code class="docutils literal notranslate"><span class="pre">rglob</span></code> を使うこともできる。パターン構文の詳細は <a class="reference internal" href="glob.html"><span class="doc">glob</span></a> を参照。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.rst&quot;</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">[WindowsPath(&#39;source/stdlib/os.rst&#39;), WindowsPath(&#39;source/stdlib/pathlib.rst&#39;)]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.rst&quot;</span><span class="p">))</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*.rst&quot;</span><span class="p">))</span>  <span class="c1"># 上と同じ</span>
 </pre></div>
 </div>
 </section>
 <section id="read-text-write-text">
 <h2>read_text / write_text<a class="headerlink" href="#read-text-write-text" title="Link to this heading"></a></h2>
 <p>ファイルを開いてから閉じるまでの一連の処理を 1 行で行える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="go">6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="go">&#39;hello\n&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">6</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">&#39;hello\n&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="mkdir-unlink-rmdir-rename">
 <h2>mkdir / unlink / rmdir / rename によるパスの作成・変更<a class="headerlink" href="#mkdir-unlink-rmdir-rename" title="Link to this heading"></a></h2>
-<p>ディレクトリやファイルの作成・削除・改名も <code class="docutils literal notranslate"><span class="pre">Path</span></code> のメソッドとして行える。<code class="docutils literal notranslate"><span class="pre">os.makedirs</span></code> / <code class="docutils literal notranslate"><span class="pre">os.remove</span></code> / <code class="docutils literal notranslate"><span class="pre">os.rmdir</span></code> に対応する。<code class="docutils literal notranslate"><span class="pre">mkdir</span></code> は <code class="docutils literal notranslate"><span class="pre">parents=True</span></code> で中間ディレクトリも含めて作成し、<code class="docutils literal notranslate"><span class="pre">exist_ok=True</span></code> で既に存在していてもエラーにしない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;file.txt&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="go">6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;renamed.txt&quot;</span><span class="p">)</span>
-<span class="go">WindowsPath(&#39;a/b/c/renamed.txt&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;renamed.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>
+<p>ディレクトリやファイルの作成・削除・改名も <code class="docutils literal notranslate"><span class="pre">Path</span></code> のメソッドとして行える。それぞれ <code class="docutils literal notranslate"><span class="pre">os.makedirs</span></code> / <code class="docutils literal notranslate"><span class="pre">os.remove</span></code> / <code class="docutils literal notranslate"><span class="pre">os.rmdir</span></code> / <code class="docutils literal notranslate"><span class="pre">os.rename</span></code> に対応する。<code class="docutils literal notranslate"><span class="pre">mkdir</span></code> は <code class="docutils literal notranslate"><span class="pre">parents=True</span></code> で中間ディレクトリも含めて作成し、<code class="docutils literal notranslate"><span class="pre">exist_ok=True</span></code> で既に存在していてもエラーにしない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;file.txt&quot;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">&quot;hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">6</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;renamed.txt&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">WindowsPath(&#39;a/b/c/renamed.txt&#39;)</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s2">&quot;renamed.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+<span class="linenos">9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rename</span></code> は移動先に同名のファイルが存在すると、Windows では <code class="docutils literal notranslate"><span class="pre">FileExistsError</span></code> になる（POSIX では黙って上書きされる）。OS を問わず上書きしたい場合は <code class="docutils literal notranslate"><span class="pre">replace</span></code> を使う。</p>
+</section>
+<section id="copy-move">
+<h2>copy / move によるコピー・移動<a class="headerlink" href="#copy-move" title="Link to this heading"></a></h2>
+<p>Python 3.14 以降では、<code class="docutils literal notranslate"><span class="pre">Path.copy()</span></code> / <code class="docutils literal notranslate"><span class="pre">Path.move()</span></code> でファイルやディレクトリ（ツリー全体）のコピー・移動を行える。従来はこうした処理に <a class="reference internal" href="shutil.html"><span class="doc">shutil</span></a> を併用する必要があった。いずれも新しいパスを表す <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトを返す。指定したディレクトリの中へコピー・移動する <code class="docutils literal notranslate"><span class="pre">copy_into()</span></code> / <code class="docutils literal notranslate"><span class="pre">move_into()</span></code> もある。なお、コピー先・移動先の親ディレクトリはあらかじめ存在している必要がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">src</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;memo.txt&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">src</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s2">&quot;backup/memo.txt&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;backup/memo.txt&#39;)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">src</span><span class="o">.</span><span class="n">move_into</span><span class="p">(</span><span class="s2">&quot;archive&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">WindowsPath(&#39;archive/memo.txt&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="parent-name-suffix">
 <h2>parent / name / suffix<a class="headerlink" href="#parent-name-suffix" title="Link to this heading"></a></h2>
 <p>パスを構成要素に分解して参照する属性。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parent</span>
-<span class="go">WindowsPath(&#39;source/stdlib&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;os.rst&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">stem</span>
-<span class="go">&#39;os&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span>
-<span class="go">&#39;.rst&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parent</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;source/stdlib&#39;)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">name</span>
+<span class="linenos">5</span><span class="go">&#39;os.rst&#39;</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">stem</span>
+<span class="linenos">7</span><span class="go">&#39;os&#39;</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span>
+<span class="linenos">9</span><span class="go">&#39;.rst&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="with-name-with-suffix-with-stem">
 <h2>with_name / with_suffix / with_stem<a class="headerlink" href="#with-name-with-suffix-with-stem" title="Link to this heading"></a></h2>
 <p>パスの一部だけを置き換えた新しい <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトを返す。元のオブジェクトは変更されない（イミュータブル）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s2">&quot;pathlib.rst&quot;</span><span class="p">)</span>
-<span class="go">WindowsPath(&#39;source/stdlib/pathlib.rst&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
-<span class="go">WindowsPath(&#39;source/stdlib/os.txt&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_stem</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
-<span class="go">WindowsPath(&#39;source/stdlib/index.rst&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s2">&quot;pathlib.rst&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;source/stdlib/pathlib.rst&#39;)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">WindowsPath(&#39;source/stdlib/os.txt&#39;)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">with_stem</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">WindowsPath(&#39;source/stdlib/index.rst&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="resolve">
 <h2>resolve<a class="headerlink" href="#resolve" title="Link to this heading"></a></h2>
-<p>相対パスを絶対パスに変換する。<code class="docutils literal notranslate"><span class="pre">..</span></code> などの記号も解決される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/../source/index.rst&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-<span class="go">WindowsPath(&#39;G:/python/standard/source/index.rst&#39;)</span>
+<p>相対パスを絶対パスに変換する。<code class="docutils literal notranslate"><span class="pre">..</span></code> やシンボリックリンクも解決される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source/../source/index.rst&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">WindowsPath(&#39;G:/python/standard/source/index.rst&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="as-posix">
 <h2>as_posix<a class="headerlink" href="#as-posix" title="Link to this heading"></a></h2>
 <p>区切り文字を OS に依存せず <code class="docutils literal notranslate"><span class="pre">/</span></code> に統一した文字列を返す。Windows でも <code class="docutils literal notranslate"><span class="pre">/</span></code> 区切りの文字列を得たい場合に使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;stdlib&quot;</span> <span class="o">/</span> <span class="s2">&quot;os.rst&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
-<span class="go">&#39;source/stdlib/os.rst&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;stdlib&quot;</span> <span class="o">/</span> <span class="s2">&quot;os.rst&quot;</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">&#39;source/stdlib/os.rst&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">

@@ -88,41 +88,42 @@
 <h1>おわりに<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>これまでの振り返り<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>本ドキュメントでは、numpy で数値データを配列として扱い、pandas で表形式のデータを集計し、その結果を matplotlib でグラフとして可視化するという一連の流れを紹介してきました。環境構築から始まり、各ライブラリの基本的な使い方を経て、最後の「実務での活用例」では、これらを組み合わせて実際のデータ分析に近い形の例に取り組みました。ここまでの内容で、自分の手元にあるデータを読み込み、集計し、グラフにまとめるという一連の作業を進められるようになっているはずです。</p>
+<p>本ドキュメントでは、numpy で数値データを配列として扱い、pandas で表形式のデータを集計し、その結果を matplotlib でグラフとして可視化するという一連の流れを紹介してきた。環境構築から始まり、各ライブラリの基本的な使い方を経て、最後の「実務での活用例」では、これらを組み合わせて実際のデータ分析に近い形の例に取り組んだ。ここまでの内容で、自分の手元にあるデータを読み込み、集計し、グラフにまとめるという一連の作業を進められるようになっているはずである。</p>
 </section>
 <section id="id3">
 <h2>実務で困ったときの調べ方<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>numpy、pandas、matplotlib は、本ドキュメントで紹介した以外にも非常に多くの機能を持っています。本ドキュメントに載っていない機能に出会ったときは、まず公式サイトのドキュメントを調べてみてください。</p>
+<p>numpy、pandas、matplotlib は、本ドキュメントで紹介した以外にも非常に多くの機能を持っている。本ドキュメントに載っていない機能に出会ったときは、まず公式サイトのドキュメントを調べてみるとよい。</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://numpy.org/">numpy 公式サイト</a></p></li>
 <li><p><a class="reference external" href="https://pandas.pydata.org/">pandas 公式サイト</a></p></li>
 <li><p><a class="reference external" href="https://matplotlib.org/">matplotlib 公式サイト</a></p></li>
 </ul>
-<p>特に pandas と matplotlib は API が豊富なので、「やりたいこと」をそのまま検索したり、公式サイトのサンプルギャラリー（matplotlib であれば「matplotlib gallery」）を眺めたりすると、目的のグラフや処理の手がかりが見つかることがよくあります。</p>
-<p>つまずいたときによく出会うエラー・警告には、次のようなものがあります。エラーメッセージやクラス名で検索すると、原因と対処法が見つかることがほとんどです。</p>
+<p>特に pandas と matplotlib は API が豊富なので、「やりたいこと」をそのまま検索したり、公式サイトのサンプルギャラリー（matplotlib であれば「matplotlib gallery」）を眺めたりすると、目的のグラフや処理の手がかりが見つかることがよくある。</p>
+<p>つまずいたときによく出会うエラー・警告には、次のようなものがある。エラーメッセージやクラス名で検索すると、原因と対処法が見つかることがほとんどである。</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">KeyError</span></code>: 存在しない列名やラベルを指定したときに発生します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（<code class="docutils literal notranslate"><span class="pre">operands</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">broadcast</span> <span class="pre">together</span></code> や <code class="docutils literal notranslate"><span class="pre">shapes</span> <span class="pre">...</span> <span class="pre">not</span> <span class="pre">aligned</span></code> など）: numpy の配列同士の形状が合わず、ブロードキャストや行列積ができないときに発生します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ChainedAssignmentError</span></code>: <code class="docutils literal notranslate"><span class="pre">df[&quot;age&quot;][0]</span> <span class="pre">=</span> <span class="pre">31</span></code> のように <code class="docutils literal notranslate"><span class="pre">[]</span></code> を連ねて値を代入（連鎖代入）したときに出る警告です。pandas 3.0 以降ではこの書き方で元の <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> は変更されないため、<code class="docutils literal notranslate"><span class="pre">df.loc[0,</span> <span class="pre">&quot;age&quot;]</span> <span class="pre">=</span> <span class="pre">31</span></code> のように <code class="docutils literal notranslate"><span class="pre">loc</span></code> を使って 1 回で代入してください。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeyError</span></code>: 存在しない列名やラベルを指定したときに発生する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code>（<code class="docutils literal notranslate"><span class="pre">operands</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">broadcast</span> <span class="pre">together</span></code> や <code class="docutils literal notranslate"><span class="pre">shapes</span> <span class="pre">...</span> <span class="pre">not</span> <span class="pre">aligned</span></code> など）: numpy の配列同士の形状が合わず、ブロードキャストや行列積ができないときに発生する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ChainedAssignmentError</span></code>: <code class="docutils literal notranslate"><span class="pre">df[&quot;age&quot;][0]</span> <span class="pre">=</span> <span class="pre">31</span></code> のように <code class="docutils literal notranslate"><span class="pre">[]</span></code> を連ねて値を代入（連鎖代入）したときに出る警告である。pandas 3.0 以降ではこの書き方で元の <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> は変更されないため、<code class="docutils literal notranslate"><span class="pre">df.loc[0,</span> <span class="pre">&quot;age&quot;]</span> <span class="pre">=</span> <span class="pre">31</span></code> のように <code class="docutils literal notranslate"><span class="pre">loc</span></code> を使って 1 回で代入すること。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pandas4Warning</span></code>: pandas 4.0 で削除・変更が予定されている機能を使ったときに出る警告である。たとえば <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> を指定すると出る。警告メッセージに示された代わりの書き方（<code class="docutils literal notranslate"><span class="pre">inplace</span></code> であれば戻り値の代入）に書き換えること。</p></li>
 </ul>
 </section>
 <section id="id4">
 <h2>次のステップ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>本ドキュメントでは扱いませんでしたが、実務でデータを扱っていくと、次のような話題に出会うことがあります。興味を持ったキーワードから調べてみると、理解の幅が広がります。</p>
+<p>本ドキュメントでは扱わなかったが、実務でデータを扱っていくと、次のような話題に出会うことがある。興味を持ったキーワードから調べてみると、理解の幅が広がる。</p>
 <ul class="simple">
-<li><p><strong>pandas のマルチインデックスの応用</strong>: 複数キーの <code class="docutils literal notranslate"><span class="pre">groupby</span></code> の結果が <code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code> になることや、<code class="docutils literal notranslate"><span class="pre">loc</span></code> での階層アクセス、<code class="docutils literal notranslate"><span class="pre">unstack</span></code>/<code class="docutils literal notranslate"><span class="pre">stack</span></code> の基本は「<a class="reference internal" href="pandas/groupby.html"><span class="doc">集計とグルーピング</span></a>」で扱いましたが、列側を階層化した <code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code> や、階層の順序を入れ替える <code class="docutils literal notranslate"><span class="pre">swaplevel</span></code>、特定の階層だけを取り出す <code class="docutils literal notranslate"><span class="pre">xs</span></code> など、より高度な使い方もあります。</p></li>
-<li><p><strong>pandas の resample</strong>: 時系列データを「週単位」「月単位」のようにまとめ直す機能。本ドキュメントで扱った <code class="docutils literal notranslate"><span class="pre">rolling</span></code> と合わせて使われます。</p></li>
+<li><p><strong>pandas のマルチインデックスの応用</strong>: 複数キーの <code class="docutils literal notranslate"><span class="pre">groupby</span></code> の結果が <code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code> になることや、<code class="docutils literal notranslate"><span class="pre">loc</span></code> での階層アクセス、<code class="docutils literal notranslate"><span class="pre">unstack</span></code>/<code class="docutils literal notranslate"><span class="pre">stack</span></code> の基本は「<a class="reference internal" href="pandas/groupby.html"><span class="doc">集計とグルーピング</span></a>」で扱ったが、列側を階層化した <code class="docutils literal notranslate"><span class="pre">MultiIndex</span></code> や、階層の順序を入れ替える <code class="docutils literal notranslate"><span class="pre">swaplevel</span></code>、特定の階層だけを取り出す <code class="docutils literal notranslate"><span class="pre">xs</span></code> など、より高度な使い方もある。</p></li>
+<li><p><strong>pandas の resample</strong>: 時系列データを「週単位」「月単位」のようにまとめ直す機能。本ドキュメントで扱った <code class="docutils literal notranslate"><span class="pre">rolling</span></code> と合わせて使われる。</p></li>
 <li><p><strong>seaborn</strong>: matplotlib をベースにした、統計的なグラフ（分布の比較や相関関係の可視化など）を簡潔に描けるライブラリ。</p></li>
-<li><p><strong>numpy の線形代数（np.linalg）の応用</strong>: 内積・逆行列・行列式・連立一次方程式の解法といった基本は「<a class="reference internal" href="numpy/linalg.html"><span class="doc">線形代数（np.linalg）</span></a>」で扱いましたが、固有値・固有ベクトル（<code class="docutils literal notranslate"><span class="pre">np.linalg.eig</span></code>）や特異値分解（<code class="docutils literal notranslate"><span class="pre">np.linalg.svd</span></code>）など、より高度な行列計算の機能もあります。</p></li>
-<li><p><strong>scipy</strong>: numpy の配列を土台に、より高度な科学技術計算（最適化、統計、信号処理、より充実した線形代数など）を提供するライブラリ。<code class="docutils literal notranslate"><span class="pre">np.linalg</span></code> で物足りなくなったら次に検討する選択肢です。</p></li>
-<li><p><strong>statsmodels</strong>: 回帰分析などの統計モデルを扱うライブラリ。「<a class="reference internal" href="practice/correlation.html"><span class="doc">2 変数の相関と回帰直線</span></a>」で扱った回帰直線に加えて、複数の変数を使う重回帰分析や、係数が統計的に意味を持つかどうかの検定などを行えます。</p></li>
-<li><p><strong>scikit-learn</strong>: numpy、pandas、scipy を基盤にした機械学習ライブラリ。集計・可視化の次のステップとして、データからの予測や分類に取り組みたくなったときに使います。</p></li>
-<li><p><strong>Jupyter Notebook</strong>: numpy、pandas、matplotlib を対話的に試しながら分析を進めるための実行環境。本ドキュメントではコンソールでのスクリプト実行を前提にしてきましたが、実際のデータ分析では Notebook 上で試行錯誤しながら進めることも多くあります。</p></li>
+<li><p><strong>numpy の線形代数（np.linalg）の応用</strong>: 内積・逆行列・行列式・連立一次方程式の解法といった基本は「<a class="reference internal" href="numpy/linalg.html"><span class="doc">線形代数（np.linalg）</span></a>」で扱ったが、固有値・固有ベクトル（<code class="docutils literal notranslate"><span class="pre">np.linalg.eig</span></code>）や特異値分解（<code class="docutils literal notranslate"><span class="pre">np.linalg.svd</span></code>）など、より高度な行列計算の機能もある。</p></li>
+<li><p><strong>scipy</strong>: numpy の配列を土台に、より高度な科学技術計算（最適化、統計、信号処理、より充実した線形代数など）を提供するライブラリ。<code class="docutils literal notranslate"><span class="pre">np.linalg</span></code> で物足りなくなったら次に検討する選択肢である。</p></li>
+<li><p><strong>statsmodels</strong>: 回帰分析などの統計モデルを扱うライブラリ。「<a class="reference internal" href="practice/correlation.html"><span class="doc">2 変数の相関と回帰直線</span></a>」で扱った回帰直線に加えて、複数の変数を使う重回帰分析や、係数が統計的に意味を持つかどうかの検定などを行える。</p></li>
+<li><p><strong>scikit-learn</strong>: numpy、pandas、scipy を基盤にした機械学習ライブラリ。集計・可視化の次のステップとして、データからの予測や分類に取り組みたくなったときに使う。</p></li>
+<li><p><strong>Jupyter Notebook</strong>: numpy、pandas、matplotlib を対話的に試しながら分析を進めるための実行環境。本ドキュメントではコンソールでのスクリプト実行を前提にしてきたが、実際のデータ分析では Notebook 上で試行錯誤しながら進めることも多くある。</p></li>
 </ul>
 </section>
 <section id="id5">
 <h2>最後に<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>ライブラリの使い方は、実際に自分の手元にあるデータで試してみることで一番早く身につきます。本ドキュメントの内容を土台に、ぜひ自分のデータで numpy、pandas、matplotlib を使ってみてください。</p>
+<p>ライブラリの使い方は、実際に自分の手元にあるデータで試してみることで一番早く身につく。本ドキュメントの内容を土台に、ぜひ自分のデータで numpy、pandas、matplotlib を使ってみてほしい。</p>
 </section>
 </section>
 

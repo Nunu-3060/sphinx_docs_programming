@@ -108,74 +108,78 @@
 <section id="elementtree-parse-fromstring">
 <h2>ElementTree.parse / fromstring<a class="headerlink" href="#elementtree-parse-fromstring" title="Link to this heading"></a></h2>
 <p>XML ファイルを解析するには <code class="docutils literal notranslate"><span class="pre">parse()</span></code>、文字列を解析するには <code class="docutils literal notranslate"><span class="pre">fromstring()</span></code> を使う。<code class="docutils literal notranslate"><span class="pre">parse()</span></code> は <code class="docutils literal notranslate"><span class="pre">ElementTree</span></code> オブジェクトを返し、<code class="docutils literal notranslate"><span class="pre">getroot()</span></code> でルート要素を取得する。<code class="docutils literal notranslate"><span class="pre">fromstring()</span></code> はルート要素（<code class="docutils literal notranslate"><span class="pre">Element</span></code>）を直接返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xml_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;testsuite name=&quot;mytests&quot; tests=&quot;2&quot;&gt;</span>
-<span class="gp">... </span><span class="s2">    &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_add&quot; time=&quot;0.001&quot;/&gt;</span>
-<span class="gp">... </span><span class="s2">    &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_sub&quot; time=&quot;0.002&quot;&gt;</span>
-<span class="gp">... </span><span class="s2">        &lt;failure message=&quot;assertion failed&quot;&gt;AssertionError: 1 != 2&lt;/failure&gt;</span>
-<span class="gp">... </span><span class="s2">    &lt;/testcase&gt;</span>
-<span class="gp">... </span><span class="s2">&lt;/testsuite&gt;&quot;&quot;&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_str</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span>
-<span class="go">&lt;Element &#39;testsuite&#39; at ...&gt;</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;report.xml&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">xml_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;&lt;testsuite name=&quot;mytests&quot; tests=&quot;2&quot;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">... </span><span class="s2">    &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_add&quot; time=&quot;0.001&quot;/&gt;</span>
+<span class="linenos"> 4</span><span class="gp">... </span><span class="s2">    &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_sub&quot; time=&quot;0.002&quot;&gt;</span>
+<span class="linenos"> 5</span><span class="gp">... </span><span class="s2">        &lt;failure message=&quot;assertion failed&quot;&gt;AssertionError: 1 != 2&lt;/failure&gt;</span>
+<span class="linenos"> 6</span><span class="gp">... </span><span class="s2">    &lt;/testcase&gt;</span>
+<span class="linenos"> 7</span><span class="gp">... </span><span class="s2">&lt;/testsuite&gt;&quot;&quot;&quot;</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_str</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span>
+<span class="linenos">10</span><span class="go">&lt;Element &#39;testsuite&#39; at ...&gt;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;report.xml&quot;</span><span class="p">)</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>要素の参照<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p>各 <code class="docutils literal notranslate"><span class="pre">Element</span></code> は、タグ名を表す <code class="docutils literal notranslate"><span class="pre">.tag</span></code>、属性を辞書として保持する <code class="docutils literal notranslate"><span class="pre">.attrib</span></code>、開始タグ直後のテキストを表す <code class="docutils literal notranslate"><span class="pre">.text</span></code> を持つ。子要素はそのまま <code class="docutils literal notranslate"><span class="pre">for</span></code> 文で反復できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">tag</span>
-<span class="go">&#39;testsuite&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">attrib</span>
-<span class="go">{&#39;name&#39;: &#39;mytests&#39;, &#39;tests&#39;: &#39;2&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="go">testcase {&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_add&#39;, &#39;time&#39;: &#39;0.001&#39;}</span>
-<span class="go">testcase {&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_sub&#39;, &#39;time&#39;: &#39;0.002&#39;}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">tag</span>
+<span class="linenos">2</span><span class="go">&#39;testsuite&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">attrib</span>
+<span class="linenos">4</span><span class="go">{&#39;name&#39;: &#39;mytests&#39;, &#39;tests&#39;: &#39;2&#39;}</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+<span class="linenos">6</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">)</span>
+<span class="linenos">7</span><span class="gp">...</span>
+<span class="linenos">8</span><span class="go">testcase {&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_add&#39;, &#39;time&#39;: &#39;0.001&#39;}</span>
+<span class="linenos">9</span><span class="go">testcase {&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_sub&#39;, &#39;time&#39;: &#39;0.002&#39;}</span>
 </pre></div>
 </div>
 </section>
 <section id="find-findall">
 <h2>find / findall<a class="headerlink" href="#find-findall" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">find()</span></code> は最初に一致した子要素を、<code class="docutils literal notranslate"><span class="pre">findall()</span></code> は一致した子要素すべてをリストで返す。引数には単純な XPath 風のパスを指定でき、<code class="docutils literal notranslate"><span class="pre">.//tag</span></code> と書くとその階層より下を再帰的に検索する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">tc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;testcase&quot;</span><span class="p">)]</span>
-<span class="go">[&#39;test_add&#39;, &#39;test_sub&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;testcase&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">attrib</span>
-<span class="go">{&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_add&#39;, &#39;time&#39;: &#39;0.001&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//failure&quot;</span><span class="p">)]</span>
-<span class="go">[&#39;AssertionError: 1 != 2&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">tc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;testcase&quot;</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="go">[&#39;test_add&#39;, &#39;test_sub&#39;]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;testcase&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">attrib</span>
+<span class="linenos">4</span><span class="go">{&#39;classname&#39;: &#39;tests.test_math&#39;, &#39;name&#39;: &#39;test_add&#39;, &#39;time&#39;: &#39;0.001&#39;}</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//failure&quot;</span><span class="p">)]</span>
+<span class="linenos">6</span><span class="go">[&#39;AssertionError: 1 != 2&#39;]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>属性値を取得する際は <code class="docutils literal notranslate"><span class="pre">element.attrib[&quot;name&quot;]</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">element.get(&quot;name&quot;)</span></code> を使うと、属性が存在しない場合に <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">None</span></code> （またはデフォルト値）を返すため安全。</p>
+<p>属性値を取得する際は <code class="docutils literal notranslate"><span class="pre">element.attrib[&quot;name&quot;]</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">element.get(&quot;name&quot;)</span></code> を使うと、属性が存在しない場合に <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">None</span></code>（またはデフォルト値）を返すため安全。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">find()</span></code> は一致する要素がない場合に <code class="docutils literal notranslate"><span class="pre">None</span></code> を返す。結果の判定には <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">elem:</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">elem</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">None:</span></code> を使うこと。<code class="docutils literal notranslate"><span class="pre">Element</span></code> の真偽値は子要素の有無で決まるため、子要素を持たない要素は見つかっていても偽と判定されてしまう。この紛らわしさから、<code class="docutils literal notranslate"><span class="pre">Element</span></code> の真偽値判定は Python 3.12 で非推奨となり、<code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> が発生する。子要素の有無を調べたい場合は <code class="docutils literal notranslate"><span class="pre">len(elem)</span></code> を使う。</p>
 </div>
 </section>
 <section id="element-subelement">
 <h2>Element / SubElement による構築と出力<a class="headerlink" href="#element-subelement" title="Link to this heading"></a></h2>
 <p>新しく XML を組み立てる場合は <code class="docutils literal notranslate"><span class="pre">Element()</span></code> でルート要素を作り、<code class="docutils literal notranslate"><span class="pre">SubElement()</span></code> で子要素を追加していく。組み立てた要素は <code class="docutils literal notranslate"><span class="pre">tostring()</span></code> で文字列に、<code class="docutils literal notranslate"><span class="pre">ElementTree(root).write()</span></code> でファイルに出力できる。<code class="docutils literal notranslate"><span class="pre">ET.indent()</span></code> を使うと出力を整形できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;testsuite&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mytests&quot;</span><span class="p">,</span> <span class="n">tests</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tc1</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="s2">&quot;testcase&quot;</span><span class="p">,</span>
-<span class="gp">... </span>                     <span class="n">classname</span><span class="o">=</span><span class="s2">&quot;tests.test_math&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_add&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;0.001&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tc2</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="s2">&quot;testcase&quot;</span><span class="p">,</span>
-<span class="gp">... </span>                     <span class="n">classname</span><span class="o">=</span><span class="s2">&quot;tests.test_math&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_sub&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;0.002&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">failure</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tc2</span><span class="p">,</span> <span class="s2">&quot;failure&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;assertion failed&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">failure</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;AssertionError: 1 != 2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ET</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">new_root</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">))</span>
-<span class="go">&lt;testsuite name=&quot;mytests&quot; tests=&quot;2&quot;&gt;</span>
-<span class="go">  &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_add&quot; time=&quot;0.001&quot; /&gt;</span>
-<span class="go">  &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_sub&quot; time=&quot;0.002&quot;&gt;</span>
-<span class="go">    &lt;failure message=&quot;assertion failed&quot;&gt;AssertionError: 1 != 2&lt;/failure&gt;</span>
-<span class="go">  &lt;/testcase&gt;</span>
-<span class="go">&lt;/testsuite&gt;</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">new_root</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;report.xml&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;testsuite&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mytests&quot;</span><span class="p">,</span> <span class="n">tests</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tc1</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="s2">&quot;testcase&quot;</span><span class="p">,</span>
+<span class="linenos"> 3</span><span class="gp">... </span>                     <span class="n">classname</span><span class="o">=</span><span class="s2">&quot;tests.test_math&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_add&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;0.001&quot;</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tc2</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="s2">&quot;testcase&quot;</span><span class="p">,</span>
+<span class="linenos"> 5</span><span class="gp">... </span>                     <span class="n">classname</span><span class="o">=</span><span class="s2">&quot;tests.test_math&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_sub&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;0.002&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">failure</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">tc2</span><span class="p">,</span> <span class="s2">&quot;failure&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;assertion failed&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">failure</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;AssertionError: 1 != 2&quot;</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ET</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">new_root</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">new_root</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">))</span>
+<span class="linenos">10</span><span class="go">&lt;testsuite name=&quot;mytests&quot; tests=&quot;2&quot;&gt;</span>
+<span class="linenos">11</span><span class="go">  &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_add&quot; time=&quot;0.001&quot; /&gt;</span>
+<span class="linenos">12</span><span class="go">  &lt;testcase classname=&quot;tests.test_math&quot; name=&quot;test_sub&quot; time=&quot;0.002&quot;&gt;</span>
+<span class="linenos">13</span><span class="go">    &lt;failure message=&quot;assertion failed&quot;&gt;AssertionError: 1 != 2&lt;/failure&gt;</span>
+<span class="linenos">14</span><span class="go">  &lt;/testcase&gt;</span>
+<span class="linenos">15</span><span class="go">&lt;/testsuite&gt;</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">new_root</span><span class="p">)</span>
+<span class="linenos">18</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;report.xml&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -184,12 +188,7 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p><code class="docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> は、外部エンティティ参照の膨張攻撃
-（いわゆる「XML 爆弾」）などの悪意あるデータに対して安全に
-設計されていない。信頼できないソース（外部から受け取った
-ファイルやリクエストボディなど）を解析する場合は、サードパーティ
-の <a class="reference external" href="https://pypi.org/project/defusedxml/">defusedxml</a> パッケージ
-の利用を検討すること。</p>
+<p><code class="docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> が内部で使う XML パーサ Expat は、バージョンが古い（2.7.2 未満）場合、エンティティの多重展開を悪用する「billion laughs」攻撃（いわゆる「XML 爆弾」）などに対して脆弱である。Python がどのバージョンの Expat を使うかは環境によって異なる（<code class="docutils literal notranslate"><span class="pre">pyexpat.EXPAT_VERSION</span></code> で確認できる）。信頼できないソース（外部から受け取ったファイルやリクエストボディなど）を解析する場合は、<a class="reference external" href="https://docs.python.org/ja/3/library/xml.html#xml-vulnerabilities">XML の脆弱性</a> の説明を確認し、必要に応じてサードパーティの <a class="reference external" href="https://pypi.org/project/defusedxml/">defusedxml</a> パッケージの利用を検討すること。</p>
 </div>
 </section>
 </section>

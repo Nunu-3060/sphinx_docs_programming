@@ -101,47 +101,55 @@
              
   <section id="traceback">
 <h1>traceback<a class="headerlink" href="#traceback" title="Link to this heading"></a></h1>
-<p>例外発生時のトレースバック（スタックトレース）を、標準エラー出力へ表示したり、
-文字列として取得したりするためのモジュール。<code class="docutils literal notranslate"><span class="pre">except</span></code> ブロック内でエラー
-内容を詳しく記録・報告したい場合によく使われる。</p>
+<p>例外発生時のトレースバック（スタックトレース）を、標準エラー出力へ表示したり、文字列として取得したりするためのモジュール。<code class="docutils literal notranslate"><span class="pre">except</span></code> ブロック内でエラー内容を詳しく記録・報告したい場合によく使われる。</p>
 <section id="traceback-print-exc">
 <h2>traceback.print_exc<a class="headerlink" href="#traceback-print-exc" title="Link to this heading"></a></h2>
-<p>現在処理中の例外のトレースバックを、標準エラー出力にそのまま表示する。<code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックの中で、デバッグ用にエラー内容を画面に出力したいだけの場合に最も手軽な方法。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
-<span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+<p>現在処理中の例外のトレースバックを、標準エラー出力にそのまま表示する。<code class="docutils literal notranslate"><span class="pre">except</span></code> ブロックの中で、デバッグ用にエラー内容を画面に出力したいだけの場合に最も手軽な方法である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos"> 4</span><span class="gp">...</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="gp">...</span>
+<span class="linenos">10</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">11</span>  File <span class="nb">&quot;&lt;python-input-2&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">13</span><span class="w">    </span><span class="pm">~~~~~~^^^^^^^</span>
+<span class="linenos">14</span>  File <span class="nb">&quot;&lt;python-input-1&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
+<span class="linenos">15</span><span class="w">    </span><span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos">16</span><span class="w">           </span><span class="pm">~~^~~</span>
+<span class="linenos">17</span><span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">~~^~~</span></code> のような記号は、例外の原因となった式の位置を示すもので、Python 3.11 以降のトレースバックに表示される。また <code class="docutils literal notranslate"><span class="pre">&lt;python-input-N&gt;</span></code> は Python 3.13 以降の対話モード（REPL）で入力した各コードに付けられる名前で、スクリプトを実行した場合はここにファイルのパスが表示される。Python 3.13 以降では、端末に表示されるトレースバックはデフォルトで色付けされる（環境変数 <code class="docutils literal notranslate"><span class="pre">PYTHON_COLORS=0</span></code> や <code class="docutils literal notranslate"><span class="pre">NO_COLOR</span></code> で無効化できる）。</p>
 </div>
 </section>
 <section id="traceback-format-exc">
 <h2>traceback.format_exc<a class="headerlink" href="#traceback-format-exc" title="Link to this heading"></a></h2>
-<p>トレースバックを標準エラー出力に表示するのではなく、文字列として取得する。
-取得した文字列は、ログメッセージへの埋め込みやエラーレポートの生成、
-独自のエラーページの作成など、出力先を自分でコントロールしたい場面で使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">error_text</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">error_text</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
-<span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+<p>トレースバックを標準エラー出力に表示するのではなく、文字列として取得する。取得した文字列は、ログメッセージへの埋め込みやエラーレポートの生成、独自のエラーページの作成など、出力先を自分でコントロールしたい場面で使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos"> 4</span><span class="gp">...</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="n">error_text</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">error_text</span><span class="p">)</span>
+<span class="linenos">10</span><span class="gp">...</span>
+<span class="linenos">11</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">12</span>  File <span class="nb">&quot;&lt;python-input-2&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+<span class="linenos">13</span><span class="w">    </span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">14</span><span class="w">    </span><span class="pm">~~~~~~^^^^^^^</span>
+<span class="linenos">15</span>  File <span class="nb">&quot;&lt;python-input-1&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
+<span class="linenos">16</span><span class="w">    </span><span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos">17</span><span class="w">           </span><span class="pm">~~^~~</span>
+<span class="linenos">18</span><span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -152,27 +160,31 @@
 <section id="traceback-format-exception">
 <h2>traceback.format_exception<a class="headerlink" href="#traceback-format-exception" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">print_exc</span></code> や <code class="docutils literal notranslate"><span class="pre">format_exc</span></code> は「現在処理中の例外」を暗黙に対象とするが、<code class="docutils literal notranslate"><span class="pre">format_exception</span></code> はより汎用的で、例外オブジェクトを明示的に受け取り、整形済みの行から成るリストを返す。例外を変数として保持し、発生した場所から離れた場所（呼び出し元に伝播させた後など）で処理したい場合に向いている。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">lines</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">lines</span>
-<span class="gp">...</span>
-<span class="go">[&#39;Traceback (most recent call last):\n&#39;, &#39;  File &quot;&lt;stdin&gt;&quot;, line 2, in &lt;module&gt;\n&#39;, &#39;  File &quot;&lt;stdin&gt;&quot;, line 2, in divide\n&#39;, &#39;ZeroDivisionError: division by zero\n&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
-<span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
-<span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos"> 4</span><span class="gp">...</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="n">lines</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">... </span>    <span class="n">lines</span>
+<span class="linenos">10</span><span class="gp">...</span>
+<span class="linenos">11</span><span class="go">[&#39;Traceback (most recent call last):\n&#39;, &#39;  File &quot;&lt;python-input-2&gt;&quot;, line 2, in &lt;module&gt;\n    divide(10, 0)\n    ~~~~~~^^^^^^^\n&#39;, &#39;  File &quot;&lt;python-input-1&gt;&quot;, line 2, in divide\n    return a / b\n           ~~^~~\n&#39;, &#39;ZeroDivisionError: division by zero\n&#39;]</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+<span class="linenos">13</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">14</span>  File <span class="nb">&quot;&lt;python-input-2&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">16</span><span class="w">    </span><span class="pm">~~~~~~^^^^^^^</span>
+<span class="linenos">17</span>  File <span class="nb">&quot;&lt;python-input-1&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">divide</span>
+<span class="linenos">18</span><span class="w">    </span><span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos">19</span><span class="w">           </span><span class="pm">~~^~~</span>
+<span class="linenos">20</span><span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">format_exception(exc)</span></code> のように例外オブジェクト 1 つだけを渡す書き方が使える。<code class="docutils literal notranslate"><span class="pre">sys.exc_info()</span></code> の戻り値をそのまま扱いたい場合や、古いコードとの互換を保ちたい場合は、<code class="docutils literal notranslate"><span class="pre">traceback.format_exception(type(exc),</span> <span class="pre">exc,</span> <span class="pre">exc.__traceback__)</span></code> のように 3 引数で呼び出す形も広く使われている。</p>
+<p><code class="docutils literal notranslate"><span class="pre">format_exception(exc)</span></code> のように例外オブジェクト 1 つだけを渡す書き方は Python 3.10 で追加されたもので、本書が対象とする Python 3.11 以降ではいつでも使える。<code class="docutils literal notranslate"><span class="pre">sys.exc_info()</span></code> の戻り値をそのまま扱いたい場合や、古いコードとの互換を保ちたい場合は、<code class="docutils literal notranslate"><span class="pre">traceback.format_exception(type(exc),</span> <span class="pre">exc,</span> <span class="pre">exc.__traceback__)</span></code> のように 3 引数で呼び出す形も広く使われている。</p>
 </div>
 </section>
 </section>

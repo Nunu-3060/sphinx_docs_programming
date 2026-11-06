@@ -101,99 +101,108 @@
              
   <section id="id1">
 <h1>インデックスとスライス<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の要素へのアクセスは、Python の list と似た記法に加えて、numpy 独自の便利な記法が用意されています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の要素へのアクセスは、Python の list と似た記法に加えて、numpy 独自の便利な記法が用意されている。</p>
 <section id="id2">
 <h2>基本的なインデックスとスライス<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
-
-<span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="c1"># 10</span>
-
-<span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="c1"># 50  末尾の要素</span>
-
-<span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="c1"># array([20, 30])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos"> 6</span><span class="c1"># 10</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos"> 9</span><span class="c1"># 50  末尾の要素</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="linenos">12</span><span class="c1"># array([20, 30])</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>numpy 2.0 以降では、対話環境（REPL や Jupyter）で <code class="docutils literal notranslate"><span class="pre">a[0]</span></code> のように要素を 1 つ取り出して表示すると、<code class="docutils literal notranslate"><span class="pre">10</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">np.int64(10)</span></code> のように型名付きで表示される。<code class="docutils literal notranslate"><span class="pre">print(a[0])</span></code> で出力すると <code class="docutils literal notranslate"><span class="pre">10</span></code> と表示される。値そのものは同じであり、本ドキュメントのコード例のコメントでは値だけを示している。pandas の <code class="docutils literal notranslate"><span class="pre">s.sum()</span></code> などが返す値も同様である。</p>
 </div>
 </section>
 <section id="id3">
 <h2>多次元配列でのアクセス<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>多次元配列では、<code class="docutils literal notranslate"><span class="pre">a[行,</span> <span class="pre">列]</span></code> のようにカンマ区切りで各次元を指定します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-
-<span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="c1"># 3  0 行目・2 列目の要素</span>
-
-<span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-<span class="c1"># array([4, 5, 6])  1 行目をすべて取得</span>
-
-<span class="n">m</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="c1"># array([2, 5])  1 列目をすべて取得</span>
+<p>多次元配列では、<code class="docutils literal notranslate"><span class="pre">a[行,</span> <span class="pre">列]</span></code> のようにカンマ区切りで各次元を指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos"> 4</span><span class="c1"># 3  0 行目・2 列目の要素</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+<span class="linenos"> 7</span><span class="c1"># array([4, 5, 6])  1 行目をすべて取得</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">m</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="linenos">10</span><span class="c1"># array([2, 5])  1 列目をすべて取得</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>ブールインデックス<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>条件式から得られる真偽値の配列を使って、条件に合う要素だけを抽出できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
-
-<span class="n">a</span> <span class="o">&gt;</span> <span class="mi">25</span>
-<span class="c1"># array([False, False,  True,  True,  True])</span>
-
-<span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">]</span>
-<span class="c1"># array([30, 40, 50])</span>
+<p>条件式から得られる真偽値の配列を使って、条件に合う要素だけを抽出できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">25</span>
+<span class="linenos">4</span><span class="c1"># array([False, False,  True,  True,  True])</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">]</span>
+<span class="linenos">7</span><span class="c1"># array([30, 40, 50])</span>
 </pre></div>
 </div>
 </section>
 <section id="np-where">
 <h2>np.where による値の作り分け<a class="headerlink" href="#np-where" title="Link to this heading"></a></h2>
-<p>ブールインデックスは「条件に合う要素だけを抽出する」ものですが、「条件に応じて別の値に置き換えた、元と同じ形状の配列を作りたい」場合は <code class="docutils literal notranslate"><span class="pre">np.where</span></code> を使います。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">18</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">temps</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;hot&quot;</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span>
-<span class="c1"># array([&#39;normal&#39;, &#39;normal&#39;, &#39;hot&#39;, &#39;normal&#39;, &#39;hot&#39;], dtype=&#39;&lt;U6&#39;)</span>
+<p>ブールインデックスは「条件に合う要素だけを抽出する」ものであるが、「条件に応じて別の値に置き換えた、元と同じ形状の配列を作りたい」場合は <code class="docutils literal notranslate"><span class="pre">np.where</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">temps</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">18</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">35</span><span class="p">])</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">temps</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;hot&quot;</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="c1"># array([&#39;normal&#39;, &#39;normal&#39;, &#39;hot&#39;, &#39;normal&#39;, &#39;hot&#39;], dtype=&#39;&lt;U6&#39;)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">np.where(condition,</span> <span class="pre">x,</span> <span class="pre">y)</span></code> は、<code class="docutils literal notranslate"><span class="pre">condition</span></code> が <code class="docutils literal notranslate"><span class="pre">True</span></code> の要素には <code class="docutils literal notranslate"><span class="pre">x</span></code>、<code class="docutils literal notranslate"><span class="pre">False</span></code> の要素には <code class="docutils literal notranslate"><span class="pre">y</span></code> を割り当てた新しい配列を返します。<code class="docutils literal notranslate"><span class="pre">x</span></code> / <code class="docutils literal notranslate"><span class="pre">y</span></code> にはスカラー値だけでなく、<code class="docutils literal notranslate"><span class="pre">condition</span></code> と同じ形状の配列を渡すこともできます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.where(condition,</span> <span class="pre">x,</span> <span class="pre">y)</span></code> は、<code class="docutils literal notranslate"><span class="pre">condition</span></code> が <code class="docutils literal notranslate"><span class="pre">True</span></code> の要素には <code class="docutils literal notranslate"><span class="pre">x</span></code>、<code class="docutils literal notranslate"><span class="pre">False</span></code> の要素には <code class="docutils literal notranslate"><span class="pre">y</span></code> を割り当てた新しい配列を返す。<code class="docutils literal notranslate"><span class="pre">x</span></code> / <code class="docutils literal notranslate"><span class="pre">y</span></code> にはスカラー値だけでなく、<code class="docutils literal notranslate"><span class="pre">condition</span></code> と同じ形状の配列を渡すこともできる。</p>
 </section>
 <section id="id5">
 <h2>ファンシーインデックス<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>インデックスの配列（または <code class="docutils literal notranslate"><span class="pre">list</span></code>）を指定すると、任意の位置の要素をまとめて取得できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
-
-<span class="n">a</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="c1"># array([10, 30, 50])</span>
+<p>インデックスの配列（または <code class="docutils literal notranslate"><span class="pre">list</span></code>）を指定すると、任意の位置の要素をまとめて取得できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">a</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="linenos">4</span><span class="c1"># array([10, 30, 50])</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>スライスで得られた配列は元の配列と同じメモリを共有する「ビュー」ですが、ブールインデックスやファンシーインデックスで得られる配列は元とは別の新しい配列（コピー）になります。</p>
+<p>スライスで得られた配列は元の配列と同じメモリを共有する「ビュー」であるが、ブールインデックスやファンシーインデックスで得られる配列は元とは別の新しい配列（コピー）になる。</p>
 </div>
 </section>
 <section id="id6">
 <h2>ビューを変更すると元の配列も変わる<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<p>「ビュー」は元の配列とメモリを共有しているため、ビュー側の要素を書き換えると、元の配列の値も一緒に変わってしまいます。意図せず元のデータを壊してしまわないよう、注意が必要です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
-
-<span class="n">view</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
-<span class="c1"># [999  30  40]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># [ 10 999  30  40  50]  元の配列も変わってしまう</span>
+<p>「ビュー」は元の配列とメモリを共有しているため、ビュー側の要素を書き換えると、元の配列の値も一緒に変わってしまう。意図せず元のデータを壊してしまわないよう、注意が必要である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">view</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="linenos"> 4</span><span class="n">view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nb">print</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="c1"># [999  30  40]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">10</span><span class="c1"># [ 10 999  30  40  50]  元の配列も変わってしまう</span>
 </pre></div>
 </div>
-<p>元の配列を変えずに済ませたい場合は、<code class="docutils literal notranslate"><span class="pre">copy()</span></code> を使って明示的にコピーを作成してください。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">safe_view</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">safe_view</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># [10 20 30 40 50]  copy() を使えば元の配列は変わらない</span>
+<p>元の配列を変えずに済ませたい場合は、<code class="docutils literal notranslate"><span class="pre">copy()</span></code> を使って明示的にコピーを作成すること。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">safe_copy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="linenos"> 4</span><span class="n">safe_copy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nb">print</span><span class="p">(</span><span class="n">safe_copy</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="c1"># [999  30  40]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">10</span><span class="c1"># [10 20 30 40 50]  copy() を使えば元の配列は変わらない</span>
 </pre></div>
 </div>
 </section>

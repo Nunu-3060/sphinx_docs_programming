@@ -65,6 +65,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#threading-semaphore">threading.Semaphore</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#threading-condition">threading.Condition</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#threading-local">threading.local()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">フリースレッドビルド</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="multiprocessing.html">multiprocessing</a></li>
@@ -106,169 +107,160 @@
              
   <section id="threading">
 <h1>threading<a class="headerlink" href="#threading" title="Link to this heading"></a></h1>
-<p>複数のスレッドを用いて処理を並行実行するためのモジュール。ファイル I/O や
-ネットワーク通信のように「待ち時間」の多い処理を並行させるのに向いている。</p>
+<p>複数のスレッドを用いて処理を並行実行するためのモジュール。ファイル I/O やネットワーク通信のように「待ち時間」の多い処理を並行させるのに向いている。</p>
 <section id="threading-thread">
 <h2>threading.Thread<a class="headerlink" href="#threading-thread" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Thread</span></code> オブジェクトに実行したい関数を渡してスレッドを生成する。<code class="docutils literal notranslate"><span class="pre">start()</span></code> でスレッドの実行を開始し、<code class="docutils literal notranslate"><span class="pre">join()</span></code> で終了を待ち合わせる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">worker</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 開始&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 終了&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;thread-1&quot;</span><span class="p">,))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># スレッドの終了を待つ</span>
-<span class="go">thread-1: 開始</span>
-<span class="go">thread-1: 終了</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">worker</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 開始&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: 終了&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="gp">...</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;thread-1&quot;</span><span class="p">,))</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># スレッドの終了を待つ</span>
+<span class="linenos">12</span><span class="go">thread-1: 開始</span>
+<span class="linenos">13</span><span class="go">thread-1: 終了</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>複数スレッドの並行実行<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>複数のスレッドを起動し、それぞれを <code class="docutils literal notranslate"><span class="pre">join()</span></code> することで、まとめて完了を
-待つことができる。以下は 3 本のスレッドを並行に走らせる例。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;thread-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,))</span>
-<span class="gp">... </span>           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-<span class="gp">...</span>
+<p>複数のスレッドを起動し、それぞれを <code class="docutils literal notranslate"><span class="pre">join()</span></code> することで、まとめて完了を待つことができる。以下は 3 本のスレッドを並行に走らせる例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;thread-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,))</span>
+<span class="linenos">2</span><span class="gp">... </span>           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">7</span><span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">8</span><span class="gp">...</span>
 </pre></div>
 </div>
 </section>
 <section id="threading-lock">
 <h2>threading.Lock<a class="headerlink" href="#threading-lock" title="Link to this heading"></a></h2>
-<p>複数のスレッドが同じ変数を同時に更新すると、更新内容が失われる
-「競合状態（race condition）」が発生することがある。<code class="docutils literal notranslate"><span class="pre">Lock</span></code> を使うと、
-一度に 1 つのスレッドしかクリティカルセクションに入れないようにできる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">increment</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">global</span> <span class="n">counter</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>  <span class="c1"># ロックを取得してから更新</span>
-<span class="gp">... </span>            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">increment</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span>
-<span class="go">200000</span>
+<p>複数のスレッドが同じ変数を同時に更新すると、更新内容が失われる「競合状態（race condition）」が発生することがある。<code class="docutils literal notranslate"><span class="pre">Lock</span></code> を使うと、一度に 1 つのスレッドしかクリティカルセクションに入れないようにできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">increment</span><span class="p">():</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="k">global</span> <span class="n">counter</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+<span class="linenos"> 7</span><span class="gp">... </span>        <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>  <span class="c1"># ロックを取得してから更新</span>
+<span class="linenos"> 8</span><span class="gp">... </span>            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos"> 9</span><span class="gp">...</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">increment</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">12</span><span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">13</span><span class="gp">...</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+<span class="linenos">15</span><span class="gp">... </span>    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">16</span><span class="gp">...</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span>
+<span class="linenos">18</span><span class="go">200000</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">lock:</span></code> を外すと、2 つのスレッドが同時に <code class="docutils literal notranslate"><span class="pre">counter</span></code> を読み書きして
-しまい、最終的な値が 200000 より小さくなることがある。</p>
+<p><code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">lock:</span></code> を外すと、2 つのスレッドが同時に <code class="docutils literal notranslate"><span class="pre">counter</span></code> を読み書きしてしまい、最終的な値が 200000 より小さくなることがある。</p>
 </section>
 <section id="threading-event">
 <h2>threading.Event<a class="headerlink" href="#threading-event" title="Link to this heading"></a></h2>
-<p>スレッド間で「あるイベントが発生したかどうか」を伝えるためのシンプルな
-フラグ。<code class="docutils literal notranslate"><span class="pre">wait()</span></code> で待機し、<code class="docutils literal notranslate"><span class="pre">set()</span></code> でフラグを立てる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">waiter</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;イベント待ち...&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># set() が呼ばれるまでブロック</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;イベントを受信&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiter</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>  <span class="c1"># 待っているスレッドを起こす</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<p>スレッド間で「あるイベントが発生したかどうか」を伝えるためのシンプルなフラグ。<code class="docutils literal notranslate"><span class="pre">wait()</span></code> で待機し、<code class="docutils literal notranslate"><span class="pre">set()</span></code> でフラグを立てる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">waiter</span><span class="p">():</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;イベント待ち...&quot;</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="n">event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># set() が呼ばれるまでブロック</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;イベントを受信&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">...</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiter</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>  <span class="c1"># 待っているスレッドを起こす</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="threading-rlock">
 <h2>threading.RLock<a class="headerlink" href="#threading-rlock" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">RLock``（再入可能ロック）は、同じスレッドが既に獲得しているロックを</span>
-<span class="pre">再度獲得してもブロックしない。再帰呼び出しの中で同じロックを取り直す</span>
-<span class="pre">必要がある場合、通常の</span> <span class="pre">``Lock</span></code> の代わりに使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rlock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">outer</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">with</span> <span class="n">rlock</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">inner</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">with</span> <span class="n">rlock</span><span class="p">:</span>  <span class="c1"># 同じスレッドなのでブロックしない</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;inner 実行中&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">outer</span><span class="p">()</span>
-<span class="go">inner 実行中</span>
+<p><code class="docutils literal notranslate"><span class="pre">RLock</span></code>（再入可能ロック）は、同じスレッドが既に獲得しているロックを再度獲得してもブロックしない。再帰呼び出しの中で同じロックを取り直す必要がある場合、通常の <code class="docutils literal notranslate"><span class="pre">Lock</span></code> の代わりに使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">rlock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">outer</span><span class="p">():</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">with</span> <span class="n">rlock</span><span class="p">:</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="n">inner</span><span class="p">()</span>
+<span class="linenos"> 6</span><span class="gp">...</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">inner</span><span class="p">():</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="k">with</span> <span class="n">rlock</span><span class="p">:</span>  <span class="c1"># 同じスレッドなのでブロックしない</span>
+<span class="linenos"> 9</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;inner 実行中&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="gp">...</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">outer</span><span class="p">()</span>
+<span class="linenos">12</span><span class="go">inner 実行中</span>
 </pre></div>
 </div>
 </section>
 <section id="threading-semaphore">
 <h2>threading.Semaphore<a class="headerlink" href="#threading-semaphore" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> は、リソースへ同時にアクセスできるスレッド数の上限を
-指定できる、ロックを一般化した仕組み。同時接続数の制限など、
-アクセス数に上限を設けたい場面で使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sem</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 同時に2スレッドまで</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">access_resource</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">with</span> <span class="n">sem</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: リソース使用中&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
+<p><code class="docutils literal notranslate"><span class="pre">Semaphore</span></code> は、リソースへ同時にアクセスできるスレッド数の上限を指定できる、ロックを一般化した仕組み。同時接続数の制限など、アクセス数に上限を設けたい場面で使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">sem</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 同時に 2 スレッドまで</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">access_resource</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="k">with</span> <span class="n">sem</span><span class="p">:</span>
+<span class="linenos">5</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: リソース使用中&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">...</span>
 </pre></div>
 </div>
 </section>
 <section id="threading-condition">
 <h2>threading.Condition<a class="headerlink" href="#threading-condition" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Condition</span></code> は <code class="docutils literal notranslate"><span class="pre">Lock</span></code> に加えて、あるスレッドが特定の条件が満たされる
-まで待機（<code class="docutils literal notranslate"><span class="pre">wait()</span></code>）し、別のスレッドが条件成立を通知（<code class="docutils literal notranslate"><span class="pre">notify()</span></code>）
-できる仕組みを提供する。プロデューサー・コンシューマーパターンの
-実装などに使われる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">condition</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">consumer</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># 通知があるまで待機</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;受信: </span><span class="si">{</span><span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">producer</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>  <span class="c1"># 待機中のスレッドを起こす</span>
-<span class="gp">...</span>
+<p><code class="docutils literal notranslate"><span class="pre">Condition</span></code> は <code class="docutils literal notranslate"><span class="pre">Lock</span></code> に加えて、あるスレッドが特定の条件が満たされるまで待機（<code class="docutils literal notranslate"><span class="pre">wait()</span></code>）し、別のスレッドが条件成立を通知（<code class="docutils literal notranslate"><span class="pre">notify()</span></code>）できる仕組みを提供する。プロデューサー・コンシューマーパターンの実装などに使われる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">condition</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">consumer</span><span class="p">():</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>        <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="gp">... </span>            <span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c1"># 通知があるまで待機</span>
+<span class="linenos"> 8</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;受信: </span><span class="si">{</span><span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gp">...</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">producer</span><span class="p">():</span>
+<span class="linenos">11</span><span class="gp">... </span>    <span class="k">with</span> <span class="n">condition</span><span class="p">:</span>
+<span class="linenos">12</span><span class="gp">... </span>        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;item&quot;</span><span class="p">)</span>
+<span class="linenos">13</span><span class="gp">... </span>        <span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>  <span class="c1"># 待機中のスレッドを起こす</span>
+<span class="linenos">14</span><span class="gp">...</span>
 </pre></div>
 </div>
 </section>
 <section id="threading-local">
 <h2>threading.local()<a class="headerlink" href="#threading-local" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">threading.local()</span></code> は、スレッドごとに独立した値を持てるオブジェクトを
-作成する。同じ属性名でアクセスしても、どのスレッドからアクセスしたか
-によって異なる値が見える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">local</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">show_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">show_value</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t2</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">show_value</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">();</span> <span class="n">t1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-<span class="go">A</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t2</span><span class="o">.</span><span class="n">start</span><span class="p">();</span> <span class="n">t2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-<span class="go">B</span>
+<p><code class="docutils literal notranslate"><span class="pre">threading.local()</span></code> は、スレッドごとに独立した値を持てるオブジェクトを作成する。同じ属性名でアクセスしても、どのスレッドからアクセスしたかによって異なる値が見える。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">local</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">show_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gp">...</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">show_value</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,))</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t2</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">show_value</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,))</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">();</span> <span class="n">t1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">10</span><span class="go">A</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t2</span><span class="o">.</span><span class="n">start</span><span class="p">();</span> <span class="n">t2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="linenos">12</span><span class="go">B</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>CPython には GIL（Global Interpreter Lock）と呼ばれる仕組みがあり、一度に 1 つのスレッドしか Python バイトコードを実行できない。そのため <code class="docutils literal notranslate"><span class="pre">threading</span></code> は CPU に負荷のかかる計算処理を並列化して高速化する目的には向かない。CPU バウンドな処理を並列化したい場合は <a class="reference internal" href="multiprocessing.html"><span class="doc">multiprocessing</span></a> を、I/O 待ちの多い処理を効率よく扱いたい場合は、そのまま <code class="docutils literal notranslate"><span class="pre">threading</span></code> を使うか <a class="reference internal" href="asyncio.html"><span class="doc">asyncio</span></a> を検討するとよい。（なお Python 3.13 以降では PEP 703 に基づく公式のフリースレッドビルドが導入されており、そのビルドでは GIL が無効化されるためこの前提が厳密には当てはまらない。ただし本稿執筆時点でもまだ実験的な位置づけであり、デフォルトビルドを使う限りは上記の指針が実用上変わることはない。）</p>
+<p>CPython には GIL（Global Interpreter Lock）と呼ばれる仕組みがあり、一度に 1 つのスレッドしか Python バイトコードを実行できない。そのため <code class="docutils literal notranslate"><span class="pre">threading</span></code> は CPU に負荷のかかる計算処理を並列化して高速化する目的には向かない。CPU バウンドな処理を並列化したい場合は <a class="reference internal" href="multiprocessing.html"><span class="doc">multiprocessing</span></a> を、I/O 待ちの多い処理を効率よく扱いたい場合は、そのまま <code class="docutils literal notranslate"><span class="pre">threading</span></code> を使うか <a class="reference internal" href="asyncio.html"><span class="doc">asyncio</span></a> を検討するとよい。</p>
 </div>
+</section>
+<section id="id2">
+<h2>フリースレッドビルド<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Python 3.13 では、GIL を無効化した「フリースレッドビルド」（PEP 703）が実験的に導入され、3.14 で正式にサポートされる位置づけになった（PEP 779）。このビルドでは複数のスレッドが Python コードを真に並列に実行できるため、<code class="docutils literal notranslate"><span class="pre">threading</span></code> や <code class="docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code> で CPU バウンドな処理も高速化できる。</p>
+<p>ただし、フリースレッドビルドは通常のビルドとは別に提供されるもので（実行ファイル名は <code class="docutils literal notranslate"><span class="pre">python3.14t</span></code> など）、デフォルトのビルドでは従来どおり GIL が有効である。また、C 拡張モジュールがフリースレッドに対応していない場合は、import 時に GIL が自動的に再有効化されることがある。GIL が有効かどうかは <code class="docutils literal notranslate"><span class="pre">sys._is_gil_enabled()</span></code> で確認できる（<a class="reference internal" href="../system/sys.html"><span class="doc">sys</span></a> を参照）。</p>
+<p>GIL がなくなっても、複数のスレッドから同じデータを更新する場合に <code class="docutils literal notranslate"><span class="pre">Lock</span></code> などによる排他制御が必要であることに変わりはない。</p>
 </section>
 </section>
 

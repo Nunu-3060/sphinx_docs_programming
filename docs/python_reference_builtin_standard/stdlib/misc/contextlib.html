@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="uuid.html">uuid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="copy.html">copy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="secrets.html">secrets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ast.html">ast</a></li>
 </ul>
 </li>
 </ul>
@@ -107,90 +108,85 @@
              
   <section id="contextlib">
 <h1>contextlib<a class="headerlink" href="#contextlib" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">with</span></code> 文で使うコンテキストマネージャを作成・利用するためのユーティリティを
-提供するモジュール。<code class="docutils literal notranslate"><span class="pre">__enter__</span></code> / <code class="docutils literal notranslate"><span class="pre">__exit__</span></code> を持つクラスを自作しなくても、
-ジェネリック関数から簡単にコンテキストマネージャを定義できる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">with</span></code> 文で使うコンテキストマネージャを作成・利用するためのユーティリティを提供するモジュール。<code class="docutils literal notranslate"><span class="pre">__enter__</span></code> / <code class="docutils literal notranslate"><span class="pre">__exit__</span></code> を持つクラスを自作しなくても、ジェネレータ関数から簡単にコンテキストマネージャを定義できる。</p>
 <section id="contextmanager">
 <h2>&#64;contextmanager<a class="headerlink" href="#contextmanager" title="Link to this heading"></a></h2>
-<p>ジェネレータ関数に <code class="docutils literal notranslate"><span class="pre">&#64;contextmanager</span></code> を付けることで、<code class="docutils literal notranslate"><span class="pre">yield</span></code> を境に
-「前処理」と「後処理」を書くだけでコンテキストマネージャを定義できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
-
-<span class="nd">@contextmanager</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: start&quot;</span><span class="p">)</span>
-    <span class="k">yield</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">timer</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">):</span>
-<span class="o">...</span>     <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">))</span>
-<span class="n">task</span><span class="p">:</span> <span class="n">start</span>
-<span class="n">task</span><span class="p">:</span> <span class="mf">0.012</span><span class="n">s</span>
+<p>ジェネレータ関数に <code class="docutils literal notranslate"><span class="pre">&#64;contextmanager</span></code> を付けることで、<code class="docutils literal notranslate"><span class="pre">yield</span></code> を境に「前処理」と「後処理」を書くだけでコンテキストマネージャを定義できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos"> 2</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nd">@contextmanager</span>
+<span class="linenos"> 5</span><span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+<span class="linenos"> 6</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos"> 7</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: start&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span>    <span class="k">yield</span>
+<span class="linenos"> 9</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">timer</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">):</span>
+<span class="linenos">12</span><span class="o">...</span>     <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">))</span>
+<span class="linenos">13</span><span class="o">...</span>
+<span class="linenos">14</span><span class="n">task</span><span class="p">:</span> <span class="n">start</span>
+<span class="linenos">15</span><span class="n">task</span><span class="p">:</span> <span class="mf">0.012</span><span class="n">s</span>
 </pre></div>
 </div>
-<p>例外が発生した場合でも後処理を確実に実行したいときは、<code class="docutils literal notranslate"><span class="pre">yield</span></code> を <code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">finally</span></code> で囲む。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@contextmanager</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">open_resource</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;open </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">name</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;close </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">open_resource</span><span class="p">(</span><span class="s2">&quot;file.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
-<span class="o">...</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;oops&quot;</span><span class="p">)</span>
-<span class="nb">open</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">close</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-    <span class="o">...</span>
-<span class="ne">ValueError</span><span class="p">:</span> <span class="n">oops</span>
+<p>例外が発生した場合でも後処理を確実に実行したいときは、<code class="docutils literal notranslate"><span class="pre">yield</span></code> を <code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">finally</span></code> で囲む。<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロック内で発生した例外は <code class="docutils literal notranslate"><span class="pre">yield</span></code> の位置で送出されるため、<code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">finally</span></code> がないと <code class="docutils literal notranslate"><span class="pre">yield</span></code> より後の後処理は実行されない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@contextmanager</span>
+<span class="linenos"> 2</span><span class="k">def</span><span class="w"> </span><span class="nf">open_resource</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="linenos"> 3</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;open </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 4</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 5</span>        <span class="k">yield</span> <span class="n">name</span>
+<span class="linenos"> 6</span>    <span class="k">finally</span><span class="p">:</span>
+<span class="linenos"> 7</span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;close </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">open_resource</span><span class="p">(</span><span class="s2">&quot;file.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+<span class="linenos">10</span><span class="o">...</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;oops&quot;</span><span class="p">)</span>
+<span class="linenos">11</span><span class="o">...</span>
+<span class="linenos">12</span><span class="nb">open</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="linenos">13</span><span class="n">close</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="linenos">14</span><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="linenos">15</span>    <span class="o">...</span>
+<span class="linenos">16</span><span class="ne">ValueError</span><span class="p">:</span> <span class="n">oops</span>
 </pre></div>
 </div>
 </section>
 <section id="suppress">
 <h2>suppress()<a class="headerlink" href="#suppress" title="Link to this heading"></a></h2>
 <p>指定した例外が発生してもプログラムを止めずに無視したい場合に使う。<code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">except</span></code> / <code class="docutils literal notranslate"><span class="pre">pass</span></code> を書くよりも簡潔に意図を表現できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">):</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;not_exist.txt&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;続行される&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="linenos">2</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">):</span>
+<span class="linenos">5</span>    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;not_exist.txt&quot;</span><span class="p">)</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;続行される&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="closing">
 <h2>closing()<a class="headerlink" href="#closing" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">close()</span></code> メソッドは持つが、コンテキストマネージャとしては実装されていない
-オブジェクトを <code class="docutils literal notranslate"><span class="pre">with</span></code> 文で扱えるようにする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">closing</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
-
-<span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;https://example.com&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
-    <span class="n">html</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">close()</span></code> メソッドは持つが、コンテキストマネージャとしては実装されていないオブジェクトを <code class="docutils literal notranslate"><span class="pre">with</span></code> 文で扱えるようにする。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">closing</span>
+<span class="linenos">2</span><span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;https://example.com&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
+<span class="linenos">5</span>    <span class="n">html</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>ファイルオブジェクトなど、多くの標準ライブラリのオブジェクトは
-すでにコンテキストマネージャとして実装されているため <code class="docutils literal notranslate"><span class="pre">closing()</span></code> は
-不要である。<code class="docutils literal notranslate"><span class="pre">close()</span></code> はあるが <code class="docutils literal notranslate"><span class="pre">__enter__</span></code> / <code class="docutils literal notranslate"><span class="pre">__exit__</span></code> を
-持たない古いスタイルの API に対して使うことが多い。</p>
+<p>ファイルオブジェクトなど、多くの標準ライブラリのオブジェクトはすでにコンテキストマネージャとして実装されているため <code class="docutils literal notranslate"><span class="pre">closing()</span></code> は不要である。<code class="docutils literal notranslate"><span class="pre">close()</span></code> はあるが <code class="docutils literal notranslate"><span class="pre">__enter__</span></code> / <code class="docutils literal notranslate"><span class="pre">__exit__</span></code> を持たない古いスタイルの API に対して使うことが多い。</p>
 </div>
 </section>
 <section id="exitstack">
 <h2>ExitStack()<a class="headerlink" href="#exitstack" title="Link to this heading"></a></h2>
-<p>使用するコンテキストマネージャの数が実行時まで決まらない場合や、複数の後処理を一つの <code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックにまとめたい場合には <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> が便利。<code class="docutils literal notranslate"><span class="pre">enter_context()</span></code> で登録したコンテキストマネージャは、登録した順とは逆順に、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜ける際にまとめて後処理される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExitStack</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">process_all</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
-        <span class="c1"># files はブロックを抜ける際に、開いた順とは逆順にすべて close される</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+<p>使用するコンテキストマネージャの数が実行時まで決まらない場合や、複数の後処理を 1 つの <code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックにまとめたい場合には <code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> が便利。<code class="docutils literal notranslate"><span class="pre">enter_context()</span></code> で登録したコンテキストマネージャは、登録した順とは逆順に、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜ける際にまとめて後処理される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExitStack</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">def</span><span class="w"> </span><span class="nf">process_all</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="k">with</span> <span class="n">ExitStack</span><span class="p">()</span> <span class="k">as</span> <span class="n">stack</span><span class="p">:</span>
+<span class="linenos">5</span>        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">stack</span><span class="o">.</span><span class="n">enter_context</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="linenos">6</span>        <span class="c1"># files はブロックを抜ける際に、開いた順とは逆順にすべて close される</span>
+<span class="linenos">7</span>        <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -200,25 +196,40 @@
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>標準出力・標準エラー出力を一時的に別の場所へ差し替えたい場合は <code class="docutils literal notranslate"><span class="pre">redirect_stdout</span></code>/<code class="docutils literal notranslate"><span class="pre">redirect_stderr</span></code> が使える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect_stdout</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
-
-<span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
-<span class="k">with</span> <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">buf</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;captured&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect_stdout</span>
+<span class="linenos">2</span><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="linenos">5</span><span class="k">with</span> <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">buf</span><span class="p">):</span>
+<span class="linenos">6</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;captured&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>条件によってコンテキストマネージャを使うかどうかを切り替えたい場合、何もしないコンテキストマネージャとして <code class="docutils literal notranslate"><span class="pre">nullcontext</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">if</span></code> 文で <code class="docutils literal notranslate"><span class="pre">with</span></code> の対象を分岐させるコードを書かずに済む。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">nullcontext</span>
-
-<span class="n">cm</span> <span class="o">=</span> <span class="n">lock</span> <span class="k">if</span> <span class="n">use_lock</span> <span class="k">else</span> <span class="n">nullcontext</span><span class="p">()</span>
-<span class="k">with</span> <span class="n">cm</span><span class="p">:</span>
-    <span class="o">...</span>  <span class="c1"># use_lock が False でも同じコードで書ける</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">nullcontext</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">cm</span> <span class="o">=</span> <span class="n">lock</span> <span class="k">if</span> <span class="n">use_lock</span> <span class="k">else</span> <span class="n">nullcontext</span><span class="p">()</span>
+<span class="linenos">4</span><span class="k">with</span> <span class="n">cm</span><span class="p">:</span>
+<span class="linenos">5</span>    <span class="o">...</span>  <span class="c1"># use_lock が False でも同じコードで書ける</span>
 </pre></div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Python 3.11 で追加された <code class="docutils literal notranslate"><span class="pre">chdir()</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックの中だけカレントディレクトリを一時的に変更し、ブロックを抜けると元のディレクトリへ戻せる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">chdir</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">with</span> <span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="o">...</span>  <span class="c1"># この中ではカレントディレクトリが /tmp になる</span>
+<span class="linenos">5</span><span class="c1"># ブロックを抜けると元のディレクトリに戻る</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> で使う非同期コンテキストマネージャ向けには、<code class="docutils literal notranslate"><span class="pre">&#64;contextmanager</span></code> に対応する <code class="docutils literal notranslate"><span class="pre">&#64;asynccontextmanager</span></code> や、<code class="docutils literal notranslate"><span class="pre">ExitStack</span></code> に対応する <code class="docutils literal notranslate"><span class="pre">AsyncExitStack</span></code> が用意されている。</p>
 </div>
 </section>
 </section>

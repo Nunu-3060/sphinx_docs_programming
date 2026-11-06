@@ -63,6 +63,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#asyncio-run">asyncio.run</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#asyncio-create-task-asyncio-gather">asyncio.create_task / asyncio.gather</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#asyncio-taskgroup">asyncio.TaskGroup による構造化された並行実行</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asyncio-timeout">asyncio.timeout によるタイムアウト</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#asyncio-queue">asyncio.Queue によるタスク間の連携</a></li>
 </ul>
 </li>
@@ -103,103 +104,126 @@
              
   <section id="asyncio">
 <h1>asyncio<a class="headerlink" href="#asyncio" title="Link to this heading"></a></h1>
-<p>単一スレッド・単一プロセスの中で、コルーチンを用いて I/O バウンドな
-処理を並行実行するためのモジュール。イベントループが、待ち時間の発生した
-コルーチンから別のコルーチンへと実行を切り替えることで、効率よく
-多数の処理を同時に進めることができる。</p>
+<p>単一スレッド・単一プロセスの中で、コルーチンを用いて I/O バウンドな処理を並行実行するためのモジュール。イベントループが、待ち時間の発生したコルーチンから別のコルーチンへと実行を切り替えることで、効率よく多数の処理を同時に進めることができる。</p>
 <section id="async-def-await">
 <h2>async def / await<a class="headerlink" href="#async-def-await" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> で定義した関数はコルーチン関数となり、呼び出しても即座には
-実行されず、コルーチンオブジェクトを返す。<code class="docutils literal notranslate"><span class="pre">await</span></code> を使うと、その
-コルーチンの完了を待ちながら、他の処理に制御を譲ることができる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>  <span class="c1"># I/O 待ちを模したノンブロッキングな待機</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">さん&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
+<p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> で定義した関数はコルーチン関数となり、呼び出しても即座には実行されず、コルーチンオブジェクトを返す。<code class="docutils literal notranslate"><span class="pre">await</span></code> を使うと、そのコルーチンの完了を待ちながら、他の処理に制御を譲ることができる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>  <span class="c1"># I/O 待ちを模したノンブロッキングな待機</span>
+<span class="linenos">5</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">さん&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">...</span>
 </pre></div>
 </div>
 </section>
 <section id="asyncio-run">
 <h2>asyncio.run<a class="headerlink" href="#asyncio-run" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">asyncio.run()</span></code> はイベントループを新規作成し、渡したコルーチンを
-実行してループを閉じる。トップレベルの非同期プログラムを起動する際の
-基本的な入り口となる関数。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="go">こんにちは、Aliceさん</span>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio.run()</span></code> はイベントループを新規作成し、渡したコルーチンを実行してループを閉じる。トップレベルの非同期プログラムを起動する際の基本的な入り口となる関数である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">こんにちは、Aliceさん</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>古い資料では <code class="docutils literal notranslate"><span class="pre">asyncio.get_event_loop()</span></code> でイベントループを取得し、<code class="docutils literal notranslate"><span class="pre">loop.run_until_complete()</span></code> で実行するコードが見られるが、新しいコードでは <code class="docutils literal notranslate"><span class="pre">asyncio.run()</span></code> を使う。実行中のイベントループが存在しない状態で <code class="docutils literal notranslate"><span class="pre">get_event_loop()</span></code> を呼ぶと、3.14 以降は <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> になる。また、イベントループポリシー（<code class="docutils literal notranslate"><span class="pre">asyncio.set_event_loop_policy()</span></code> など）の仕組みは 3.14 で非推奨となった。同じイベントループで複数のコルーチンを順に実行したい場合は、3.11 で追加された <code class="docutils literal notranslate"><span class="pre">asyncio.Runner</span></code> を使う。</p>
 </div>
 </section>
 <section id="asyncio-create-task-asyncio-gather">
 <h2>asyncio.create_task / asyncio.gather<a class="headerlink" href="#asyncio-create-task-asyncio-gather" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">create_task()</span></code> はコルーチンをイベントループ上のタスクとしてスケジュールし、即座にバックグラウンドで実行を開始させる。複数のコルーチンをまとめて並行実行し、すべての結果を待ちたい場合は <code class="docutils literal notranslate"><span class="pre">asyncio.gather()</span></code> を使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="c1"># 3 つのタスクを同時にスケジュール</span>
-<span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
-<span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
-<span class="go">こんにちは、Aliceさん</span>
-<span class="go">こんにちは、Carolさん</span>
-<span class="go">こんにちは、Bobさん</span>
+<p><code class="docutils literal notranslate"><span class="pre">create_task()</span></code> はコルーチンをイベントループ上のタスクとしてスケジュールし、呼び出し元が <code class="docutils literal notranslate"><span class="pre">await</span></code> などで制御を手放した時点で、バックグラウンドでの実行が始まる。戻り値の <code class="docutils literal notranslate"><span class="pre">Task</span></code> オブジェクトは <code class="docutils literal notranslate"><span class="pre">await</span></code> して結果を受け取れる。なお、イベントループはタスクへの弱い参照しか保持しないため、完了前にタスクがガベージコレクションされないよう、戻り値は変数などに保持しておく必要がある。複数のコルーチンをまとめて並行実行し、すべての結果を待ちたい場合は <code class="docutils literal notranslate"><span class="pre">asyncio.gather()</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="c1"># 3 つのコルーチンをタスクとして同時にスケジュール</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+<span class="linenos"> 4</span><span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="linenos"> 6</span><span class="gp">... </span>        <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="p">)</span>
+<span class="linenos"> 8</span><span class="gp">...</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos">10</span><span class="go">こんにちは、Aliceさん</span>
+<span class="linenos">11</span><span class="go">こんにちは、Carolさん</span>
+<span class="linenos">12</span><span class="go">こんにちは、Bobさん</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">say_hello</span></code> を順番に <code class="docutils literal notranslate"><span class="pre">await</span></code> で呼び出した場合は合計 4 秒かかるが、<code class="docutils literal notranslate"><span class="pre">gather()</span></code> でまとめて並行実行すると、最も遅い待機時間である 2 秒程度ですべて完了する。</p>
 </section>
 <section id="asyncio-taskgroup">
 <h2>asyncio.TaskGroup による構造化された並行実行<a class="headerlink" href="#asyncio-taskgroup" title="Link to this heading"></a></h2>
-<p>Python 3.11 以降では、<code class="docutils literal notranslate"><span class="pre">gather()</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">asyncio.TaskGroup</span></code> を
-使うことが推奨されている。<code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> ブロックを抜ける際に、ブロック
-内で <code class="docutils literal notranslate"><span class="pre">create_task()</span></code> した全タスクの完了を待つ。いずれかのタスクが
-例外を発生させた場合、他の実行中のタスクは自動的にキャンセルされ、
-例外はブロックを抜ける際にまとめて送出される。<code class="docutils literal notranslate"><span class="pre">gather()</span></code> よりも
-キャンセルと例外伝播の扱いが安全で分かりやすい。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
-<span class="go">こんにちは、Aliceさん</span>
-<span class="go">こんにちは、Carolさん</span>
-<span class="go">こんにちは、Bobさん</span>
+<p>Python 3.11 で追加された <code class="docutils literal notranslate"><span class="pre">asyncio.TaskGroup</span></code> は、<code class="docutils literal notranslate"><span class="pre">gather()</span></code> に代わるより安全な選択肢である。<code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> ブロックを抜ける際に、ブロック内で <code class="docutils literal notranslate"><span class="pre">tg.create_task()</span></code> した全タスクの完了を待つ。いずれかのタスクが例外を発生させた場合、他の実行中のタスクは自動的にキャンセルされ、発生した例外は <code class="docutils literal notranslate"><span class="pre">ExceptionGroup</span></code> にまとめて送出される。<code class="docutils literal notranslate"><span class="pre">gather()</span></code> よりもキャンセルと例外伝播の扱いが安全で分かりやすい。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos"> 4</span><span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos"> 6</span><span class="gp">...</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos"> 8</span><span class="go">こんにちは、Aliceさん</span>
+<span class="linenos"> 9</span><span class="go">こんにちは、Carolさん</span>
+<span class="linenos">10</span><span class="go">こんにちは、Bobさん</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ExceptionGroup</span></code> は <code class="docutils literal notranslate"><span class="pre">except*</span></code> 構文（3.11 以降）で、含まれる例外の型ごとに処理できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fail</span><span class="p">():</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;boom&quot;</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="gp">...</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="gp">... </span>            <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos"> 8</span><span class="gp">... </span>            <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">fail</span><span class="p">())</span>
+<span class="linenos"> 9</span><span class="gp">... </span>    <span class="k">except</span><span class="o">*</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">eg</span><span class="p">:</span>
+<span class="linenos">10</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;失敗: </span><span class="si">{</span><span class="n">eg</span><span class="o">.</span><span class="n">exceptions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">11</span><span class="gp">...</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos">13</span><span class="go">失敗: (ValueError(&#39;boom&#39;),)</span>
 </pre></div>
 </div>
 </section>
+<section id="asyncio-timeout">
+<h2>asyncio.timeout によるタイムアウト<a class="headerlink" href="#asyncio-timeout" title="Link to this heading"></a></h2>
+<p>Python 3.11 で追加された <code class="docutils literal notranslate"><span class="pre">asyncio.timeout()</span></code> を <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">with</span></code> で使うと、ブロック内の処理に制限時間を設けられる。時間内に終わらなかった場合、ブロック内の処理はキャンセルされ、<code class="docutils literal notranslate"><span class="pre">TimeoutError</span></code> が送出される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">3</span><span class="gp">... </span>        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+<span class="linenos">4</span><span class="gp">... </span>            <span class="k">await</span> <span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">... </span>    <span class="k">except</span> <span class="ne">TimeoutError</span><span class="p">:</span>
+<span class="linenos">6</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;タイムアウトしました&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="gp">...</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos">9</span><span class="go">タイムアウトしました</span>
+</pre></div>
+</div>
+<p>単一のコルーチンにタイムアウトを設定するだけなら、従来からある <code class="docutils literal notranslate"><span class="pre">asyncio.wait_for(coro,</span> <span class="pre">timeout)</span></code> も使える。</p>
+</section>
 <section id="asyncio-queue">
 <h2>asyncio.Queue によるタスク間の連携<a class="headerlink" href="#asyncio-queue" title="Link to this heading"></a></h2>
-<p>コルーチン同士でデータをやり取りしたい場合は <code class="docutils literal notranslate"><span class="pre">asyncio.Queue</span></code> が使える。
-プロデューサー・コンシューマー間の連携によく利用される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">producer</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">consumer</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">item</span> <span class="o">=</span> <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="gp">... </span>        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="k">break</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;受信: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="n">queue</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">producer</span><span class="p">(</span><span class="n">queue</span><span class="p">),</span> <span class="n">consumer</span><span class="p">(</span><span class="n">queue</span><span class="p">))</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
-<span class="go">受信: 0</span>
-<span class="go">受信: 1</span>
-<span class="go">受信: 2</span>
+<p>コルーチン同士でデータをやり取りしたい場合は <code class="docutils literal notranslate"><span class="pre">asyncio.Queue</span></code> が使える。プロデューサー・コンシューマー間の連携によく利用される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">producer</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="gp">... </span>        <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="gp">...</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">consumer</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="gp">... </span>        <span class="n">item</span> <span class="o">=</span> <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="gp">... </span>        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">10</span><span class="gp">... </span>            <span class="k">break</span>
+<span class="linenos">11</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;受信: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">12</span><span class="gp">...</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos">14</span><span class="gp">... </span>    <span class="n">queue</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="linenos">15</span><span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">producer</span><span class="p">(</span><span class="n">queue</span><span class="p">),</span> <span class="n">consumer</span><span class="p">(</span><span class="n">queue</span><span class="p">))</span>
+<span class="linenos">16</span><span class="gp">...</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos">18</span><span class="go">受信: 0</span>
+<span class="linenos">19</span><span class="go">受信: 1</span>
+<span class="linenos">20</span><span class="go">受信: 2</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> はシングルスレッドで動作するため、GIL による制限が問題にならず、スレッド切り替えのオーバーヘッドやロックによる競合状態の心配も基本的に不要になる。大量の同時ネットワーク接続を扱うサーバーなど、I/O 待ちの処理を極めて多数同時に扱いたい場合、<code class="docutils literal notranslate"><span class="pre">threading</span></code> よりも <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> の方が少ないリソースで効率よくスケールすることが多い。ただし、対象のライブラリが async 対応している必要があり、CPU バウンドな処理には <a class="reference internal" href="multiprocessing.html"><span class="doc">multiprocessing</span></a> が適している。</p>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> は 1 つのスレッドの中で、<code class="docutils literal notranslate"><span class="pre">await</span></code> の地点でのみ処理を切り替えるため、スレッド切り替えのオーバーヘッドがなく、ロックを必要とする競合状態の心配も（<code class="docutils literal notranslate"><span class="pre">await</span></code> をまたがない限り）基本的に不要になる。大量の同時ネットワーク接続を扱うサーバーなど、I/O 待ちの処理を極めて多数同時に扱いたい場合、<code class="docutils literal notranslate"><span class="pre">threading</span></code> よりも <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> の方が少ないリソースで効率よくスケールすることが多い。ただし、対象のライブラリが async 対応している必要がある。また、CPU バウンドな処理はイベントループ全体を止めてしまうため、<a class="reference internal" href="multiprocessing.html"><span class="doc">multiprocessing</span></a> などで別プロセスに逃がすのが適している（ブロッキングする関数を別スレッドで実行するには <code class="docutils literal notranslate"><span class="pre">asyncio.to_thread()</span></code> が使える）。</p>
 </div>
 </section>
 </section>

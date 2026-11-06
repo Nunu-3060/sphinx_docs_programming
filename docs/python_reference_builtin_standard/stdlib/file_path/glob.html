@@ -57,6 +57,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">パターン構文の基本</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#glob-iglob">glob.iglob</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#recursive-true">recursive=True と ** による再帰検索</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glob-translate">glob.translate</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="tempfile.html">tempfile</a></li>
@@ -109,44 +110,56 @@
 <p>シェルのワイルドカードパターンに従って、パターンにマッチするファイルパスを列挙するモジュール。</p>
 <section id="glob-glob">
 <h2>glob.glob<a class="headerlink" href="#glob-glob" title="Link to this heading"></a></h2>
-<p>パターンにマッチするパスの一覧をリストとして返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/*.rst&quot;</span><span class="p">)</span>
-<span class="go">[&#39;source/stdlib/os.rst&#39;, &#39;source/stdlib/pathlib.rst&#39;, &#39;source/stdlib/glob.rst&#39;]</span>
+<p>パターンにマッチするパスの一覧をリストとして返す。このページの出力例は Linux / macOS でのものであり、Windows では返されるパスの一部の区切り文字が <code class="docutils literal notranslate"><span class="pre">\</span></code> になる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/file_path/*.rst&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">[&#39;source/stdlib/file_path/os.rst&#39;, &#39;source/stdlib/file_path/pathlib.rst&#39;, &#39;source/stdlib/file_path/glob.rst&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>パターン構文の基本<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">*</span></code> は区切り文字（<code class="docutils literal notranslate"><span class="pre">/</span></code>）を除く任意の文字列、<code class="docutils literal notranslate"><span class="pre">?</span></code> は任意の 1 文字、<code class="docutils literal notranslate"><span class="pre">[abc]</span></code> はいずれか 1 文字にマッチする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/?s.rst&quot;</span><span class="p">)</span>
-<span class="go">[&#39;source/stdlib/os.rst&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/[gs]*.rst&quot;</span><span class="p">)</span>
-<span class="go">[&#39;source/stdlib/shutil.rst&#39;, &#39;source/stdlib/glob.rst&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/file_path/?s.rst&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">[&#39;source/stdlib/file_path/os.rst&#39;]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/file_path/[gs]*.rst&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">[&#39;source/stdlib/file_path/shutil.rst&#39;, &#39;source/stdlib/file_path/glob.rst&#39;]</span>
 </pre></div>
 </div>
+<p>結果の順序は保証されないため、順序が必要な場合は <code class="docutils literal notranslate"><span class="pre">sorted()</span></code> で並べ替える。また、<code class="docutils literal notranslate"><span class="pre">*</span></code> や <code class="docutils literal notranslate"><span class="pre">?</span></code> はドット（<code class="docutils literal notranslate"><span class="pre">.</span></code>）で始まる隠しファイルにはマッチしない。隠しファイルも対象にしたい場合は <code class="docutils literal notranslate"><span class="pre">include_hidden=True</span></code>（Python 3.11 以降）を指定する。</p>
 </section>
 <section id="glob-iglob">
 <h2>glob.iglob<a class="headerlink" href="#glob-iglob" title="Link to this heading"></a></h2>
 <p>結果をリストではなくイテレータとして返す。マッチ件数が多い場合にメモリを節約できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/*.rst&quot;</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-<span class="go">source/stdlib/os.rst</span>
-<span class="go">source/stdlib/pathlib.rst</span>
-<span class="go">source/stdlib/glob.rst</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="s2">&quot;source/stdlib/file_path/*.rst&quot;</span><span class="p">):</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">source/stdlib/file_path/os.rst</span>
+<span class="linenos">4</span><span class="go">source/stdlib/file_path/pathlib.rst</span>
+<span class="linenos">5</span><span class="go">source/stdlib/file_path/glob.rst</span>
 </pre></div>
 </div>
 </section>
 <section id="recursive-true">
 <h2>recursive=True と ** による再帰検索<a class="headerlink" href="#recursive-true" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">recursive=True</span></code> を指定すると、<code class="docutils literal notranslate"><span class="pre">**</span></code> がディレクトリを再帰的にたどるワイルドカードとして機能する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/**/*.rst&quot;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">[&#39;source/index.rst&#39;, &#39;source/stdlib/os.rst&#39;, &#39;source/builtins/type_conversion.rst&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/**/*.rst&quot;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">[&#39;source/index.rst&#39;, &#39;source/builtins/type_conversion.rst&#39;, &#39;source/stdlib/file_path/os.rst&#39;]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code> は結果を <code class="docutils literal notranslate"><span class="pre">str</span></code> のリストとして返すのに対し、<a class="reference internal" href="pathlib.html"><span class="doc">pathlib</span></a> の <code class="docutils literal notranslate"><span class="pre">Path.glob</span></code> は <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトのイテレータを返す。パスをオブジェクトとして扱う新しいコードでは <code class="docutils literal notranslate"><span class="pre">Path.glob</span></code> の使用が推奨されることが多い。</p>
+<p><code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code> は結果を <code class="docutils literal notranslate"><span class="pre">str</span></code> のリストとして返すのに対し、<a class="reference internal" href="pathlib.html"><span class="doc">pathlib</span></a> の <code class="docutils literal notranslate"><span class="pre">Path.glob</span></code> は <code class="docutils literal notranslate"><span class="pre">Path</span></code> オブジェクトのイテレータを返す（<code class="docutils literal notranslate"><span class="pre">Path.glob</span></code> では <code class="docutils literal notranslate"><span class="pre">recursive=True</span></code> を指定しなくても <code class="docutils literal notranslate"><span class="pre">**</span></code> が再帰的に機能する）。パスをオブジェクトとして扱う新しいコードでは <code class="docutils literal notranslate"><span class="pre">Path.glob</span></code> の使用が推奨されることが多い。</p>
+</div>
+</section>
+<section id="glob-translate">
+<h2>glob.translate<a class="headerlink" href="#glob-translate" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">glob.translate()</span></code>（Python 3.13 以降）は、glob パターンを同等の正規表現文字列に変換する。ファイルシステムを走査せずに、手元のパス文字列の一覧をパターンで絞り込みたい場合に使える。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">regex</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;src/**/*.py&quot;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;src/main.py&quot;</span><span class="p">,</span> <span class="s2">&quot;src/pkg/util.py&quot;</span><span class="p">,</span> <span class="s2">&quot;docs/index.rst&quot;</span><span class="p">]</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">p</span><span class="p">)]</span>
+<span class="linenos">5</span><span class="go">[&#39;src/main.py&#39;, &#39;src/pkg/util.py&#39;]</span>
+</pre></div>
 </div>
 </section>
 </section>

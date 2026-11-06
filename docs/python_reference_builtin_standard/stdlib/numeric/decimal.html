@@ -102,16 +102,15 @@
              
   <section id="decimal">
 <h1>decimal<a class="headerlink" href="#decimal" title="Link to this heading"></a></h1>
-<p>10進数を正確に扱うための、精度を指定できる浮動小数点演算を提供するモジュール。<code class="docutils literal notranslate"><span class="pre">float</span></code> は内部的に2進数で数値を表現するため、<code class="docutils literal notranslate"><span class="pre">0.1</span></code> のような単純な10進小数でも誤差を持つことがある。金額計算など、誤差が許されない場面では <code class="docutils literal notranslate"><span class="pre">float</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> を使うべきである。</p>
+<p>10 進数を正確に扱うための、精度を指定できる浮動小数点演算を提供するモジュール。<code class="docutils literal notranslate"><span class="pre">float</span></code> は内部的に 2 進数で数値を表現するため、<code class="docutils literal notranslate"><span class="pre">0.1</span></code> のような単純な 10 進小数でも誤差を持つことがある。金額計算など、誤差が許されない場面では <code class="docutils literal notranslate"><span class="pre">float</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> を使うべきである。</p>
 <section id="id1">
 <h2>Decimal の基本<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Decimal</span></code> は数値を文字列として渡すことで、10進数としての正確さを
-保ったまま計算できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span>
-<span class="go">0.30000000000000004</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.1&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.2&quot;</span><span class="p">)</span>
-<span class="go">Decimal(&#39;0.3&#39;)</span>
+<p><code class="docutils literal notranslate"><span class="pre">Decimal</span></code> は数値を文字列として渡すことで、10 進数としての正確さを保ったまま計算できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span>
+<span class="linenos">2</span><span class="go">0.30000000000000004</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.1&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.2&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">Decimal(&#39;0.3&#39;)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -122,33 +121,45 @@
 <section id="id2">
 <h2>金額計算での利用<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>金額のような、誤差が許されない値の計算には <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> が適している。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">price</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1980&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tax_rate</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.10&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tax_rate</span><span class="p">)</span>
-<span class="go">Decimal(&#39;2178.00&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">price</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1980&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">tax_rate</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.10&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">price</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tax_rate</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">Decimal(&#39;2178.00&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>四則演算と丸め<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Decimal</span></code> 同士は通常の演算子でそのまま四則演算ができる。丸めには <code class="docutils literal notranslate"><span class="pre">quantize</span></code> を使い、小数点以下の桁数を明示的に指定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">ROUND_HALF_UP</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;19.995&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">value</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.01&quot;</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_HALF_UP</span><span class="p">)</span>
-<span class="go">Decimal(&#39;20.00&#39;)</span>
+<p><code class="docutils literal notranslate"><span class="pre">Decimal</span></code> 同士は通常の演算子でそのまま四則演算ができる。丸めには <code class="docutils literal notranslate"><span class="pre">quantize</span></code> を使い、小数点以下の桁数を明示的に指定する。<code class="docutils literal notranslate"><span class="pre">rounding</span></code> を省略した場合はコンテキストの丸めモード（既定では偶数への丸めである <code class="docutils literal notranslate"><span class="pre">ROUND_HALF_EVEN</span></code>）が使われるため、一般的な四捨五入をしたい場合は <code class="docutils literal notranslate"><span class="pre">ROUND_HALF_UP</span></code> を明示する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span><span class="p">,</span> <span class="n">ROUND_HALF_UP</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;19.995&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">value</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.01&quot;</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_HALF_UP</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">Decimal(&#39;20.00&#39;)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.125&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;0.01&quot;</span><span class="p">))</span>  <span class="c1"># 既定の ROUND_HALF_EVEN</span>
+<span class="linenos">6</span><span class="go">Decimal(&#39;0.12&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="getcontext-prec">
 <h2>getcontext().prec<a class="headerlink" href="#getcontext-prec" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">getcontext()</span></code> で現在のスレッドにおける演算コンテキストを取得できる。<code class="docutils literal notranslate"><span class="pre">prec</span></code> 属性で有効桁数（精度）を設定すると、以降の <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> 演算すべてに適用される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">getcontext</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
-<span class="go">Decimal(&#39;0.3333&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">28</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
-<span class="go">Decimal(&#39;0.3333333333333333333333333333&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">getcontext</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">Decimal(&#39;0.3333&#39;)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">getcontext</span><span class="p">()</span><span class="o">.</span><span class="n">prec</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">Decimal(&#39;0.3333333333333333333333333333&#39;)</span>
+</pre></div>
+</div>
+<p>コンテキストの変更はそのスレッド内の以降のすべての演算に影響する。一部の計算だけ精度を変えたい場合は、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜けると元に戻る <code class="docutils literal notranslate"><span class="pre">localcontext()</span></code> を使うとよい。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">localcontext</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">localcontext</span><span class="p">(</span><span class="n">prec</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">))</span>
+<span class="linenos">4</span><span class="gp">...</span>
+<span class="linenos">5</span><span class="go">0.3333</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">Decimal(&#39;0.3333333333333333333333333333&#39;)</span>
 </pre></div>
 </div>
 </section>

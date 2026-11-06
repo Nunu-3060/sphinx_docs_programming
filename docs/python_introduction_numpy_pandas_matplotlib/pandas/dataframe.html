@@ -102,135 +102,141 @@
              
   <section id="dataframe">
 <h1>DataFrame の基本<a class="headerlink" href="#dataframe" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> は、複数の列（<code class="docutils literal notranslate"><span class="pre">Series</span></code>）から構成される表形式のデータです。</p>
+<p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> は、複数の列（<code class="docutils literal notranslate"><span class="pre">Series</span></code>）から構成される表形式のデータである。</p>
 <section id="id1">
 <h2>DataFrame の作成<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>辞書（列名 → 値の list）から作成するのが最も一般的です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
-    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">],</span>
-<span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 1    Bob   25   Osaka</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>辞書（列名 → 値の list）から作成するのが最も一般的である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="linenos"> 4</span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
+<span class="linenos"> 5</span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+<span class="linenos"> 6</span>    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">],</span>
+<span class="linenos"> 7</span><span class="p">})</span>
+<span class="linenos"> 8</span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="c1">#     name  age    city</span>
+<span class="linenos">10</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">11</span><span class="c1"># 1    Bob   25   Osaka</span>
+<span class="linenos">12</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>基本的な属性<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
-<span class="c1"># (3, 3)  行数と列数</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
-<span class="c1"># Index([&#39;name&#39;, &#39;age&#39;, &#39;city&#39;], dtype=&#39;str&#39;)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">index</span>
-<span class="c1"># RangeIndex(start=0, stop=3, step=1)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
-<span class="c1"># name      str</span>
-<span class="c1"># age     int64</span>
-<span class="c1"># city      str</span>
-<span class="c1"># dtype: object</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+<span class="linenos"> 2</span><span class="c1"># (3, 3)  行数と列数</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="linenos"> 5</span><span class="c1"># Index([&#39;name&#39;, &#39;age&#39;, &#39;city&#39;], dtype=&#39;str&#39;)</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+<span class="linenos"> 8</span><span class="c1"># RangeIndex(start=0, stop=3, step=1)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="linenos">11</span><span class="c1"># name      str</span>
+<span class="linenos">12</span><span class="c1"># age     int64</span>
+<span class="linenos">13</span><span class="c1"># city      str</span>
+<span class="linenos">14</span><span class="c1"># dtype: object</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>列の追加・削除・リネーム<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>既存の列を使った計算結果を新しい列として追加するには、<code class="docutils literal notranslate"><span class="pre">[]</span></code> に新しい列名を指定して代入します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;is_adult&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">30</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="c1">#     name  age    city  is_adult</span>
-<span class="c1"># 0  Alice   30   Tokyo      True</span>
-<span class="c1"># 1    Bob   25   Osaka     False</span>
-<span class="c1"># 2  Carol   35  Nagoya      True</span>
+<p>既存の列を使った計算結果を新しい列として追加するには、<code class="docutils literal notranslate"><span class="pre">[]</span></code> に新しい列名を指定して代入する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;is_adult&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">30</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="linenos">3</span><span class="c1">#     name  age    city  is_adult</span>
+<span class="linenos">4</span><span class="c1"># 0  Alice   30   Tokyo      True</span>
+<span class="linenos">5</span><span class="c1"># 1    Bob   25   Osaka     False</span>
+<span class="linenos">6</span><span class="c1"># 2  Carol   35  Nagoya      True</span>
 </pre></div>
 </div>
-<p>列を削除するには <code class="docutils literal notranslate"><span class="pre">drop</span></code> を使い、<code class="docutils literal notranslate"><span class="pre">columns</span></code> 引数に削除したい列名（または列名の list）を指定します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;is_adult&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 1    Bob   25   Osaka</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>列を削除するには <code class="docutils literal notranslate"><span class="pre">drop</span></code> を使い、<code class="docutils literal notranslate"><span class="pre">columns</span></code> 引数に削除したい列名（または列名の list）を指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;is_adult&quot;</span><span class="p">])</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+<span class="linenos">3</span><span class="c1">#     name  age    city</span>
+<span class="linenos">4</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">5</span><span class="c1"># 1    Bob   25   Osaka</span>
+<span class="linenos">6</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
-<p>列名を変更するには <code class="docutils literal notranslate"><span class="pre">rename</span></code> を使い、<code class="docutils literal notranslate"><span class="pre">columns</span></code> 引数に「元の列名 → 新しい列名」の辞書を指定します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;full_name&quot;</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
-<span class="c1">#   full_name  age    city</span>
-<span class="c1"># 0     Alice   30   Tokyo</span>
-<span class="c1"># 1       Bob   25   Osaka</span>
-<span class="c1"># 2     Carol   35  Nagoya</span>
+<p>列名を変更するには <code class="docutils literal notranslate"><span class="pre">rename</span></code> を使い、<code class="docutils literal notranslate"><span class="pre">columns</span></code> 引数に「元の列名 → 新しい列名」の辞書を指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df3</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;full_name&quot;</span><span class="p">})</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
+<span class="linenos">3</span><span class="c1">#   full_name  age    city</span>
+<span class="linenos">4</span><span class="c1"># 0     Alice   30   Tokyo</span>
+<span class="linenos">5</span><span class="c1"># 1       Bob   25   Osaka</span>
+<span class="linenos">6</span><span class="c1"># 2     Carol   35  Nagoya</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">drop</span></code> や <code class="docutils literal notranslate"><span class="pre">rename</span></code> は、既定では元の <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> を変更せず、結果を新しい <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> として返します。元のデータを直接書き換えたい場合は、戻り値を変数に代入し直すか、<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">drop</span></code> や <code class="docutils literal notranslate"><span class="pre">rename</span></code> は、既定では元の <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> を変更せず、結果を新しい <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> として返す。元のデータを更新したい場合は、<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.drop(columns=[&quot;is_adult&quot;])</span></code> のように戻り値を変数に代入し直す。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>古いコードでは、元のデータを直接書き換えるために <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> を指定する書き方も見られる。<code class="docutils literal notranslate"><span class="pre">inplace</span></code> 引数は <code class="docutils literal notranslate"><span class="pre">drop</span></code>、<code class="docutils literal notranslate"><span class="pre">rename</span></code>、<code class="docutils literal notranslate"><span class="pre">dropna</span></code>、<code class="docutils literal notranslate"><span class="pre">sort_values</span></code>、<code class="docutils literal notranslate"><span class="pre">reset_index</span></code> など多くのメソッドで非推奨となっており、将来のバージョン（pandas 4.0 を予定）で削除される（PDEP-8）。指定すると <code class="docutils literal notranslate"><span class="pre">Pandas4Warning</span></code> などの警告が出る。<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> を指定してもメモリ使用量や速度の面での利点はほとんど無いため、新しくコードを書く場合は使わず、戻り値を代入し直すこと。</p>
 </div>
 </section>
 <section id="astype">
 <h2>型変換（astype）<a class="headerlink" href="#astype" title="Link to this heading"></a></h2>
-<p>CSV から読み込んだデータで数値のはずの列が文字列型になっている場合など、列の型を変換したいことがあります。そのような場合は <code class="docutils literal notranslate"><span class="pre">astype</span></code> を使います。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
-<span class="c1"># name        str</span>
-<span class="c1"># age     float64</span>
-<span class="c1"># city        str</span>
-<span class="c1"># dtype: object</span>
+<p>CSV から読み込んだデータで数値のはずの列が文字列型になっている場合など、列の型を変換したいことがある。そのような場合は <code class="docutils literal notranslate"><span class="pre">astype</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="linenos">2</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="linenos">3</span><span class="c1"># name            str</span>
+<span class="linenos">4</span><span class="c1"># age         float64</span>
+<span class="linenos">5</span><span class="c1"># city            str</span>
+<span class="linenos">6</span><span class="c1"># is_adult       bool</span>
+<span class="linenos">7</span><span class="c1"># dtype: object</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">astype</span></code> には <code class="docutils literal notranslate"><span class="pre">float</span></code> や <code class="docutils literal notranslate"><span class="pre">int</span></code> のような Python の組み込み型のほか、<code class="docutils literal notranslate"><span class="pre">&quot;float64&quot;</span></code> のような dtype を表す文字列も指定できます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">astype</span></code> には <code class="docutils literal notranslate"><span class="pre">float</span></code> や <code class="docutils literal notranslate"><span class="pre">int</span></code> のような Python の組み込み型のほか、<code class="docutils literal notranslate"><span class="pre">&quot;float64&quot;</span></code> のような dtype を表す文字列も指定できる。</p>
 </section>
 <section id="category-dtype">
 <h2>カテゴリ型（category dtype）<a class="headerlink" href="#category-dtype" title="Link to this heading"></a></h2>
-<p>列に含まれる値の種類が少なく、同じ値が繰り返し登場する場合（都市名や商品カテゴリなど）は、<code class="docutils literal notranslate"><span class="pre">astype(&quot;category&quot;)</span></code> でカテゴリ型に変換すると、メモリ使用量を大きく削減できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
-<span class="c1"># category</span>
-
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span>
-<span class="c1"># Index([&#39;Nagoya&#39;, &#39;Osaka&#39;, &#39;Tokyo&#39;], dtype=&#39;str&#39;)</span>
+<p>列に含まれる値の種類が少なく、同じ値が繰り返し登場する場合（都市名や商品カテゴリなど）は、<code class="docutils literal notranslate"><span class="pre">astype(&quot;category&quot;)</span></code> でカテゴリ型に変換すると、メモリ使用量を大きく削減できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+<span class="linenos">3</span><span class="c1"># CategoricalDtype(categories=[&#39;Nagoya&#39;, &#39;Osaka&#39;, &#39;Tokyo&#39;], ordered=False,</span>
+<span class="linenos">4</span><span class="c1">#                  categories_dtype=str)</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span>
+<span class="linenos">7</span><span class="c1"># Index([&#39;Nagoya&#39;, &#39;Osaka&#39;, &#39;Tokyo&#39;], dtype=&#39;str&#39;)</span>
 </pre></div>
 </div>
-<p>内部的には、値そのものではなく整数のコードとカテゴリの対応表として保持されるため、行数が多く同じ値が繰り返されるデータほど効果が大きくなります。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 万行のうち、値の種類が 5 種類だけの場合の比較（memory_usage(deep=True)）</span>
-<span class="c1"># str 型      : 550129 バイト</span>
-<span class="c1"># category 型 :  10407 バイト</span>
+<p>内部的には、値そのものではなく整数のコードとカテゴリの対応表として保持されるため、行数が多く同じ値が繰り返されるデータほど効果が大きくなる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># 1 万行のうち、値の種類が 5 種類だけの場合の比較（memory_usage(deep=True)）</span>
+<span class="linenos">2</span><span class="c1"># str 型      : 550129 バイト</span>
+<span class="linenos">3</span><span class="c1"># category 型 :  10407 バイト</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">pd.Categorical</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">ordered=True</span></code> を指定して順序を持つカテゴリ（「小 &lt; 中 &lt; 大」のような大小関係のある区分）を作ることもできます。順序付きカテゴリでは、比較演算子（<code class="docutils literal notranslate"><span class="pre">&lt;</span></code> など）による比較も可能です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sizes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-
-<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="s2">&quot;L&quot;</span>
-<span class="c1"># 0     True</span>
-<span class="c1"># 1     True</span>
-<span class="c1"># 2    False</span>
-<span class="c1"># dtype: bool</span>
+<p><code class="docutils literal notranslate"><span class="pre">pd.Categorical</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">ordered=True</span></code> を指定して順序を持つカテゴリ（「小 &lt; 中 &lt; 大」のような大小関係のある区分）を作ることもできる。順序付きカテゴリでは、比較演算子（<code class="docutils literal notranslate"><span class="pre">&lt;</span></code> など）による比較も可能である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">sizes</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+<span class="linenos">2</span>    <span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span>
+<span class="linenos">3</span><span class="p">)</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="s2">&quot;L&quot;</span>
+<span class="linenos">6</span><span class="c1"># 0     True</span>
+<span class="linenos">7</span><span class="c1"># 1     True</span>
+<span class="linenos">8</span><span class="c1"># 2    False</span>
+<span class="linenos">9</span><span class="c1"># dtype: bool</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>データの概要を確認する<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>データの中身をざっと確認するために、よく使われるメソッドです。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="c1"># 先頭 2 行を表示</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="c1"># 末尾 2 行を表示</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-<span class="c1"># 列ごとのデータ型・欠損値の有無などを表示</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-<span class="c1"># 数値列の統計量（平均・標準偏差・最小値など）を表示</span>
+<p>データの中身をざっと確認するために、よく使われるメソッドである。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="c1"># 先頭 2 行を表示</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="c1"># 末尾 2 行を表示</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="c1"># 列ごとのデータ型・欠損値の有無などを表示</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="linenos">11</span><span class="c1"># 数値列の統計量（平均・標準偏差・最小値など）を表示</span>
 </pre></div>
 </div>
 </section>

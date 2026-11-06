@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="uuid.html">uuid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="copy.html">copy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="secrets.html">secrets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ast.html">ast</a></li>
 </ul>
 </li>
 </ul>
@@ -107,92 +108,76 @@
              
   <section id="hashlib">
 <h1>hashlib<a class="headerlink" href="#hashlib" title="Link to this heading"></a></h1>
-<p>MD5 や SHA-256 など、さまざまなハッシュアルゴリズムを扱うためのモジュール。
-ファイルの一意性確認や、通信・保存の途中で生じた偶発的な破損の検出など、
-ハッシュ値が必要な場面で使う。ただし MD5 や SHA-1 は意図的な改ざん
-（衝突攻撃）に対する耐性がないため、悪意ある攻撃者を想定する必要がある
-改ざん検出には使うべきではない（詳しくは後述）。</p>
+<p>MD5 や SHA-256 など、さまざまなハッシュアルゴリズムを扱うためのモジュール。ファイルの一意性確認や、通信・保存の途中で生じた偶発的な破損の検出など、ハッシュ値が必要な場面で使う。ただし MD5 や SHA-1 は意図的な改ざん（衝突攻撃）に対する耐性がないため、悪意ある攻撃者を想定する必要がある改ざん検出には使うべきではない（詳しくは後述）。</p>
 <section id="sha256">
 <h2>sha256 によるハッシュ計算<a class="headerlink" href="#sha256" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">sha256</span></code> は暗号学的にも安全性が高く、ファイルの完全性検証などによく
-使われる。特に理由がなければ、まずこちらを検討するとよい。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="go">&#39;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&#39;</span>
+<p><code class="docutils literal notranslate"><span class="pre">sha256</span></code> は暗号論的にも安全性が高く、ファイルの完全性検証などによく使われる。特に理由がなければ、まずこちらを検討するとよい。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="linenos">4</span><span class="go">&#39;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="md5">
 <h2>md5 によるハッシュ計算<a class="headerlink" href="#md5" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hashlib.md5()</span></code> にバイト列を渡してハッシュオブジェクトを作成する。
-文字列を渡す場合は <code class="docutils literal notranslate"><span class="pre">encode()</span></code> でバイト列に変換しておく必要がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="go">&#39;5d41402abc4b2a76b9719d911017c592&#39;</span>
+<p><code class="docutils literal notranslate"><span class="pre">hashlib.md5()</span></code> にバイト列を渡してハッシュオブジェクトを作成する。文字列を渡す場合は <code class="docutils literal notranslate"><span class="pre">encode()</span></code> でバイト列に変換しておく必要がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">&#39;5d41402abc4b2a76b9719d911017c592&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>MD5 は計算が高速で古いコードやツールとの互換性のために今も見かけるが、
-衝突攻撃に対して脆弱であり、暗号学的な安全性が必要な用途には使うべき
-ではない。ここでは API の使い方を示す例として掲載しているだけであり、
-新しいコードでは前述の <code class="docutils literal notranslate"><span class="pre">sha256</span></code> や後述の BLAKE2 を使うのが望ましい。</p>
+<p>MD5 は計算が高速で古いコードやツールとの互換性のために今も見かけるが、衝突攻撃に対して脆弱であり、暗号論的な安全性が必要な用途には使うべきではない。ここでは API の使い方を示す例として掲載しているだけであり、新しいコードでは前述の <code class="docutils literal notranslate"><span class="pre">sha256</span></code> や後述の BLAKE2 を使うのが望ましい。既存の仕様との互換のためにセキュリティ目的以外で MD5 を使う場合は、<code class="docutils literal notranslate"><span class="pre">hashlib.md5(data,</span> <span class="pre">usedforsecurity=False)</span></code> のように明示しておくと、FIPS モードが有効な環境などでも利用できる場合がある。</p>
 </div>
 </section>
 <section id="update">
 <h2>update() による逐次的な入力<a class="headerlink" href="#update" title="Link to this heading"></a></h2>
-<p>大きなファイルなどを一度にメモリへ読み込みたくない場合、<code class="docutils literal notranslate"><span class="pre">update()</span></code> を
-繰り返し呼び出して少しずつデータを与えられる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;large_file.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8192</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<p>大きなファイルなどを一度にメモリへ読み込みたくない場合、<code class="docutils literal notranslate"><span class="pre">update()</span></code> を繰り返し呼び出して少しずつデータを与えられる（ファイル全体のハッシュを計算するだけなら、後述の <code class="docutils literal notranslate"><span class="pre">file_digest()</span></code> を使う方が簡単である）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;large_file.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8192</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="linenos">4</span><span class="gp">... </span>        <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="hexdigest-digest">
 <h2>hexdigest() と digest()<a class="headerlink" href="#hexdigest-digest" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hexdigest()</span></code> は 16 進数文字列としてハッシュ値を返し、<code class="docutils literal notranslate"><span class="pre">digest()</span></code> は
-生のバイト列として返す。ログ出力やファイル名などには <code class="docutils literal notranslate"><span class="pre">hexdigest()</span></code> が
-扱いやすい。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-<span class="go">b&#39;,\xf2M\xba_\xb0\xa3\x0e&amp;\xe8;*\xc5\xb9\xe2\x9e\x1b\x16\x1e\\\x1f\xa7B^s\x043b\x93\x8b\x98$&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
-<span class="go">64</span>
+<p><code class="docutils literal notranslate"><span class="pre">hexdigest()</span></code> は 16 進数文字列としてハッシュ値を返し、<code class="docutils literal notranslate"><span class="pre">digest()</span></code> は生のバイト列として返す。ログ出力やファイル名などには <code class="docutils literal notranslate"><span class="pre">hexdigest()</span></code> が扱いやすい。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">b&#39;,\xf2M\xba_\xb0\xa3\x0e&amp;\xe8;*\xc5\xb9\xe2\x9e\x1b\x16\x1e\\\x1f\xa7B^s\x043b\x93\x8b\x98$&#39;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+<span class="linenos">5</span><span class="go">64</span>
 </pre></div>
 </div>
 </section>
 <section id="hashlib-new-blake2file-digest">
 <h2>hashlib.new()、BLAKE2、file_digest()<a class="headerlink" href="#hashlib-new-blake2file-digest" title="Link to this heading"></a></h2>
-<p>アルゴリズム名を文字列として渡して汎用的にハッシュオブジェクトを作りたい
-場合は、個別の関数の代わりに <code class="docutils literal notranslate"><span class="pre">hashlib.new(名前,</span> <span class="pre">データ)</span></code> が使える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;sha256&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="go">&#39;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&#39;</span>
+<p>アルゴリズム名を文字列として渡して汎用的にハッシュオブジェクトを作りたい場合は、個別の関数の代わりに <code class="docutils literal notranslate"><span class="pre">hashlib.new(名前,</span> <span class="pre">データ)</span></code> が使える。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;sha256&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">&#39;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&#39;</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">blake2b</span></code>/<code class="docutils literal notranslate"><span class="pre">blake2s</span></code> は MD5 や SHA-1 よりも高速かつ安全な、比較的
-新しいハッシュアルゴリズムで、鍵付きハッシュ（HMAC 相当の機能）を
-標準でサポートしている。暗号学的な安全性までは不要な用途
-（キャッシュのキー生成など）でも、MD5/SHA-1 の代わりにまず検討する
-価値がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">blake2b</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">digest_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;secret-key&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">blake2b</span></code>/<code class="docutils literal notranslate"><span class="pre">blake2s</span></code> は MD5 や SHA-1 よりも高速かつ安全な、比較的新しいハッシュアルゴリズムで、鍵付きハッシュ（HMAC 相当の機能）を標準でサポートしている。暗号論的な安全性までは不要な用途（キャッシュのキー生成など）でも、MD5/SHA-1 の代わりにまず検討する価値がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">blake2b</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">digest_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;secret-key&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>ファイル全体のハッシュを計算する際、Python 3.11 以降では <code class="docutils literal notranslate"><span class="pre">update()</span></code> をチャンクごとに呼び出すループを自分で書く代わりに、<code class="docutils literal notranslate"><span class="pre">hashlib.file_digest()</span></code> にバイナリモードで開いたファイルオブジェクトを渡すだけで済む。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;large_file.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">file_digest</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;sha256&quot;</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<p>ファイル全体のハッシュを計算する際は、<code class="docutils literal notranslate"><span class="pre">update()</span></code> をチャンクごとに呼び出すループを自分で書く代わりに、Python 3.11 で追加された <code class="docutils literal notranslate"><span class="pre">hashlib.file_digest()</span></code> にバイナリモードで開いたファイルオブジェクトとアルゴリズム名を渡すだけで済む。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;large_file.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">file_digest</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;sha256&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">...</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">digest</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>前述のとおり MD5 や SHA-1 には安全性の問題があるため、パスワードのハッシュ化にも適さない。パスワードを保存する場合は、ソルトやストレッチングを考慮した専用のライブラリ（<code class="docutils literal notranslate"><span class="pre">hashlib.pbkdf2_hmac</span></code> や、より高レベルな <code class="docutils literal notranslate"><span class="pre">bcrypt</span></code>、<code class="docutils literal notranslate"><span class="pre">argon2-cffi</span></code> など）を使用すべきである。</p>
+<p>MD5 や SHA-1 に限らず、SHA-256 のような汎用のハッシュ関数をそのままパスワードのハッシュ化に使うべきではない。これらは高速に計算できるよう設計されているため、総当たり攻撃にも弱いからである。パスワードを保存する場合は、ソルトやストレッチングを考慮した専用の関数やライブラリ（標準ライブラリの <code class="docutils literal notranslate"><span class="pre">hashlib.pbkdf2_hmac</span></code>/<code class="docutils literal notranslate"><span class="pre">hashlib.scrypt</span></code> や、より高レベルなサードパーティ製の <code class="docutils literal notranslate"><span class="pre">bcrypt</span></code>、<code class="docutils literal notranslate"><span class="pre">argon2-cffi</span></code> など）を使用すべきである。</p>
 </div>
 </section>
 </section>

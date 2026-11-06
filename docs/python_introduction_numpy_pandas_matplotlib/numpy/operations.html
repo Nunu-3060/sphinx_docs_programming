@@ -100,76 +100,76 @@
 <h1>配列の演算<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>要素ごとの演算<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 同士の四則演算は、Python の list とは異なり、要素ごとに計算されます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
-
-<span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-<span class="c1"># array([11, 22, 33])</span>
-
-<span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
-<span class="c1"># array([10, 40, 90])</span>
-
-<span class="n">a</span> <span class="o">*</span> <span class="mi">2</span>
-<span class="c1"># array([2, 4, 6])</span>
+<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> 同士の四則演算は、Python の list とは異なり、要素ごとに計算される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos"> 4</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="linenos"> 7</span><span class="c1"># array([11, 22, 33])</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="linenos">10</span><span class="c1"># array([10, 40, 90])</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="n">a</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">13</span><span class="c1"># array([2, 4, 6])</span>
 </pre></div>
 </div>
-<p>比較演算子も同様に要素ごとに適用され、真偽値の配列が返されます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="c1"># array([ True, False,  True])</span>
+<p>比較演算子も同様に要素ごとに適用され、真偽値の配列が返される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">a</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="c1"># array([ True, False,  True])</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>行列の掛け算<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>これまで見てきた <code class="docutils literal notranslate"><span class="pre">*</span></code> は、あくまで要素ごとの掛け算（アダマール積）です。数学的な意味での行列の掛け算（行列積）を行いたい場合は、<code class="docutils literal notranslate"><span class="pre">*</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 演算子（または <code class="docutils literal notranslate"><span class="pre">np.matmul</span></code>）を使います。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-<span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
-
-<span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
-<span class="c1"># array([[ 5, 12],</span>
-<span class="c1">#        [21, 32]])</span>
-<span class="c1"># 要素ごとの掛け算（アダマール積）</span>
-
-<span class="n">a</span> <span class="o">@</span> <span class="n">b</span>
-<span class="c1"># array([[19, 22],</span>
-<span class="c1">#        [43, 50]])</span>
-<span class="c1"># 行列積（1 行目・1 列目: 1*5 + 2*7 = 19 など）</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="c1"># a @ b と同じ結果</span>
+<p>これまで見てきた <code class="docutils literal notranslate"><span class="pre">*</span></code> は、あくまで要素ごとの掛け算（アダマール積）である。数学的な意味での行列の掛け算（行列積）を行いたい場合は、<code class="docutils literal notranslate"><span class="pre">*</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 演算子（または <code class="docutils literal notranslate"><span class="pre">np.matmul</span></code>）を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="linenos"> 4</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="linenos"> 7</span><span class="c1"># array([[ 5, 12],</span>
+<span class="linenos"> 8</span><span class="c1">#        [21, 32]])</span>
+<span class="linenos"> 9</span><span class="c1"># 要素ごとの掛け算（アダマール積）</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">a</span> <span class="o">@</span> <span class="n">b</span>
+<span class="linenos">12</span><span class="c1"># array([[19, 22],</span>
+<span class="linenos">13</span><span class="c1">#        [43, 50]])</span>
+<span class="linenos">14</span><span class="c1"># 行列積（1 行目・1 列目: 1*5 + 2*7 = 19 など）</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="linenos">17</span><span class="c1"># a @ b と同じ結果</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">*</span></code> は「同じ形状の配列同士を要素ごとに掛け合わせる」演算であるのに対し、<code class="docutils literal notranslate"><span class="pre">&#64;</span></code> は「行列として掛け合わせる」演算です。数式の行列積をそのままコードにしたい場合に <code class="docutils literal notranslate"><span class="pre">*</span></code> を使ってしまうと、意図しない結果になるので注意してください。</p>
+<p><code class="docutils literal notranslate"><span class="pre">*</span></code> は「同じ形状の配列同士を要素ごとに掛け合わせる」演算であるのに対し、<code class="docutils literal notranslate"><span class="pre">&#64;</span></code> は「行列として掛け合わせる」演算である。数式の行列積をそのままコードにしたい場合に <code class="docutils literal notranslate"><span class="pre">*</span></code> を使ってしまうと、意図しない結果になるので注意すること。</p>
 </div>
 </section>
 <section id="id4">
 <h2>数学関数（ユニバーサル関数）<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">np.sin</span></code> / <code class="docutils literal notranslate"><span class="pre">np.cos</span></code> / <code class="docutils literal notranslate"><span class="pre">np.tan</span></code> / <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> / <code class="docutils literal notranslate"><span class="pre">np.log</span></code> / <code class="docutils literal notranslate"><span class="pre">np.sqrt</span></code> のような数学関数も、配列を渡すと要素ごとに計算されます。このように配列の要素ごとに処理を行う関数は「ユニバーサル関数（ufunc）」と呼ばれます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">angles_deg</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
-<span class="n">angles_rad</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angles_deg</span><span class="p">)</span>
-<span class="c1"># np.deg2rad で度数法から弧度法（ラジアン）に変換する</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles_rad</span><span class="p">)</span>
-<span class="c1"># array([0. , 0.5, 1. ])</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]))</span>
-<span class="c1"># array([0.        , 1.        , 2.30258509])</span>
-<span class="c1"># np.log は自然対数（底が e の対数）</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">]))</span>
-<span class="c1"># array([1., 2., 3., 4.])</span>
+<p><code class="docutils literal notranslate"><span class="pre">np.sin</span></code> / <code class="docutils literal notranslate"><span class="pre">np.cos</span></code> / <code class="docutils literal notranslate"><span class="pre">np.tan</span></code> / <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> / <code class="docutils literal notranslate"><span class="pre">np.log</span></code> / <code class="docutils literal notranslate"><span class="pre">np.sqrt</span></code> のような数学関数も、配列を渡すと要素ごとに計算される。このように配列の要素ごとに処理を行う関数は「ユニバーサル関数（ufunc）」と呼ばれる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">angles_deg</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+<span class="linenos"> 4</span><span class="n">angles_rad</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angles_deg</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="c1"># np.deg2rad で度数法から弧度法（ラジアン）に変換する</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles_rad</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="c1"># array([0. , 0.5, 1. ])</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]))</span>
+<span class="linenos">11</span><span class="c1"># array([0.        , 1.        , 2.30258509])</span>
+<span class="linenos">12</span><span class="c1"># np.log は自然対数（底が e の対数）</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">]))</span>
+<span class="linenos">15</span><span class="c1"># array([1., 2., 3., 4.])</span>
 </pre></div>
 </div>
-<p>Python 標準の <code class="docutils literal notranslate"><span class="pre">math</span></code> モジュールにも同名の関数（<code class="docutils literal notranslate"><span class="pre">math.sin</span></code> など）がありますが、<code class="docutils literal notranslate"><span class="pre">math</span></code> の関数はスカラー（単一の値）にしか使えません。配列全体にまとめて適用したい場合は、<code class="docutils literal notranslate"><span class="pre">for</span></code> ループで <code class="docutils literal notranslate"><span class="pre">math.sin</span></code> を繰り返し呼び出すのではなく、numpy の ufunc を使うことで、より簡潔かつ高速に計算できます。</p>
+<p>Python 標準の <code class="docutils literal notranslate"><span class="pre">math</span></code> モジュールにも同名の関数（<code class="docutils literal notranslate"><span class="pre">math.sin</span></code> など）があるが、<code class="docutils literal notranslate"><span class="pre">math</span></code> の関数はスカラー（単一の値）にしか使えない。配列全体にまとめて適用したい場合は、<code class="docutils literal notranslate"><span class="pre">for</span></code> ループで <code class="docutils literal notranslate"><span class="pre">math.sin</span></code> を繰り返し呼び出すのではなく、numpy の ufunc を使うことで、より簡潔かつ高速に計算できる。</p>
 </section>
 </section>
 

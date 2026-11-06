@@ -107,105 +107,110 @@
              
   <section id="functools">
 <h1>functools<a class="headerlink" href="#functools" title="Link to this heading"></a></h1>
-<p>高階関数（関数を引数に取ったり返したりする関数）や、関数・呼び出し可能
-オブジェクトに対する操作をまとめたモジュール。</p>
+<p>高階関数（関数を引数に取ったり返したりする関数）や、関数・呼び出し可能オブジェクトに対する操作をまとめたモジュール。</p>
 <section id="functools-reduce">
 <h2>functools.reduce<a class="headerlink" href="#functools-reduce" title="Link to this heading"></a></h2>
 <p>イテラブルの要素を左から順に累積的に関数へ適用し、単一の値にまとめる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">reduce</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">acc</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">acc</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">acc</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">acc</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
-<span class="go">24</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">reduce</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">acc</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">acc</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos">3</span><span class="go">10</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">acc</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">acc</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">24</span>
 </pre></div>
 </div>
 </section>
 <section id="functools-partial">
 <h2>functools.partial<a class="headerlink" href="#functools-partial" title="Link to this heading"></a></h2>
-<p>既存の関数の一部の引数をあらかじめ固定した、新しい呼び出し可能
-オブジェクトを生成する。コールバック関数に引数を渡したい場合などに便利。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">base</span> <span class="o">**</span> <span class="n">exponent</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">square</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">25</span>
+<p>既存の関数の一部の引数をあらかじめ固定した、新しい呼び出し可能オブジェクトを生成する。コールバック関数に引数を渡したい場合などに便利。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">base</span> <span class="o">**</span> <span class="n">exponent</span>
+<span class="linenos">4</span><span class="gp">...</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">square</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">25</span>
+</pre></div>
+</div>
+<p>Python 3.14 以降では、<code class="docutils literal notranslate"><span class="pre">functools.Placeholder</span></code> を使って位置引数の途中を空けたまま固定できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">Placeholder</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">square</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="n">Placeholder</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># 第 1 引数を空けて第 2 引数を固定</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">25</span>
 </pre></div>
 </div>
 </section>
 <section id="functools-lru-cache-functools-cache">
 <h2>functools.lru_cache / functools.cache<a class="headerlink" href="#functools-lru-cache-functools-cache" title="Link to this heading"></a></h2>
-<p>関数の呼び出し結果をキャッシュし、同じ引数での再計算を避けるデコレータ。<code class="docutils literal notranslate"><span class="pre">lru_cache</span></code> は保持件数の上限を指定でき、<code class="docutils literal notranslate"><span class="pre">cache</span></code> は上限なしでキャッシュする <code class="docutils literal notranslate"><span class="pre">lru_cache(maxsize=None)</span></code> の簡易版。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-<span class="go">832040</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
-<span class="go">CacheInfo(hits=28, misses=31, maxsize=None, currsize=31)</span>
+<p>関数の呼び出し結果をキャッシュし、同じ引数での再計算を避けるデコレータ。<code class="docutils literal notranslate"><span class="pre">lru_cache</span></code> は保持件数の上限（<code class="docutils literal notranslate"><span class="pre">maxsize</span></code>、デフォルトは 128）を指定でき、上限を超えると最も長く使われていない結果から破棄する。<code class="docutils literal notranslate"><span class="pre">cache</span></code> は上限なしでキャッシュする <code class="docutils literal notranslate"><span class="pre">lru_cache(maxsize=None)</span></code> の簡易版である。引数はキャッシュのキーとして使われるため、ハッシュ可能でなければならない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@cache</span>
+<span class="linenos">3</span><span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">832040</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+<span class="linenos">9</span><span class="go">CacheInfo(hits=28, misses=31, maxsize=None, currsize=31)</span>
 </pre></div>
 </div>
 </section>
 <section id="functools-wraps">
 <h2>functools.wraps<a class="headerlink" href="#functools-wraps" title="Link to this heading"></a></h2>
 <p>デコレータを書く際に、ラップ対象の関数が持つ <code class="docutils literal notranslate"><span class="pre">__name__</span></code> や <code class="docutils literal notranslate"><span class="pre">__doc__</span></code> などのメタデータを、生成される wrapper 関数へコピーする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">logged</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;call </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">wrapper</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@logged</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;挨拶を返す。&quot;&quot;&quot;</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">greet</span><span class="o">.</span><span class="vm">__name__</span>
-<span class="go">&#39;greet&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">greet</span><span class="o">.</span><span class="vm">__doc__</span>
-<span class="go">&#39;挨拶を返す。&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">logged</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;call </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gp">... </span>        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">wrapper</span>
+<span class="linenos"> 8</span><span class="gp">...</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@logged</span>
+<span class="linenos">10</span><span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="linenos">11</span><span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;挨拶を返す。&quot;&quot;&quot;</span>
+<span class="linenos">12</span><span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">13</span><span class="gp">...</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">greet</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="linenos">15</span><span class="go">&#39;greet&#39;</span>
+<span class="linenos">16</span><span class="gp">&gt;&gt;&gt; </span><span class="n">greet</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="linenos">17</span><span class="go">&#39;挨拶を返す。&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="functools-singledispatch">
 <h2>functools.singledispatch<a class="headerlink" href="#functools-singledispatch" title="Link to this heading"></a></h2>
-<p>第一引数の型に応じて呼び出す実装を切り替える関数を作成するデコレータ。<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">isinstance(...)</span></code> を連ねる代わりに、型ごとの処理を <code class="docutils literal notranslate"><span class="pre">register()</span></code> で個別の関数として追加していける。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">singledispatch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@singledispatch</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;object: </span><span class="si">{</span><span class="n">obj</span><span class="si">!r}</span><span class="s2">&quot;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@describe</span><span class="o">.</span><span class="n">register</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">_</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;int: </span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@describe</span><span class="o">.</span><span class="n">register</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">_</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;list of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">}</span><span class="s2"> items&quot;</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">&#39;int: 42&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">&#39;list of 3 items&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">(</span><span class="mf">3.14</span><span class="p">)</span>
-<span class="go">&#39;object: 3.14&#39;</span>
+<p>第一引数の型に応じて呼び出す実装を切り替える関数を作成するデコレータ。<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">isinstance(...)</span></code> を連ねる代わりに、型ごとの処理を <code class="docutils literal notranslate"><span class="pre">register()</span></code> で個別の関数として追加していける。型は引数の型ヒントから判定され、<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">float</span></code> のような Union 型も指定できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">singledispatch</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@singledispatch</span>
+<span class="linenos"> 3</span><span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;object: </span><span class="si">{</span><span class="n">obj</span><span class="si">!r}</span><span class="s2">&quot;</span>
+<span class="linenos"> 5</span><span class="gp">...</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@describe</span><span class="o">.</span><span class="n">register</span>
+<span class="linenos"> 7</span><span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">_</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;int: </span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos"> 9</span><span class="gp">...</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@describe</span><span class="o">.</span><span class="n">register</span>
+<span class="linenos">11</span><span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">_</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<span class="linenos">12</span><span class="gp">... </span>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;list of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">}</span><span class="s2"> items&quot;</span>
+<span class="linenos">13</span><span class="gp">...</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">15</span><span class="go">&#39;int: 42&#39;</span>
+<span class="linenos">16</span><span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">17</span><span class="go">&#39;list of 3 items&#39;</span>
+<span class="linenos">18</span><span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">(</span><span class="mf">3.14</span><span class="p">)</span>
+<span class="linenos">19</span><span class="go">&#39;object: 3.14&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="functools-cmp-to-key">
 <h2>functools.cmp_to_key<a class="headerlink" href="#functools-cmp-to-key" title="Link to this heading"></a></h2>
 <p>2 引数を取り、負・0・正の値を返す旧スタイルの比較関数を、<code class="docutils literal notranslate"><span class="pre">sorted</span></code> や <code class="docutils literal notranslate"><span class="pre">list.sort</span></code> の <code class="docutils literal notranslate"><span class="pre">key</span></code> に渡せる形式に変換する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cmp_to_key</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)))</span>
-<span class="go">[3, 2, 1]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cmp_to_key</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">...</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">compare</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)))</span>
+<span class="linenos">6</span><span class="go">[3, 2, 1]</span>
 </pre></div>
 </div>
 </section>

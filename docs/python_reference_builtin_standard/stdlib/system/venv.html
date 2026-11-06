@@ -103,69 +103,63 @@
              
   <section id="venv">
 <h1>venv<a class="headerlink" href="#venv" title="Link to this heading"></a></h1>
-<p>Python に標準で付属する、軽量な仮想環境を作成するためのモジュール。
-プロジェクトごとに独立した Python 実行環境・パッケージ群を用意することで、
-異なるプロジェクト間での依存パッケージのバージョン衝突を防ぐ。</p>
+<p>Python に標準で付属する、軽量な仮想環境を作成するためのモジュール。プロジェクトごとに独立した Python 実行環境・パッケージ群を用意することで、異なるプロジェクト間での依存パッケージのバージョン衝突を防ぐ。</p>
 <section id="id1">
 <h2>仮想環境の作成<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code> コマンドに続けてディレクトリ名を指定すると、その場所に
-新しい仮想環境が作成される。作成されたディレクトリには、Python 本体への
-参照や <code class="docutils literal notranslate"><span class="pre">pip</span></code>、専用の <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> などが含まれる。</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ python -m venv myenv
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code> コマンドに続けてディレクトリ名を指定すると、その場所に新しい仮想環境が作成される。作成されたディレクトリには、Python 本体への参照や <code class="docutils literal notranslate"><span class="pre">pip</span></code>、専用の <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> などが含まれる。Python 3.13 以降では、仮想環境のディレクトリ内に、その中身全体を Git の管理対象から外す <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> も自動的に作成される。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>$ python -m venv myenv
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>仮想環境の有効化<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>作成しただけでは仮想環境は使われない。有効化（activate）することで、
-シェルの <code class="docutils literal notranslate"><span class="pre">PATH</span></code> が書き換えられ、<code class="docutils literal notranslate"><span class="pre">python</span></code> や <code class="docutils literal notranslate"><span class="pre">pip</span></code> コマンドが
-仮想環境内のものを指すようになる。有効化スクリプトは OS によって
-呼び出し方が異なる。</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Windows (コマンドプロンプト)
-myenv\Scripts\activate
-
-# Windows (PowerShell)
-myenv\Scripts\Activate.ps1
-
-# macOS / Linux
-source myenv/bin/activate
+<p>作成しただけでは仮想環境は使われない。有効化（activate）することで、シェルの <code class="docutils literal notranslate"><span class="pre">PATH</span></code> が書き換えられ、<code class="docutils literal notranslate"><span class="pre">python</span></code> や <code class="docutils literal notranslate"><span class="pre">pip</span></code> コマンドが仮想環境内のものを指すようになる。有効化スクリプトは OS によって呼び出し方が異なる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span># Windows (コマンドプロンプト)
+<span class="linenos">2</span>myenv\Scripts\activate
+<span class="linenos">3</span>
+<span class="linenos">4</span># Windows (PowerShell)
+<span class="linenos">5</span>myenv\Scripts\Activate.ps1
+<span class="linenos">6</span>
+<span class="linenos">7</span># macOS / Linux
+<span class="linenos">8</span>source myenv/bin/activate
 </pre></div>
 </div>
-<p>有効化すると、以降その端末で実行する <code class="docutils literal notranslate"><span class="pre">python</span></code> や <code class="docutils literal notranslate"><span class="pre">pip</span></code> は、
-システムに直接インストールされたものではなく仮想環境内のものが優先される。</p>
+<p>有効化すると、以降その端末で実行する <code class="docutils literal notranslate"><span class="pre">python</span></code> や <code class="docutils literal notranslate"><span class="pre">pip</span></code> は、システムに直接インストールされたものではなく仮想環境内のものが優先される。<code class="docutils literal notranslate"><span class="pre">deactivate</span></code> コマンドを実行すると有効化が解除される。</p>
+<p>なお、有効化は必須ではない。<code class="docutils literal notranslate"><span class="pre">myenv/bin/python</span></code>（Windows では <code class="docutils literal notranslate"><span class="pre">myenv\Scripts\python.exe</span></code>）のように仮想環境内のインタプリタをパスで直接実行しても、その仮想環境が使われる。スクリプトや CI から利用する場合はこの方法が便利である。</p>
 </section>
 <section id="id3">
 <h2>仮想環境が分離するもの<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>仮想環境は、それぞれ独自の <code class="docutils literal notranslate"><span class="pre">site-packages``（サードパーティパッケージの</span>
-<span class="pre">インストール先）を持つ。そのため、仮想環境内で</span> <span class="pre">``pip</span> <span class="pre">install</span></code> を実行
-しても、システム全体の Python 環境や他のプロジェクトの仮想環境には
-一切影響しない。プロジェクトごとに異なるバージョンのライブラリを
-使い分けたい場合や、環境を汚さずに試したいパッケージがある場合に有用。</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(myenv) $ pip install requests
-(myenv) $ pip list
-Package    Version
----------- -------
-pip        24.0
-requests   2.31.0
+<p>仮想環境は、それぞれ独自の <code class="docutils literal notranslate"><span class="pre">site-packages</span></code>（サードパーティパッケージのインストール先）を持つ。そのため、仮想環境内で <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> を実行しても、システム全体の Python 環境や他のプロジェクトの仮想環境には一切影響しない。プロジェクトごとに異なるバージョンのライブラリを使い分けたい場合や、環境を汚さずに試したいパッケージがある場合に有用。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>(myenv) $ pip install requests
+<span class="linenos"> 2</span>(myenv) $ pip list
+<span class="linenos"> 3</span>Package            Version
+<span class="linenos"> 4</span>------------------ ---------
+<span class="linenos"> 5</span>certifi            2025.10.5
+<span class="linenos"> 6</span>charset-normalizer 3.4.4
+<span class="linenos"> 7</span>idna               3.11
+<span class="linenos"> 8</span>pip                25.3
+<span class="linenos"> 9</span>requests           2.32.5
+<span class="linenos">10</span>urllib3            2.5.0
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">requests</span></code> が依存するパッケージも、仮想環境の <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> に一緒にインストールされている（バージョンは実行時期によって異なる）。</p>
 </section>
 <section id="venv-create">
 <h2>venv.create<a class="headerlink" href="#venv-create" title="Link to this heading"></a></h2>
 <p>シェルコマンドとしてだけでなく、Python コードから仮想環境を作成することもできる。<code class="docutils literal notranslate"><span class="pre">with_pip=True</span></code> を指定すると、作成した仮想環境に <code class="docutils literal notranslate"><span class="pre">pip</span></code> も同時にインストールされる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">venv</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;myenv&quot;</span><span class="p">,</span> <span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">venv</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">venv</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;myenv&quot;</span><span class="p">,</span> <span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>より詳細な制御が必要な場合は <code class="docutils literal notranslate"><span class="pre">EnvBuilder</span></code> クラスを使う。こちらは <code class="docutils literal notranslate"><span class="pre">create</span></code> のオプションをまとめて指定するだけでなく、サブクラス化して仮想環境作成後の処理をカスタマイズすることもできる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">venv</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvBuilder</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span> <span class="o">=</span> <span class="n">EnvBuilder</span><span class="p">(</span><span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;myenv&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">venv</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvBuilder</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span> <span class="o">=</span> <span class="n">EnvBuilder</span><span class="p">(</span><span class="n">with_pip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">builder</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;myenv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">venv</span></code> は Python 本体に同梱されているため、追加のインストール作業なしにすぐ使える。一方、サードパーティの <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> はより古い Python のバージョンにも対応しており、動作も高速な場合が多い。また、Poetry や uv のようなプロジェクト管理ツールは、仮想環境の作成・管理に加えて依存パッケージのバージョン固定やビルド・公開まで一括で扱えるが、その分ツール自体の学習コストが必要になる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">venv</span></code> は Python 本体に同梱されているため、原則として追加のインストール作業なしにすぐ使える（ただし Debian / Ubuntu などのシステム付属の Python では、<code class="docutils literal notranslate"><span class="pre">python3-venv</span></code> パッケージを別途インストールする必要がある場合がある）。一方、サードパーティの <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> はより古い Python のバージョンにも対応しており、動作も高速な場合が多い。また、Poetry や uv のようなプロジェクト管理ツールは、仮想環境の作成・管理に加えて依存パッケージのバージョン固定やビルド・公開まで一括で扱えるが、その分ツール自体の学習コストが必要になる。</p>
 </div>
 </section>
 </section>

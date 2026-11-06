@@ -57,6 +57,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#timedelta">timedelta による日付の計算</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#isoformat-fromisoformat">isoformat / fromisoformat</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">タイムゾーン付き datetime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zoneinfo">zoneinfo による地域名のタイムゾーン</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="time.html">time</a></li>
@@ -105,86 +106,109 @@
 <p>日付・時刻を扱うための型（<code class="docutils literal notranslate"><span class="pre">date</span></code>、<code class="docutils literal notranslate"><span class="pre">time</span></code>、<code class="docutils literal notranslate"><span class="pre">datetime</span></code>、<code class="docutils literal notranslate"><span class="pre">timedelta</span></code> など）を提供するモジュール。カレンダー計算やタイムゾーンを考慮した日時処理を、文字列や秒数を直接扱うよりも安全かつ簡潔に記述できる。</p>
 <section id="datetime-now-datetime-today">
 <h2>datetime.now / datetime.today<a class="headerlink" href="#datetime-now-datetime-today" title="Link to this heading"></a></h2>
-<p>現在時刻を表す <code class="docutils literal notranslate"><span class="pre">datetime</span></code> オブジェクトを取得する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span>
-<span class="go">datetime.datetime(2026, 9, 16, 13, 45, 30, 123456)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">day</span>
-<span class="go">(2026, 9, 16)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">second</span>
-<span class="go">(13, 45, 30)</span>
+<p>現在のローカル日時を表す <code class="docutils literal notranslate"><span class="pre">datetime</span></code> オブジェクトを取得する。引数なしの <code class="docutils literal notranslate"><span class="pre">now()</span></code> と <code class="docutils literal notranslate"><span class="pre">today()</span></code> はどちらもタイムゾーン情報を持たない（naive な）ローカル日時を返す。<code class="docutils literal notranslate"><span class="pre">now()</span></code> には <code class="docutils literal notranslate"><span class="pre">now(timezone.utc)</span></code> のようにタイムゾーンを渡せるため、通常は <code class="docutils literal notranslate"><span class="pre">now()</span></code> を使う（後述の「タイムゾーン付き datetime」を参照）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span>
+<span class="linenos">4</span><span class="go">datetime.datetime(2026, 9, 16, 13, 45, 30, 123456)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">day</span>
+<span class="linenos">6</span><span class="go">(2026, 9, 16)</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">second</span>
+<span class="linenos">8</span><span class="go">(13, 45, 30)</span>
 </pre></div>
 </div>
 </section>
 <section id="date-time-datetime">
 <h2>date / time / datetime<a class="headerlink" href="#date-time-datetime" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">date</span></code> は年月日、<code class="docutils literal notranslate"><span class="pre">time</span></code> は時分秒、<code class="docutils literal notranslate"><span class="pre">datetime</span></code> はその両方を保持するクラス。それぞれコンストラクタに数値を渡して直接生成できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span>
-<span class="go">datetime.datetime(2026, 9, 16, 9, 30)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span>  <span class="c1"># 0=月曜</span>
-<span class="go">2</span>
+<p><code class="docutils literal notranslate"><span class="pre">date</span></code> は年月日、<code class="docutils literal notranslate"><span class="pre">time</span></code> は時分秒（とマイクロ秒）、<code class="docutils literal notranslate"><span class="pre">datetime</span></code> はその両方を保持するクラスである。それぞれコンストラクタに数値を渡して直接生成でき、<code class="docutils literal notranslate"><span class="pre">datetime.combine()</span></code> で <code class="docutils literal notranslate"><span class="pre">date</span></code> と <code class="docutils literal notranslate"><span class="pre">time</span></code> から <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を組み立てられる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">datetime</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span>
+<span class="linenos">6</span><span class="go">datetime.datetime(2026, 9, 16, 9, 30)</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span>  <span class="c1"># 月曜が 0、日曜が 6</span>
+<span class="linenos">8</span><span class="go">2</span>
 </pre></div>
 </div>
 </section>
 <section id="strftime-strptime">
 <h2>strftime / strptime<a class="headerlink" href="#strftime-strptime" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">strftime</span></code> は <code class="docutils literal notranslate"><span class="pre">datetime</span></code> オブジェクトを書式文字列に変換し、<code class="docutils literal notranslate"><span class="pre">strptime</span></code> は逆に文字列を解析して <code class="docutils literal notranslate"><span class="pre">datetime</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-<span class="go">&#39;2026-09-16 13:45:00&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2026-09-16 13:45&quot;</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span>
-<span class="go">datetime.datetime(2026, 9, 16, 13, 45)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;2026-09-16 13:45:00&#39;</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&quot;2026-09-16 13:45&quot;</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">datetime.datetime(2026, 9, 16, 13, 45)</span>
 </pre></div>
 </div>
 </section>
 <section id="timedelta">
 <h2>timedelta による日付の計算<a class="headerlink" href="#timedelta" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">timedelta</span></code> は日時の差分・加減算に使う。日付や時刻同士を足し引きすることで、「n 日後」「n 時間前」といった計算を簡単に行える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-<span class="go">datetime.datetime(2026, 9, 23, 0, 0)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">later</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">diff</span> <span class="o">=</span> <span class="n">later</span> <span class="o">-</span> <span class="n">dt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">diff</span><span class="o">.</span><span class="n">days</span>
-<span class="go">100</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">datetime.datetime(2026, 9, 23, 0, 0)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">later</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">diff</span> <span class="o">=</span> <span class="n">later</span> <span class="o">-</span> <span class="n">dt</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">diff</span><span class="o">.</span><span class="n">days</span>
+<span class="linenos">8</span><span class="go">100</span>
 </pre></div>
 </div>
 </section>
 <section id="isoformat-fromisoformat">
 <h2>isoformat / fromisoformat<a class="headerlink" href="#isoformat-fromisoformat" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">isoformat()</span></code> は <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を ISO 8601 形式の文字列に変換し、<code class="docutils literal notranslate"><span class="pre">fromisoformat()</span></code> はその逆に文字列から <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を復元する。JSON や API のレスポンス、ログなどで日時をやり取りする際の標準的なシリアライズ方法。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">&#39;2026-09-16T13:45:30&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-<span class="go">datetime.datetime(2026, 9, 16, 13, 45, 30)</span>
+<p><code class="docutils literal notranslate"><span class="pre">isoformat()</span></code> は <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を ISO 8601 形式の文字列に変換し、<code class="docutils literal notranslate"><span class="pre">fromisoformat()</span></code> はその逆に文字列から <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を復元する。JSON や API のレスポンス、ログなどで日時をやり取りする際の標準的なシリアライズ方法である。Python 3.11 以降の <code class="docutils literal notranslate"><span class="pre">fromisoformat()</span></code> は、UTC を表す末尾の <code class="docutils literal notranslate"><span class="pre">Z</span></code> など ISO 8601 の一般的な表記のほとんどを解析できる（3.10 以前は <code class="docutils literal notranslate"><span class="pre">isoformat()</span></code> が出力する形式しか受け付けなかった）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="linenos">5</span><span class="go">&#39;2026-09-16T13:45:30&#39;</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">datetime.datetime(2026, 9, 16, 13, 45, 30)</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="s2">&quot;2026-09-16T13:45:30Z&quot;</span><span class="p">)</span>
+<span class="linenos">9</span><span class="go">datetime.datetime(2026, 9, 16, 13, 45, 30, tzinfo=datetime.timezone.utc)</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>タイムゾーン付き datetime<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">tzinfo</span></code> を持たない <code class="docutils literal notranslate"><span class="pre">datetime``（naive）は、タイムゾーンの情報を持たない単なる日時の値である。``timezone.utc</span></code> などを指定することで、タイムゾーンを意識した（aware な）``datetime`` を扱える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span><span class="o">.</span><span class="n">tzinfo</span>
-<span class="go">datetime.timezone.utc</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">jst</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">jst</span><span class="p">)</span>
-<span class="go">datetime.datetime(2026, 9, 16, 22, 45, 30, 123456, tzinfo=datetime.timezone(datetime.timedelta(seconds=32400)))</span>
+<p><code class="docutils literal notranslate"><span class="pre">tzinfo</span></code> を持たない <code class="docutils literal notranslate"><span class="pre">datetime</span></code>（naive）は、タイムゾーンの情報を持たない単なる日時の値である。<code class="docutils literal notranslate"><span class="pre">timezone.utc</span></code> などを指定することで、タイムゾーンを意識した（aware な）``datetime`` を扱える。<code class="docutils literal notranslate"><span class="pre">astimezone()</span></code> で別のタイムゾーンに変換できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span><span class="o">.</span><span class="n">tzinfo</span>
+<span class="linenos">4</span><span class="go">datetime.timezone.utc</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">jst</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">utc_now</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">jst</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">datetime.datetime(2026, 9, 16, 22, 45, 30, 123456, tzinfo=datetime.timezone(datetime.timedelta(seconds=32400)))</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>異なるタイムゾーンの <code class="docutils literal notranslate"><span class="pre">datetime</span></code> 同士を比較・演算する際は、両方を aware な <code class="docutils literal notranslate"><span class="pre">datetime</span></code> に統一しておく必要がある。naive と aware を混在させると <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> が発生する。</p>
+<p>異なるタイムゾーンの <code class="docutils literal notranslate"><span class="pre">datetime</span></code> 同士を比較・演算する際は、両方を aware な <code class="docutils literal notranslate"><span class="pre">datetime</span></code> に統一しておく必要がある。naive と aware を混在させると、大小比較や減算では <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> が発生する（<code class="docutils literal notranslate"><span class="pre">==</span></code> による比較は例外にならず、常に <code class="docutils literal notranslate"><span class="pre">False</span></code> になる）。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>現在の UTC 日時を得る <code class="docutils literal notranslate"><span class="pre">datetime.utcnow()</span></code> や、エポック秒から UTC 日時を得る <code class="docutils literal notranslate"><span class="pre">datetime.utcfromtimestamp()</span></code> は Python 3.12 で非推奨になった。これらは UTC の日時を naive な <code class="docutils literal notranslate"><span class="pre">datetime</span></code> として返すため、ローカル日時と取り違えやすい。代わりに <code class="docutils literal notranslate"><span class="pre">datetime.now(timezone.utc)</span></code> や <code class="docutils literal notranslate"><span class="pre">datetime.fromtimestamp(ts,</span> <span class="pre">timezone.utc)</span></code> を使い、aware な <code class="docutils literal notranslate"><span class="pre">datetime</span></code> を得る。</p>
+</div>
+</section>
+<section id="zoneinfo">
+<h2>zoneinfo による地域名のタイムゾーン<a class="headerlink" href="#zoneinfo" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">timezone</span></code> は UTC からの固定のオフセットしか表せないため、夏時間（サマータイム）のある地域を正しく扱えない。<code class="docutils literal notranslate"><span class="pre">&quot;Asia/Tokyo&quot;</span></code> や <code class="docutils literal notranslate"><span class="pre">&quot;America/New_York&quot;</span></code> のような IANA タイムゾーン名で指定したい場合は、標準ライブラリの <code class="docutils literal notranslate"><span class="pre">zoneinfo</span></code> モジュールの <code class="docutils literal notranslate"><span class="pre">ZoneInfo</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;America/New_York&quot;</span><span class="p">))</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">()</span>
+<span class="linenos">5</span><span class="go">datetime.timedelta(days=-1, seconds=72000)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;Asia/Tokyo&quot;</span><span class="p">))</span>
+<span class="linenos">7</span><span class="go">datetime.datetime(2026, 7, 2, 1, 0, tzinfo=zoneinfo.ZoneInfo(key=&#39;Asia/Tokyo&#39;))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">zoneinfo</span></code> は OS のタイムゾーンデータベースを利用する。Windows などデータベースを持たない環境では、PyPI の <code class="docutils literal notranslate"><span class="pre">tzdata</span></code> パッケージをインストールする必要がある。</p>
 </div>
 </section>
 </section>

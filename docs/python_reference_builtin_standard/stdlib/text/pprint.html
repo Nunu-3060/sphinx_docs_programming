@@ -100,77 +100,72 @@
              
   <section id="pprint">
 <h1>pprint<a class="headerlink" href="#pprint" title="Link to this heading"></a></h1>
-<p>ネストしたリストや辞書などのデータ構造を、人間が読みやすい形に整形して
-出力するモジュール。組み込みの <code class="docutils literal notranslate"><span class="pre">print()</span></code> は複雑な構造を1行に詰め込んで
-しまい読みにくいのに対し、<code class="docutils literal notranslate"><span class="pre">pprint</span></code> は適度な位置で改行し、インデントを
-揃えて出力する。</p>
+<p>ネストしたリストや辞書などのデータ構造を、人間が読みやすい形に整形して出力するモジュール。組み込みの <code class="docutils literal notranslate"><span class="pre">print()</span></code> は複雑な構造を 1 行に詰め込んでしまい読みにくいのに対し、<code class="docutils literal notranslate"><span class="pre">pprint</span></code> は適度な位置で改行し、インデントを揃えて出力する。</p>
 <section id="print">
 <h2>print() との比較<a class="headerlink" href="#print" title="Link to this heading"></a></h2>
-<p>実際にどのような違いが出るか、深くネストしたデータ構造を例に見て
-みる。<code class="docutils literal notranslate"><span class="pre">pprint()</span></code> は同じデータを複数行に
-分けて整形して出力する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;太郎&quot;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;花子&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;hobbies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;絵&quot;</span><span class="p">,</span> <span class="s2">&quot;音楽&quot;</span><span class="p">]},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;次郎&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;hobbies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ブロック&quot;</span><span class="p">]},</span>
-<span class="gp">... </span>    <span class="p">],</span>
-<span class="gp">... </span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">{&#39;name&#39;: &#39;太郎&#39;, &#39;age&#39;: 30, &#39;children&#39;: [{&#39;name&#39;: &#39;花子&#39;, &#39;age&#39;: 5, &#39;hobbies&#39;: [&#39;絵&#39;, &#39;音楽&#39;]}, {&#39;name&#39;: &#39;次郎&#39;, &#39;age&#39;: 3, &#39;hobbies&#39;: [&#39;ブロック&#39;]}]}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">{&#39;age&#39;: 30,</span>
-<span class="go"> &#39;children&#39;: [{&#39;age&#39;: 5, &#39;hobbies&#39;: [&#39;絵&#39;, &#39;音楽&#39;], &#39;name&#39;: &#39;花子&#39;},</span>
-<span class="go">              {&#39;age&#39;: 3, &#39;hobbies&#39;: [&#39;ブロック&#39;], &#39;name&#39;: &#39;次郎&#39;}],</span>
-<span class="go"> &#39;name&#39;: &#39;太郎&#39;}</span>
+<p>実際にどのような違いが出るか、深くネストしたデータ構造を例に見てみる。<code class="docutils literal notranslate"><span class="pre">print()</span></code> は 1 行にすべてを出力するのに対し、<code class="docutils literal notranslate"><span class="pre">pprint()</span></code> は同じデータを複数行に分けて整形して出力する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;太郎&quot;</span><span class="p">,</span>
+<span class="linenos"> 3</span><span class="gp">... </span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;花子&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;hobbies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;絵&quot;</span><span class="p">,</span> <span class="s2">&quot;音楽&quot;</span><span class="p">]},</span>
+<span class="linenos"> 6</span><span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;次郎&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;hobbies&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ブロック&quot;</span><span class="p">]},</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="p">],</span>
+<span class="linenos"> 8</span><span class="gp">... </span><span class="p">}</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">{&#39;name&#39;: &#39;太郎&#39;, &#39;age&#39;: 30, &#39;children&#39;: [{&#39;name&#39;: &#39;花子&#39;, &#39;age&#39;: 5, &#39;hobbies&#39;: [&#39;絵&#39;, &#39;音楽&#39;]}, {&#39;name&#39;: &#39;次郎&#39;, &#39;age&#39;: 3, &#39;hobbies&#39;: [&#39;ブロック&#39;]}]}</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">14</span><span class="go">{&#39;age&#39;: 30,</span>
+<span class="linenos">15</span><span class="go"> &#39;children&#39;: [{&#39;age&#39;: 5, &#39;hobbies&#39;: [&#39;絵&#39;, &#39;音楽&#39;], &#39;name&#39;: &#39;花子&#39;},</span>
+<span class="linenos">16</span><span class="go">              {&#39;age&#39;: 3, &#39;hobbies&#39;: [&#39;ブロック&#39;], &#39;name&#39;: &#39;次郎&#39;}],</span>
+<span class="linenos">17</span><span class="go"> &#39;name&#39;: &#39;太郎&#39;}</span>
 </pre></div>
 </div>
 </section>
 <section id="width-indent-sort-dicts">
 <h2>width / indent / sort_dicts パラメータ<a class="headerlink" href="#width-indent-sort-dicts" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">pprint()</span></code> の出力は、いくつかの引数で調整できる。<code class="docutils literal notranslate"><span class="pre">width</span></code> は1行の
-最大文字数（これを超えそうな場合に改行される）、<code class="docutils literal notranslate"><span class="pre">indent</span></code> はネストの
-深さごとに追加するインデント幅、<code class="docutils literal notranslate"><span class="pre">sort_dicts</span></code> は辞書のキーをソートして
-表示するかどうかを制御する（デフォルトは <code class="docutils literal notranslate"><span class="pre">True</span></code> で、<code class="docutils literal notranslate"><span class="pre">False</span></code> にすると
-元の挿入順で表示される）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="go">{&#39;a&#39;: {&#39;x&#39;: 1,</span>
-<span class="go">       &#39;y&#39;: 2},</span>
-<span class="go"> &#39;b&#39;: [1,</span>
-<span class="go">       2,</span>
-<span class="go">       3,</span>
-<span class="go">       4,</span>
-<span class="go">       5,</span>
-<span class="go">       6,</span>
-<span class="go">       7,</span>
-<span class="go">       8]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_dicts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">{&#39;b&#39;: [1, 2, 3, 4, 5, 6, 7, 8], &#39;a&#39;: {&#39;x&#39;: 1, &#39;y&#39;: 2}}</span>
+<p><code class="docutils literal notranslate"><span class="pre">pprint()</span></code> の出力は、いくつかの引数で調整できる。<code class="docutils literal notranslate"><span class="pre">width</span></code> は 1 行の最大文字数（これを超えそうな場合に改行される）、<code class="docutils literal notranslate"><span class="pre">indent</span></code> はネストの深さごとに追加するインデント幅（複数行に分かれる場合にのみ効果がある）、<code class="docutils literal notranslate"><span class="pre">sort_dicts</span></code> は辞書のキーをソートして表示するかどうかを制御する（デフォルトは <code class="docutils literal notranslate"><span class="pre">True</span></code> で、<code class="docutils literal notranslate"><span class="pre">False</span></code> にすると元の挿入順で表示される）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="go">{&#39;a&#39;: {&#39;x&#39;: 1,</span>
+<span class="linenos"> 5</span><span class="go">       &#39;y&#39;: 2},</span>
+<span class="linenos"> 6</span><span class="go"> &#39;b&#39;: [1,</span>
+<span class="linenos"> 7</span><span class="go">       2,</span>
+<span class="linenos"> 8</span><span class="go">       3,</span>
+<span class="linenos"> 9</span><span class="go">       4,</span>
+<span class="linenos">10</span><span class="go">       5,</span>
+<span class="linenos">11</span><span class="go">       6,</span>
+<span class="linenos">12</span><span class="go">       7,</span>
+<span class="linenos">13</span><span class="go">       8]}</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sort_dicts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos">15</span><span class="go">{&#39;b&#39;: [1, 2, 3, 4, 5, 6, 7, 8], &#39;a&#39;: {&#39;x&#39;: 1, &#39;y&#39;: 2}}</span>
+</pre></div>
+</div>
+<p>挿入順のまま表示したいことが多い場合は、<code class="docutils literal notranslate"><span class="pre">sort_dicts=False</span></code> をデフォルトとする <code class="docutils literal notranslate"><span class="pre">pprint.pp()</span></code> を使うと簡潔に書ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pp</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pp</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">{&#39;b&#39;: [1, 2, 3, 4, 5, 6, 7, 8], &#39;a&#39;: {&#39;x&#39;: 1, &#39;y&#39;: 2}}</span>
 </pre></div>
 </div>
 </section>
 <section id="pformat">
 <h2>pformat()<a class="headerlink" href="#pformat" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">pprint()</span></code> は結果を標準出力にそのまま表示するが、画面に表示せず、
-整形済みの文字列として受け取りたい場合は <code class="docutils literal notranslate"><span class="pre">pformat()</span></code> を使う。ログ出力や、別の
-文字列に組み込みたい場合に便利。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pformat</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span> <span class="o">=</span> <span class="n">pformat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span>
-<span class="go">&quot;{&#39;items&#39;: [1, 2, 3], &#39;status&#39;: &#39;ok&#39;}&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;受信データ:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pformat</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<p><code class="docutils literal notranslate"><span class="pre">pprint()</span></code> は結果を標準出力にそのまま表示するが、画面に表示せず、整形済みの文字列として受け取りたい場合は <code class="docutils literal notranslate"><span class="pre">pformat()</span></code> を使う。ログ出力や、別の文字列に組み込みたい場合に便利。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pformat</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span> <span class="o">=</span> <span class="n">pformat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">formatted</span>
+<span class="linenos">5</span><span class="go">&quot;{&#39;items&#39;: [1, 2, 3], &#39;status&#39;: &#39;ok&#39;}&quot;</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;受信データ:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pformat</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">pprint</span></code> は主に開発時のデバッグや、ログ・対話環境での確認用途で使われる。<code class="docutils literal notranslate"><span class="pre">pprint</span></code> は他システムとのデータ交換や永続化を目的とせず、あくまで人間が読む画面上での整形表示を目的とする。構造化データをプログラムの出力として扱いたい場合は、<code class="docutils literal notranslate"><span class="pre">pprint</span></code> の出力形式（Pythonリテラル風）ではなく <a class="reference internal" href="../data_format/json.html"><span class="doc">json</span></a> を使うのが適切である。</p>
+<p><code class="docutils literal notranslate"><span class="pre">pprint</span></code> は主に開発時のデバッグや、ログ・対話環境での確認用途で使われる。他システムとのデータ交換や永続化を目的とせず、あくまで人間が読む画面上での整形表示を目的とする。構造化データをプログラムの出力として扱いたい場合は、<code class="docutils literal notranslate"><span class="pre">pprint</span></code> の出力形式（Python リテラル風）ではなく <a class="reference internal" href="../data_format/json.html"><span class="doc">json</span></a> を使うのが適切である。</p>
 </div>
 </section>
 </section>

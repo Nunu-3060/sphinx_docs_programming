@@ -107,135 +107,146 @@
              
   <section id="collections-abc">
 <h1>collections.abc<a class="headerlink" href="#collections-abc" title="Link to this heading"></a></h1>
-<p>コンテナ型（<code class="docutils literal notranslate"><span class="pre">list</span></code>、<code class="docutils literal notranslate"><span class="pre">dict</span></code>、<code class="docutils literal notranslate"><span class="pre">set</span></code> など）が備えるべき振る舞いを、
-抽象基底クラス（ABC: Abstract Base Class）として定義したモジュール。
-「イテレートできる」「要素数を持つ」「キーで値を取り出せる」といった
-性質を、具体的な型を問わずに <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> で判定したり、関数の
-引数や戻り値の型ヒントとして表現したりするのに使う。</p>
+<p>コンテナ型（<code class="docutils literal notranslate"><span class="pre">list</span></code>、<code class="docutils literal notranslate"><span class="pre">dict</span></code>、<code class="docutils literal notranslate"><span class="pre">set</span></code> など）が備えるべき振る舞いを、抽象基底クラス（ABC: Abstract Base Class）として定義したモジュール。「イテレートできる」「要素数を持つ」「キーで値を取り出せる」といった性質を、具体的な型を問わずに <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> で判定したり、関数の引数や戻り値の型ヒントとして表現したりするのに使う。</p>
 <section id="abc">
 <h2>ABC とは何のためにあるのか<a class="headerlink" href="#abc" title="Link to this heading"></a></h2>
 <p>Python では「<code class="docutils literal notranslate"><span class="pre">list</span></code> かどうか」より「イテレート可能かどうか」のように、振る舞い（プロトコル）に着目したダックタイピングが好まれる。<code class="docutils literal notranslate"><span class="pre">collections.abc</span></code> の ABC は、<code class="docutils literal notranslate"><span class="pre">__iter__</span></code> や <code class="docutils literal notranslate"><span class="pre">__len__</span></code> のような特殊メソッドを実装しているオブジェクトを、継承関係なしに「その性質を持つ」と認識できるようにする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">True</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">True</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">False</span>
 </pre></div>
 </div>
 </section>
 <section id="iterable-iterator">
 <h2>Iterable と Iterator<a class="headerlink" href="#iterable-iterator" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Iterable</span></code> は <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> を持つ（for 文で反復できる）オブジェクトを、<code class="docutils literal notranslate"><span class="pre">Iterator</span></code> はさらに <code class="docutils literal notranslate"><span class="pre">__next__</span></code> を持つ（<code class="docutils literal notranslate"><span class="pre">next()</span></code> で1つずつ値を取り出せる）オブジェクトを表す。自作クラスがこれらの性質を満たすかを継承関係に依らず判定できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Countdown</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="k">raise</span> <span class="ne">StopIteration</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">-=</span> <span class="mi">1</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="go">[3, 2, 1]</span>
+<p><code class="docutils literal notranslate"><span class="pre">Iterable</span></code> は <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> を持つ（for 文で反復できる）オブジェクトを、<code class="docutils literal notranslate"><span class="pre">Iterator</span></code> はさらに <code class="docutils literal notranslate"><span class="pre">__next__</span></code> を持つ（<code class="docutils literal notranslate"><span class="pre">next()</span></code> で 1 つずつ値を取り出せる）オブジェクトを表す。自作クラスがこれらの性質を満たすかを継承関係に依らず判定できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Countdown</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 7</span><span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 9</span><span class="gp">... </span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">10</span><span class="gp">... </span>            <span class="k">raise</span> <span class="ne">StopIteration</span>
+<span class="linenos">11</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="linenos">12</span><span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">13</span><span class="gp">...</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">15</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>
+<span class="linenos">16</span><span class="go">True</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>
+<span class="linenos">18</span><span class="go">True</span>
+<span class="linenos">19</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="linenos">20</span><span class="go">[3, 2, 1]</span>
 </pre></div>
 </div>
 </section>
 <section id="sequence-mapping">
 <h2>Sequence と Mapping<a class="headerlink" href="#sequence-mapping" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Sequence</span></code> はインデックスアクセス（<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>）と順序を持つコンテナ（<code class="docutils literal notranslate"><span class="pre">list</span></code>、<code class="docutils literal notranslate"><span class="pre">tuple</span></code>、<code class="docutils literal notranslate"><span class="pre">str</span></code> など）を、<code class="docutils literal notranslate"><span class="pre">Mapping</span></code> はキーで値を取り出せるコンテナ（<code class="docutils literal notranslate"><span class="pre">dict</span></code> など）を表す。<code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> による判定に使えるほか、<code class="docutils literal notranslate"><span class="pre">Sequence[int]</span></code> のように要素の型を指定したジェネリック型ヒントとしても使える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Mapping</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">Mapping</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">Sequence</span><span class="p">)</span>
-<span class="go">False</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">first_item</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">first_item</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
-<span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_value</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
-<span class="go">2</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Mapping</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="go">True</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">Mapping</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="go">True</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">Sequence</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="go">False</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">first_item</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">10</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos">11</span><span class="gp">...</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">13</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="linenos">14</span><span class="gp">...</span>
+<span class="linenos">15</span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_item</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="linenos">16</span><span class="go">10</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_value</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="linenos">18</span><span class="go">2</span>
 </pre></div>
 </div>
 </section>
 <section id="callable">
 <h2>Callable による型ヒント<a class="headerlink" href="#callable" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Callable</span></code> は、関数やメソッドのような呼び出し可能オブジェクトを表す。<code class="docutils literal notranslate"><span class="pre">Callable[[引数の型...],</span> <span class="pre">戻り値の型]</span></code> の形式でパラメータ化できる。これは、組み込み型や ABC を添字表記でパラメータ化できるようにしたPEP 585 により、かつて <code class="docutils literal notranslate"><span class="pre">typing.Callable</span></code> が担っていた役割を置き換えるもので、新しいコードでは <code class="docutils literal notranslate"><span class="pre">typing.Callable</span></code> の代わりにこちらを使うのが推奨される（詳細は <a class="reference internal" href="../misc/typing.html"><span class="doc">typing</span></a> を参照）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">],</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="go">7</span>
+<p><code class="docutils literal notranslate"><span class="pre">Callable</span></code> は、関数やメソッドのような呼び出し可能オブジェクトを表す。<code class="docutils literal notranslate"><span class="pre">Callable[[引数の型...],</span> <span class="pre">戻り値の型]</span></code> の形式でパラメータ化できる。これは、組み込み型や ABC を添字表記でパラメータ化できるようにした PEP 585 により、かつて <code class="docutils literal notranslate"><span class="pre">typing.Callable</span></code> が担っていた役割を置き換えるもので、新しいコードでは <code class="docutils literal notranslate"><span class="pre">typing.Callable</span></code> の代わりにこちらを使うのが推奨される（詳細は <a class="reference internal" href="../misc/typing.html"><span class="doc">typing</span></a> を参照）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">],</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">7</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>自作クラスを ABC に適合させる<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">__iter__</span></code> や <code class="docutils literal notranslate"><span class="pre">__len__</span></code> などの必要なメソッドを実装していれば、
-そのクラスは明示的に継承しなくても対応する ABC の「サブクラス」として
-認識される（これを構造的サブクラス化と呼ぶ）。また、継承関係を持たない
-まま、明示的にサブクラスとして登録する <code class="docutils literal notranslate"><span class="pre">register()</span></code> という方法も
-用意されている。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sized</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Basket</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="n">items</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Basket</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">Sized</span><span class="p">)</span>
-<span class="go">True</span>
+<p><code class="docutils literal notranslate"><span class="pre">__iter__</span></code> や <code class="docutils literal notranslate"><span class="pre">__len__</span></code> などの必要なメソッドを実装していれば、そのクラスは明示的に継承しなくても対応する ABC の「サブクラス」として認識される（これを構造的サブクラス化と呼ぶ）。また、継承関係を持たないまま、明示的にサブクラスとして登録する <code class="docutils literal notranslate"><span class="pre">register()</span></code> という方法も用意されている。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sized</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Basket</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="n">items</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 7</span><span class="gp">... </span>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="gp">...</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Basket</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">Sized</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">True</span>
+</pre></div>
+</div>
+<p>ただし、メソッドの有無だけで自動的に判定されるのは <code class="docutils literal notranslate"><span class="pre">Iterable</span></code>、<code class="docutils literal notranslate"><span class="pre">Iterator</span></code>、<code class="docutils literal notranslate"><span class="pre">Sized</span></code>、<code class="docutils literal notranslate"><span class="pre">Container</span></code>、<code class="docutils literal notranslate"><span class="pre">Collection</span></code>、<code class="docutils literal notranslate"><span class="pre">Callable</span></code>、<code class="docutils literal notranslate"><span class="pre">Hashable</span></code> など、少数の特殊メソッドで性質が決まる ABC に限られる。<code class="docutils literal notranslate"><span class="pre">Sequence</span></code> や <code class="docutils literal notranslate"><span class="pre">Mapping</span></code> などは、<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> や <code class="docutils literal notranslate"><span class="pre">__len__</span></code> を実装しただけでは <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> が <code class="docutils literal notranslate"><span class="pre">True</span></code> にならず、継承するか <code class="docutils literal notranslate"><span class="pre">register()</span></code> で登録する必要がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Squares</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+<span class="linenos"> 6</span><span class="gp">... </span>            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">... </span>        <span class="k">return</span> <span class="n">index</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 9</span><span class="gp">... </span>        <span class="k">return</span> <span class="mi">10</span>
+<span class="linenos">10</span><span class="gp">...</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Squares</span><span class="p">(),</span> <span class="n">Sequence</span><span class="p">)</span>
+<span class="linenos">12</span><span class="go">False</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Sequence</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Squares</span><span class="p">)</span>
+<span class="linenos">14</span><span class="go">&lt;class &#39;__main__.Squares&#39;&gt;</span>
+<span class="linenos">15</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Squares</span><span class="p">(),</span> <span class="n">Sequence</span><span class="p">)</span>
+<span class="linenos">16</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="mutablemapping">
 <h2>MutableMapping を継承した独自クラスの作成<a class="headerlink" href="#mutablemapping" title="Link to this heading"></a></h2>
 <p>前節の構造的サブクラス化は <code class="docutils literal notranslate"><span class="pre">isinstance()</span></code> による判定を可能にするだけで、<code class="docutils literal notranslate"><span class="pre">update()</span></code> や <code class="docutils literal notranslate"><span class="pre">get()</span></code> のような便利メソッドを自動的に使えるようにはしない。これらを利用したい場合は、実際に ABC を継承する必要がある。<code class="docutils literal notranslate"><span class="pre">collections.abc</span></code> の最も実用的な使い方は、ABC を継承して独自のコンテナクラスを作ることである。<code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code> を継承する場合、<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>、<code class="docutils literal notranslate"><span class="pre">__setitem__</span></code>、<code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>、<code class="docutils literal notranslate"><span class="pre">__iter__</span></code>、<code class="docutils literal notranslate"><span class="pre">__len__</span></code> の 5 つの抽象メソッドだけを実装すれば、<code class="docutils literal notranslate"><span class="pre">update()</span></code>、<code class="docutils literal notranslate"><span class="pre">get()</span></code>、<code class="docutils literal notranslate"><span class="pre">pop()</span></code>、<code class="docutils literal notranslate"><span class="pre">keys()</span></code>、<code class="docutils literal notranslate"><span class="pre">items()</span></code> などの残りのメソッドは ABC 側の実装から「無料で」手に入る。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutableMapping</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">CaseInsensitiveDict</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">CaseInsensitiveDict</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;text/html&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;content-type&quot;</span><span class="p">]</span>
-<span class="go">&#39;text/html&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;*/*&quot;</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">)</span>
-<span class="go">&#39;*/*&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="go">[&#39;content-type&#39;, &#39;accept&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutableMapping</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">CaseInsensitiveDict</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">):</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 5</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="linenos"> 6</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="linenos"> 7</span><span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+<span class="linenos"> 8</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="linenos"> 9</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="linenos">10</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="linenos">11</span><span class="gp">... </span>        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+<span class="linenos">12</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">13</span><span class="gp">... </span>        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+<span class="linenos">14</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">15</span><span class="gp">... </span>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+<span class="linenos">16</span><span class="gp">...</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">CaseInsensitiveDict</span><span class="p">()</span>
+<span class="linenos">18</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;text/html&quot;</span>
+<span class="linenos">19</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;content-type&quot;</span><span class="p">]</span>
+<span class="linenos">20</span><span class="go">&#39;text/html&#39;</span>
+<span class="linenos">21</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;*/*&quot;</span><span class="p">})</span>
+<span class="linenos">22</span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;accept&quot;</span><span class="p">)</span>
+<span class="linenos">23</span><span class="go">&#39;*/*&#39;</span>
+<span class="linenos">24</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="linenos">25</span><span class="go">[&#39;content-type&#39;, &#39;accept&#39;]</span>
 </pre></div>
 </div>
 <div class="admonition note">

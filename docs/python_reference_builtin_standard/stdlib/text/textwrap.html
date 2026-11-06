@@ -102,69 +102,63 @@
              
   <section id="textwrap">
 <h1>textwrap<a class="headerlink" href="#textwrap" title="Link to this heading"></a></h1>
-<p>長いテキストを指定した幅で折り返したり、インデントを整えたりするための
-モジュール。ログ出力や CLI のヘルプメッセージなど、整形されたテキストを
-生成する際に使う。</p>
+<p>長いテキストを指定した幅で折り返したり、インデントを整えたりするためのモジュール。ログ出力や CLI のヘルプメッセージなど、整形されたテキストを生成する際に使う。</p>
 <section id="textwrap-wrap">
 <h2>textwrap.wrap<a class="headerlink" href="#textwrap-wrap" title="Link to this heading"></a></h2>
-<p>テキストを指定した幅（既定は 70 文字）で折り返し、行のリストとして返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumps over the lazy dog&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="go">[&#39;The quick brown fox&#39;, &#39;jumps over the lazy&#39;, &#39;dog&#39;]</span>
+<p>テキストを指定した幅（デフォルトは 70 文字）で折り返し、行のリストとして返す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumps over the lazy dog&quot;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">[&#39;The quick brown fox&#39;, &#39;jumps over the lazy&#39;, &#39;dog&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="textwrap-fill">
 <h2>textwrap.fill<a class="headerlink" href="#textwrap-fill" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">wrap</span></code> と同様に折り返しを行うが、結果を改行 <code class="docutils literal notranslate"><span class="pre">\n</span></code> で連結した1 つの文字列として返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
-<span class="go">The quick brown fox</span>
-<span class="go">jumps over the lazy</span>
-<span class="go">dog</span>
+<p><code class="docutils literal notranslate"><span class="pre">wrap</span></code> と同様に折り返しを行うが、結果を改行 <code class="docutils literal notranslate"><span class="pre">\n</span></code> で連結した 1 つの文字列として返す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">The quick brown fox</span>
+<span class="linenos">3</span><span class="go">jumps over the lazy</span>
+<span class="linenos">4</span><span class="go">dog</span>
 </pre></div>
 </div>
 </section>
 <section id="textwrap-shorten">
 <h2>textwrap.shorten<a class="headerlink" href="#textwrap-shorten" title="Link to this heading"></a></h2>
-<p>テキストを指定した幅に収まるように短縮し、収まりきらない場合は末尾の
-単語を省略記号（既定は <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">[...]'</span></code>。先頭に半角スペースを含む）に
-置き換える。複数の空白は 1 つにまとめられる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="s2">&quot;Hello   world, this is a long sentence&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="go">&#39;Hello world, [...]&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="go">&#39;Hello world&#39;</span>
+<p>テキストを指定した幅に収まるように短縮し、収まりきらない場合は末尾の単語を省略記号（デフォルトは <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">[...]'</span></code>。先頭に半角スペースを含む）に置き換える。複数の空白は 1 つにまとめられる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="s2">&quot;Hello   world, this is a long sentence&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&#39;Hello world, [...]&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">textwrap</span><span class="o">.</span><span class="n">shorten</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;Hello world&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="textwrap-dedent">
 <h2>textwrap.dedent<a class="headerlink" href="#textwrap-dedent" title="Link to this heading"></a></h2>
-<p>複数行文字列に共通する先頭の空白（インデント）を取り除く。三重引用符で
-インデントして書いた文字列リテラルを整形する際によく使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
-<span class="gp">... </span><span class="s2">    line1</span>
-<span class="gp">... </span><span class="s2">    line2</span>
-<span class="gp">... </span><span class="s2">        line3</span>
-<span class="gp">... </span><span class="s2">    &quot;&quot;&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-<span class="go">line1</span>
-<span class="go">line2</span>
-<span class="go">    line3</span>
+<p>複数行文字列に共通する先頭の空白（インデント）を取り除く。三重引用符でインデントして書いた文字列リテラルを整形する際によく使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="linenos">2</span><span class="gp">... </span><span class="s2">    line1</span>
+<span class="linenos">3</span><span class="gp">... </span><span class="s2">    line2</span>
+<span class="linenos">4</span><span class="gp">... </span><span class="s2">        line3</span>
+<span class="linenos">5</span><span class="gp">... </span><span class="s2">    &quot;&quot;&quot;</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="linenos">7</span><span class="go">line1</span>
+<span class="linenos">8</span><span class="go">line2</span>
+<span class="linenos">9</span><span class="go">    line3</span>
 </pre></div>
 </div>
 </section>
 <section id="textwrap-indent">
 <h2>textwrap.indent<a class="headerlink" href="#textwrap-indent" title="Link to this heading"></a></h2>
-<p>各行の先頭に指定した接頭辞を付加する。<code class="docutils literal notranslate"><span class="pre">predicate</span></code> を渡すと、
-どの行に接頭辞を付けるかを条件で制御できる（既定では空行には付けない）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="s2">&quot;line1</span><span class="se">\n</span><span class="s2">line2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">))</span>
-<span class="go">&gt; line1</span>
-<span class="go">&gt; line2</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="s2">&quot;line1</span><span class="se">\n\n</span><span class="s2">line2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="kc">True</span><span class="p">))</span>
-<span class="go">&gt; line1</span>
-<span class="go">&gt;</span>
-<span class="go">&gt; line2</span>
+<p>各行の先頭に指定した接頭辞を付加する。<code class="docutils literal notranslate"><span class="pre">predicate</span></code> を渡すと、どの行に接頭辞を付けるかを条件で制御できる（デフォルトでは空行には付けない）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="s2">&quot;line1</span><span class="se">\n</span><span class="s2">line2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">&gt; line1</span>
+<span class="linenos">3</span><span class="go">&gt; line2</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="s2">&quot;line1</span><span class="se">\n\n</span><span class="s2">line2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="kc">True</span><span class="p">))</span>
+<span class="linenos">6</span><span class="go">&gt; line1</span>
+<span class="linenos">7</span><span class="go">&gt;</span>
+<span class="linenos">8</span><span class="go">&gt; line2</span>
 </pre></div>
 </div>
 </section>

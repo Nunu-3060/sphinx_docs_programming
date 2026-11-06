@@ -106,50 +106,48 @@
 <p>Python のオブジェクトをバイト列にシリアライズ（直列化）し、そこから元のオブジェクトを復元するためのモジュール。JSON と異なり、ほぼ任意の Python オブジェクト（カスタムクラスのインスタンスなど）をそのまま保存・復元できる。</p>
 <section id="pickle-dump-pickle-load">
 <h2>pickle.dump / pickle.load<a class="headerlink" href="#pickle-dump-pickle-load" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dump</span></code> はオブジェクトをファイルに書き込み、<code class="docutils literal notranslate"><span class="pre">load</span></code> はファイルから
-オブジェクトを復元する。ファイルはバイナリモード（<code class="docutils literal notranslate"><span class="pre">&quot;wb&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;rb&quot;</span></code>）
-で開く必要がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">loaded</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">loaded</span>
-<span class="go">{&#39;name&#39;: &#39;Alice&#39;, &#39;scores&#39;: [90, 85, 100]}</span>
+<p><code class="docutils literal notranslate"><span class="pre">dump</span></code> はオブジェクトをファイルに書き込み、<code class="docutils literal notranslate"><span class="pre">load</span></code> はファイルからオブジェクトを復元する。ファイルはバイナリモード（<code class="docutils literal notranslate"><span class="pre">&quot;wb&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;rb&quot;</span></code>）で開く必要がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="gp">...</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="gp">... </span>    <span class="n">loaded</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="gp">...</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">loaded</span>
+<span class="linenos">10</span><span class="go">{&#39;name&#39;: &#39;Alice&#39;, &#39;scores&#39;: [90, 85, 100]}</span>
 </pre></div>
 </div>
 </section>
 <section id="pickle-dumps-pickle-loads">
 <h2>pickle.dumps / pickle.loads<a class="headerlink" href="#pickle-dumps-pickle-loads" title="Link to this heading"></a></h2>
 <p>ファイルを経由せず、バイト列として直接シリアライズ・復元したい場合は <code class="docutils literal notranslate"><span class="pre">dumps</span></code> / <code class="docutils literal notranslate"><span class="pre">loads</span></code> を使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-<span class="go">b&#39;\x80\x05\x95...&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">{&#39;name&#39;: &#39;Alice&#39;, &#39;scores&#39;: [90, 85, 100]}</span>
+<p><code class="docutils literal notranslate"><span class="pre">dump</span></code> / <code class="docutils literal notranslate"><span class="pre">dumps</span></code> が使う pickle プロトコル（データ形式のバージョン）のデフォルトは <code class="docutils literal notranslate"><span class="pre">pickle.DEFAULT_PROTOCOL</span></code> で、Python 3.14 以降は 5、3.13 以前は 4 である。読み込み側はプロトコルを自動判別するが、古い Python で読み込む必要がある場合は <code class="docutils literal notranslate"><span class="pre">protocol</span></code> 引数で明示的に指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 先頭はプロトコル番号を表すヘッダ（Python 3.13 以前では b&#39;\x80\x04&#39;）</span>
+<span class="linenos">3</span><span class="go">b&#39;\x80\x05&#39;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">{&#39;name&#39;: &#39;Alice&#39;, &#39;scores&#39;: [90, 85, 100]}</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>カスタムクラスのシリアライズ<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>インスタンス属性を持つ独自クラスのオブジェクトも、追加の設定なしで
-そのまま保存・復元できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span>
-<span class="go">(1, 2)</span>
+<p>インスタンス属性を持つ独自クラスのオブジェクトも、追加の設定なしでそのまま保存・復元できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+<span class="linenos">4</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="linenos">8</span><span class="go">(1, 2)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>pickle はクラスの定義そのものではなく、クラスがどのモジュールのどの名前で定義されているかという「パス」だけを保存する。そのため、unpickle 時にはそのクラスが同じモジュールパスから import 可能である必要がある。上記の例は対話環境の同一スコープ内で実行しているため問題なく動くが、実際のプログラムでファイルやネットワーク経由で pickle データをやり取りする場合、保存時と復元時でクラスのモジュールを移動・削除・改名すると <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">Can't</span> <span class="pre">get</span> <span class="pre">attribute</span> <span class="pre">'Point'</span> <span class="pre">on</span> <span class="pre">&lt;module</span> <span class="pre">...&gt;</span></code> のようなエラーになるので注意。</p>
+<p>pickle はクラスの定義（コード）そのものではなく、クラスがどのモジュールのどの名前で定義されているかという「パス」だけを保存する。そのため、unpickle 時にはそのクラスが同じモジュールパスから import 可能である必要がある。上記の例は対話環境の同一スコープ内で実行しているため問題なく動くが、実際のプログラムでファイルやネットワーク経由で pickle データをやり取りする場合、保存後にクラスを別のモジュールへ移動したり、クラスやモジュールを削除・改名したりすると、復元時に <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> や <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> になるので注意。</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>

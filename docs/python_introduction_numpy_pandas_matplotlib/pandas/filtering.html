@@ -104,91 +104,91 @@
 <h1>条件によるフィルタリング<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>ブール条件による抽出<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>条件式は、行ごとに真偽値を持つ <code class="docutils literal notranslate"><span class="pre">Series</span></code> を返します。これを <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> の <code class="docutils literal notranslate"><span class="pre">[]</span></code> に渡すことで、条件に合う行だけを抽出できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
-    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">],</span>
-<span class="p">})</span>
-
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span>
-<span class="c1"># 0     True</span>
-<span class="c1"># 1    False</span>
-<span class="c1"># 2     True</span>
-<span class="c1"># Name: age, dtype: bool</span>
-
-<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">]</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>条件式は、行ごとに真偽値を持つ <code class="docutils literal notranslate"><span class="pre">Series</span></code> を返す。これを <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> の <code class="docutils literal notranslate"><span class="pre">[]</span></code> に渡すことで、条件に合う行だけを抽出できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="linenos"> 4</span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
+<span class="linenos"> 5</span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+<span class="linenos"> 6</span>    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Osaka&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">],</span>
+<span class="linenos"> 7</span><span class="p">})</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span>
+<span class="linenos">10</span><span class="c1"># 0     True</span>
+<span class="linenos">11</span><span class="c1"># 1    False</span>
+<span class="linenos">12</span><span class="c1"># 2     True</span>
+<span class="linenos">13</span><span class="c1"># Name: age, dtype: bool</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">]</span>
+<span class="linenos">16</span><span class="c1">#     name  age    city</span>
+<span class="linenos">17</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">18</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>複数条件の組み合わせ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>複数の条件を組み合わせる場合は、Python の <code class="docutils literal notranslate"><span class="pre">and</span></code> / <code class="docutils literal notranslate"><span class="pre">or</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code> を使い、各条件を丸かっこで囲みます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tokyo&quot;</span><span class="p">)]</span>
-<span class="c1">#     name  age   city</span>
-<span class="c1"># 0  Alice   30  Tokyo</span>
+<p>複数の条件を組み合わせる場合は、Python の <code class="docutils literal notranslate"><span class="pre">and</span></code> / <code class="docutils literal notranslate"><span class="pre">or</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code> を使い、各条件を丸かっこで囲む。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Tokyo&quot;</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="c1">#     name  age   city</span>
+<span class="linenos">3</span><span class="c1"># 0  Alice   30  Tokyo</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>~（否定）による条件の反転<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>条件を反転させたい場合は、Python の <code class="docutils literal notranslate"><span class="pre">not</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">~</span></code> を使います。<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code> と同様、反転させたい条件は丸かっこで囲みます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">)]</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>条件を反転させたい場合は、Python の <code class="docutils literal notranslate"><span class="pre">not</span></code> ではなく <code class="docutils literal notranslate"><span class="pre">~</span></code> を使う。<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code> と同様、反転させたい条件は丸かっこで囲む。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="c1">#     name  age    city</span>
+<span class="linenos">3</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">4</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">~(df[&quot;age&quot;]</span> <span class="pre">&lt;</span> <span class="pre">30)</span></code> は「<code class="docutils literal notranslate"><span class="pre">age</span></code> が 30 未満ではない」、つまり「<code class="docutils literal notranslate"><span class="pre">age</span></code> が 30 以上」という条件になります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">~(df[&quot;age&quot;]</span> <span class="pre">&lt;</span> <span class="pre">30)</span></code> は「<code class="docutils literal notranslate"><span class="pre">age</span></code> が 30 未満ではない」、つまり「<code class="docutils literal notranslate"><span class="pre">age</span></code> が 30 以上」という条件になる。</p>
 </section>
 <section id="isin">
 <h2>isin による複数値の一致判定<a class="headerlink" href="#isin" title="Link to this heading"></a></h2>
-<p>「複数の値のいずれかに一致する行」を抽出したい場合、<code class="docutils literal notranslate"><span class="pre">|</span></code> で条件を並べる代わりに <code class="docutils literal notranslate"><span class="pre">isin</span></code> を使うと簡潔に書けます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">])]</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>「複数の値のいずれかに一致する行」を抽出したい場合、<code class="docutils literal notranslate"><span class="pre">|</span></code> で条件を並べる代わりに <code class="docutils literal notranslate"><span class="pre">isin</span></code> を使うと簡潔に書ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;Tokyo&quot;</span><span class="p">,</span> <span class="s2">&quot;Nagoya&quot;</span><span class="p">])]</span>
+<span class="linenos">2</span><span class="c1">#     name  age    city</span>
+<span class="linenos">3</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">4</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
-<p>上の例は <code class="docutils literal notranslate"><span class="pre">df[(df[&quot;city&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;Tokyo&quot;)</span> <span class="pre">|</span> <span class="pre">(df[&quot;city&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;Nagoya&quot;)]</span></code> と同じ結果になりますが、候補が増えるほど <code class="docutils literal notranslate"><span class="pre">isin</span></code> の方が読みやすくなります。</p>
+<p>上の例は <code class="docutils literal notranslate"><span class="pre">df[(df[&quot;city&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;Tokyo&quot;)</span> <span class="pre">|</span> <span class="pre">(df[&quot;city&quot;]</span> <span class="pre">==</span> <span class="pre">&quot;Nagoya&quot;)]</span></code> と同じ結果になるが、候補が増えるほど <code class="docutils literal notranslate"><span class="pre">isin</span></code> の方が読みやすくなる。</p>
 </section>
 <section id="str-contains">
 <h2>文字列条件によるフィルタリング（str.contains）<a class="headerlink" href="#str-contains" title="Link to this heading"></a></h2>
-<p>文字列の列に対しては、<code class="docutils literal notranslate"><span class="pre">.str</span></code> アクセサ（「<a class="reference internal" href="series.html"><span class="doc">Series の基本</span></a>」参照）の <code class="docutils literal notranslate"><span class="pre">contains</span></code> を条件として使うこともよくあります。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;o&quot;</span><span class="p">)]</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
+<p>文字列の列に対しては、<code class="docutils literal notranslate"><span class="pre">.str</span></code> アクセサ（「<a class="reference internal" href="series.html"><span class="doc">Series の基本</span></a>」参照）の <code class="docutils literal notranslate"><span class="pre">contains</span></code> を条件として使うこともよくある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;o&quot;</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="c1">#     name  age    city</span>
+<span class="linenos">3</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">4</span><span class="c1"># 2  Carol   35  Nagoya</span>
 </pre></div>
 </div>
-<p>「都市名に &quot;o&quot; を含む行」のように、部分一致で行を絞り込みたい場合に便利です。<code class="docutils literal notranslate"><span class="pre">isin</span></code> が値の完全一致による絞り込みであるのに対し、<code class="docutils literal notranslate"><span class="pre">str.contains</span></code> は部分一致による絞り込みという違いがあります。</p>
+<p>「都市名に &quot;o&quot; を含む行」のように、部分一致で行を絞り込みたい場合に便利である。<code class="docutils literal notranslate"><span class="pre">isin</span></code> が値の完全一致による絞り込みであるのに対し、<code class="docutils literal notranslate"><span class="pre">str.contains</span></code> は部分一致による絞り込みという違いがある。</p>
 </section>
 <section id="query">
 <h2>query による抽出<a class="headerlink" href="#query" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">query</span></code> メソッドを使うと、条件を文字列として記述できます。列名をそのまま変数のように書けるため、<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> や <code class="docutils literal notranslate"><span class="pre">()</span></code> が減り、条件が読みやすくなる場合があります。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; 28&quot;</span><span class="p">)</span>
-<span class="c1">#     name  age    city</span>
-<span class="c1"># 0  Alice   30   Tokyo</span>
-<span class="c1"># 2  Carol   35  Nagoya</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; 28 and city == &#39;Tokyo&#39;&quot;</span><span class="p">)</span>
-<span class="c1">#     name  age   city</span>
-<span class="c1"># 0  Alice   30  Tokyo</span>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> メソッドを使うと、条件を文字列として記述できる。列名をそのまま変数のように書けるため、<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> や <code class="docutils literal notranslate"><span class="pre">()</span></code> が減り、条件が読みやすくなる場合がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; 28&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="c1">#     name  age    city</span>
+<span class="linenos">3</span><span class="c1"># 0  Alice   30   Tokyo</span>
+<span class="linenos">4</span><span class="c1"># 2  Carol   35  Nagoya</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; 28 and city == &#39;Tokyo&#39;&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="c1">#     name  age   city</span>
+<span class="linenos">8</span><span class="c1"># 0  Alice   30  Tokyo</span>
 </pre></div>
 </div>
-<p>Python の変数を条件に使いたい場合は、変数名の前に <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> を付けます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min_age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">28</span>
-<span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; @min_age&quot;</span><span class="p">)</span>
+<p>Python の変数を条件に使いたい場合は、変数名の前に <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> を付ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">min_age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="linenos">2</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;age &gt; @min_age&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">[]</span></code> を使った書き方と <code class="docutils literal notranslate"><span class="pre">query</span></code> はどちらも同じ結果が得られます。条件がシンプルなら <code class="docutils literal notranslate"><span class="pre">[]</span></code>、条件が複雑になってきたら <code class="docutils literal notranslate"><span class="pre">query</span></code> を使うとコードが読みやすくなることが多いです。好みや状況に応じて使い分けてください。</p>
+<p><code class="docutils literal notranslate"><span class="pre">[]</span></code> を使った書き方と <code class="docutils literal notranslate"><span class="pre">query</span></code> はどちらも同じ結果が得られる。条件がシンプルなら <code class="docutils literal notranslate"><span class="pre">[]</span></code>、条件が複雑になってきたら <code class="docutils literal notranslate"><span class="pre">query</span></code> を使うとコードが読みやすくなることが多い。好みや状況に応じて使い分けるとよい。</p>
 </div>
 </section>
 </section>

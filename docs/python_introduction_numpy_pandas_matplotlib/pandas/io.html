@@ -98,37 +98,37 @@
              
   <section id="id1">
 <h1>データの読み込みと書き出し<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>実務では、ゼロから <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> を作るよりも、既存のファイルからデータを読み込むことがほとんどです。</p>
+<p>実務では、ゼロから <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> を作るよりも、既存のファイルからデータを読み込むことがほとんどである。</p>
 <section id="csv">
 <h2>CSV ファイル<a class="headerlink" href="#csv" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;output.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="c1"># index=False を指定すると、行インデックスを列として書き出さない</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;output.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos">6</span><span class="c1"># index=False を指定すると、行インデックスを列として書き出さない</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">read_csv</span></code> にはエンコーディングや区切り文字を指定するオプションもあります。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">read_csv</span></code> にはエンコーディングや区切り文字を指定するオプションもある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Windows の Excel で保存した日本語を含む CSV ファイルは、Shift_JIS 系の文字コードになっていることがあります。その場合は <code class="docutils literal notranslate"><span class="pre">encoding=&quot;cp932&quot;</span></code> を指定すると、文字化けせずに読み込めます。</p>
+<p>Windows の Excel で保存した日本語を含む CSV ファイルは、Shift_JIS 系の文字コードになっていることがある。その場合は <code class="docutils literal notranslate"><span class="pre">encoding=&quot;cp932&quot;</span></code> を指定すると、文字化けせずに読み込める。</p>
 </section>
 <section id="excel">
 <h2>Excel ファイル<a class="headerlink" href="#excel" title="Link to this heading"></a></h2>
-<p>Excel ファイルの読み書きには、<code class="docutils literal notranslate"><span class="pre">openpyxl</span></code> パッケージが別途必要です。</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; py -m pip install openpyxl</span>
+<p>Excel ファイルの読み書きには、<code class="docutils literal notranslate"><span class="pre">openpyxl</span></code> パッケージが別途必要である。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="go">&gt; py -m pip install openpyxl</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;data.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Sheet1&quot;</span><span class="p">)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;output.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Sheet1&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;data.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Sheet1&quot;</span><span class="p">)</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;output.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Sheet1&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>このほかにも <code class="docutils literal notranslate"><span class="pre">read_json</span></code> や <code class="docutils literal notranslate"><span class="pre">read_sql</span></code> など、さまざまな形式に対応した読み込み関数が用意されています。用途に応じて公式ドキュメントを参照してください。</p>
+<p>このほかにも <code class="docutils literal notranslate"><span class="pre">read_json</span></code> や <code class="docutils literal notranslate"><span class="pre">read_sql</span></code> など、さまざまな形式に対応した読み込み関数が用意されている。用途に応じて公式ドキュメントを参照すること。</p>
 </div>
 </section>
 </section>

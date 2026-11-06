@@ -96,20 +96,20 @@
 <section id="set-add-set-remove-set-discard">
 <h2>set.add / set.remove / set.discard<a class="headerlink" href="#set-add-set-remove-set-discard" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">add</span></code> は集合に要素を 1 つ追加する。すでに同じ要素があれば何も起こらない。<code class="docutils literal notranslate"><span class="pre">remove</span></code> と <code class="docutils literal notranslate"><span class="pre">discard</span></code> はどちらも要素を取り除くが、指定した要素が存在しない場合の挙動が異なる。<code class="docutils literal notranslate"><span class="pre">remove</span></code> は <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> を発生させるのに対し、<code class="docutils literal notranslate"><span class="pre">discard</span></code> はエラーにならず何もしない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;cherry&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">{&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">{&#39;apple&#39;, &#39;cherry&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;melon&quot;</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">KeyError</span>: <span class="n">&#39;melon&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">&quot;melon&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">{&#39;apple&#39;, &#39;cherry&#39;}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;cherry&quot;</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos"> 4</span><span class="go">{&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;}</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos"> 7</span><span class="go">{&#39;apple&#39;, &#39;cherry&#39;}</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;melon&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">10</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos">11</span><span class="gr">KeyError</span>: <span class="n">&#39;melon&#39;</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">&quot;melon&quot;</span><span class="p">)</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos">14</span><span class="go">{&#39;apple&#39;, &#39;cherry&#39;}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -120,90 +120,90 @@
 <section id="set-union-set-intersection-set-difference">
 <h2>set.union / set.intersection / set.difference<a class="headerlink" href="#set-union-set-intersection-set-difference" title="Link to this heading"></a></h2>
 <p>複数の集合に対する集合演算を行う。<code class="docutils literal notranslate"><span class="pre">union</span></code> は和集合（いずれかに含まれる要素）、<code class="docutils literal notranslate"><span class="pre">intersection</span></code> は積集合（両方に含まれる要素）、<code class="docutils literal notranslate"><span class="pre">difference</span></code> は差集合（片方にのみ含まれる要素）を返す。それぞれ演算子 <code class="docutils literal notranslate"><span class="pre">|</span></code>、<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>、<code class="docutils literal notranslate"><span class="pre">-</span></code> でも同じ結果が得られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">{1, 2, 3, 4, 5, 6}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">|</span> <span class="n">b</span>
-<span class="go">{1, 2, 3, 4, 5, 6}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">{3, 4}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
-<span class="go">{3, 4}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">{1, 2}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
-<span class="go">{1, 2}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="go">{1, 2, 3, 4, 5, 6}</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">|</span> <span class="n">b</span>
+<span class="linenos"> 6</span><span class="go">{1, 2, 3, 4, 5, 6}</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="go">{3, 4}</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
+<span class="linenos">10</span><span class="go">{3, 4}</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">12</span><span class="go">{1, 2}</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="linenos">14</span><span class="go">{1, 2}</span>
 </pre></div>
 </div>
 </section>
 <section id="set-symmetric-difference">
 <h2>set.symmetric_difference / <code class="docutils literal notranslate"><span class="pre">^</span></code><a class="headerlink" href="#set-symmetric-difference" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">symmetric_difference</span></code> は対称差集合（どちらか一方にのみ含まれる要素）を返す。演算子 <code class="docutils literal notranslate"><span class="pre">^</span></code> でも同じ結果が得られる。<code class="docutils literal notranslate"><span class="pre">difference</span></code>（<code class="docutils literal notranslate"><span class="pre">-</span></code>）が一方向の差だけを見るのに対し、対称差は両方向の差を合わせたものになる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">{1, 2, 5, 6}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">^</span> <span class="n">b</span>
-<span class="go">{1, 2, 5, 6}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">{1, 2, 5, 6}</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">^</span> <span class="n">b</span>
+<span class="linenos">6</span><span class="go">{1, 2, 5, 6}</span>
 </pre></div>
 </div>
 </section>
 <section id="set-update-set-intersection-update-set-difference-update-set-symmetric-difference-update">
 <h2>set.update / set.intersection_update / set.difference_update / set.symmetric_difference_update<a class="headerlink" href="#set-update-set-intersection-update-set-difference-update-set-symmetric-difference-update" title="Link to this heading"></a></h2>
 <p>これまでに紹介した <code class="docutils literal notranslate"><span class="pre">union</span></code> <code class="docutils literal notranslate"><span class="pre">intersection</span></code> <code class="docutils literal notranslate"><span class="pre">difference</span></code> <code class="docutils literal notranslate"><span class="pre">symmetric_difference</span></code> はいずれも <strong>新しい集合を返し、元の集合を変更しない</strong>。これに対して、末尾に <code class="docutils literal notranslate"><span class="pre">_update</span></code> が付くメソッド群は、辞書の <code class="docutils literal notranslate"><span class="pre">update</span></code> やリストの <code class="docutils literal notranslate"><span class="pre">append</span></code> / <code class="docutils literal notranslate"><span class="pre">extend</span></code> と同様に、<strong>その場（in-place）で元の集合を書き換える</strong>。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>              <span class="c1"># a |= b と同じ</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">{1, 2, 3, 4, 5, 6}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">intersection_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1"># a &amp;= b と同じ</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">{3, 4}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">difference_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>    <span class="c1"># a -= b と同じ</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">{1, 2}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">symmetric_difference_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1"># a ^= b と同じ</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">{1, 2, 5, 6}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>              <span class="c1"># a |= b と同じ</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos"> 5</span><span class="go">{1, 2, 3, 4, 5, 6}</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">intersection_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1"># a &amp;= b と同じ</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos">10</span><span class="go">{3, 4}</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">difference_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>    <span class="c1"># a -= b と同じ</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos">15</span><span class="go">{1, 2}</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos">18</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">symmetric_difference_update</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1"># a ^= b と同じ</span>
+<span class="linenos">19</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos">20</span><span class="go">{1, 2, 5, 6}</span>
 </pre></div>
 </div>
 </section>
 <section id="set-pop-set-clear">
 <h2>set.pop / set.clear<a class="headerlink" href="#set-pop-set-clear" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pop</span></code> は集合から要素を 1 つ取り除いて返す。<code class="docutils literal notranslate"><span class="pre">set</span></code> は順序を持たないため、どの要素が取り除かれるかは決まっていない。空の集合に対して呼び出すと <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">clear</span></code> は集合の要素をすべて取り除き、空にする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>          <span class="c1"># どの要素が返るかは不定</span>
-<span class="go">&#39;apple&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
-<span class="go">set()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">KeyError</span>: <span class="n">&#39;pop from an empty set&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>          <span class="c1"># どの要素が返るかは不定</span>
+<span class="linenos"> 3</span><span class="go">&#39;apple&#39;</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span>
+<span class="linenos"> 6</span><span class="go">set()</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos">10</span><span class="gr">KeyError</span>: <span class="n">&#39;pop from an empty set&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="set-issubset-set-issuperset">
 <h2>set.issubset / set.issuperset<a class="headerlink" href="#set-issubset-set-issuperset" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">issubset</span></code> はある集合が別の集合の部分集合かどうか、<code class="docutils literal notranslate"><span class="pre">issuperset</span></code> は逆にある集合が別の集合を包含しているかどうかを判定する。演算子 <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> と <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> でも同じ判定ができる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="go">True</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span>
+<span class="linenos"> 6</span><span class="go">True</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="go">True</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span>
+<span class="linenos">10</span><span class="go">True</span>
 </pre></div>
 </div>
 <div class="admonition note">

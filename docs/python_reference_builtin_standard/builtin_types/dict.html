@@ -97,62 +97,62 @@
 <section id="dict-get">
 <h2>dict.get<a class="headerlink" href="#dict-get" title="Link to this heading"></a></h2>
 <p>指定したキーに対応する値を取得する。<code class="docutils literal notranslate"><span class="pre">dict[key]</span></code> と異なり、キーが存在しない場合に <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> を発生させず、第 2 引数で指定したデフォルト値（省略時は <code class="docutils literal notranslate"><span class="pre">None</span></code>）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">KeyError</span>: <span class="n">&#39;timeout&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="go">30</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0&quot;</span><span class="p">)</span>
-<span class="go">&#39;localhost&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+<span class="linenos"> 3</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos"> 5</span><span class="gr">KeyError</span>: <span class="n">&#39;timeout&#39;</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="go">30</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">&#39;localhost&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="dict-keys-dict-values-dict-items">
 <h2>dict.keys / dict.values / dict.items<a class="headerlink" href="#dict-keys-dict-values-dict-items" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">keys</span></code> はキーの集合、<code class="docutils literal notranslate"><span class="pre">values</span></code> は値の集合、<code class="docutils literal notranslate"><span class="pre">items</span></code> はキーと値の組（タプル）の集合を、それぞれビューオブジェクトとして返す。ビューは元の辞書と連動しており、辞書が更新されると内容も自動的に反映される。辞書を直接反復（<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">d</span></code>）した場合は、<code class="docutils literal notranslate"><span class="pre">keys()</span></code> を反復した場合と同じキーが得られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alice&quot;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s2">&quot;bob&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="go">[&#39;alice&#39;, &#39;bob&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="go">[90, 75]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="go">[(&#39;alice&#39;, 90), (&#39;bob&#39;, 75)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="go">alice</span>
-<span class="go">bob</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
-<span class="go">alice 90</span>
-<span class="go">bob 75</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alice&quot;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s2">&quot;bob&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="linenos"> 3</span><span class="go">[&#39;alice&#39;, &#39;bob&#39;]</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="linenos"> 5</span><span class="go">[90, 75]</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="linenos"> 7</span><span class="go">[(&#39;alice&#39;, 90), (&#39;bob&#39;, 75)]</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">alice</span>
+<span class="linenos">11</span><span class="go">bob</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="linenos">13</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+<span class="linenos">14</span><span class="go">alice 90</span>
+<span class="linenos">15</span><span class="go">bob 75</span>
 </pre></div>
 </div>
 </section>
 <section id="dict-update">
 <h2>dict.update<a class="headerlink" href="#dict-update" title="Link to this heading"></a></h2>
 <p>別の辞書やキーワード引数の内容を、既存の辞書に取り込む。同じキーが存在する場合は値が上書きされ、存在しないキーは新たに追加される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9090</span><span class="p">,</span> <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
-<span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: False, &#39;timeout&#39;: 30}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9090</span><span class="p">,</span> <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
+<span class="linenos">4</span><span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: False, &#39;timeout&#39;: 30}</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]</span>
+<span class="linenos">7</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="dict-setdefault">
 <h2>dict.setdefault<a class="headerlink" href="#dict-setdefault" title="Link to this heading"></a></h2>
 <p>キーが存在する場合はその値を返し、存在しない場合は指定したデフォルト値をそのキーに設定した上で、そのデフォルト値を返す。キーごとのリストをまとめるような、値の初期化を伴う集計処理でよく使われる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;vegetables&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;carrot&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span>
-<span class="go">{&#39;fruits&#39;: [&#39;apple&#39;, &#39;banana&#39;], &#39;vegetables&#39;: [&#39;carrot&#39;]}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;fruits&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;vegetables&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;carrot&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span>
+<span class="linenos">6</span><span class="go">{&#39;fruits&#39;: [&#39;apple&#39;, &#39;banana&#39;], &#39;vegetables&#39;: [&#39;carrot&#39;]}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -163,39 +163,39 @@
 <section id="id1">
 <h2>辞書のマージ演算子 <code class="docutils literal notranslate"><span class="pre">|</span></code> / <code class="docutils literal notranslate"><span class="pre">|=</span></code><a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">|</span></code> 演算子で 2 つの辞書をマージした新しい辞書を作成できる。同じキーが両方に存在する場合は、右側（後ろ）の辞書の値が優先される。<code class="docutils literal notranslate"><span class="pre">dict.update</span></code> は既存の辞書をその場で書き換えるのに対し、<code class="docutils literal notranslate"><span class="pre">|</span></code> は新しい辞書を返し、元の辞書はどちらも変更されない点が異なる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">overrides</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9090</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">|</span> <span class="n">overrides</span>
-<span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: True}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
-<span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 8080}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8080</span><span class="p">}</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">overrides</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9090</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">|</span> <span class="n">overrides</span>
+<span class="linenos">4</span><span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: True}</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
+<span class="linenos">6</span><span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 8080}</span>
 </pre></div>
 </div>
 <p>その場でマージしたい場合は <code class="docutils literal notranslate"><span class="pre">|=</span></code> を使う。これは <code class="docutils literal notranslate"><span class="pre">update</span></code> とほぼ同じ結果になるが、右辺には辞書（またはキーと値の組を返すイテラブル）をそのまま書ける。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">|=</span> <span class="n">overrides</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
-<span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: True}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">|=</span> <span class="n">overrides</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span>
+<span class="linenos">3</span><span class="go">{&#39;host&#39;: &#39;localhost&#39;, &#39;port&#39;: 9090, &#39;debug&#39;: True}</span>
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>その他の便利なメソッド<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">copy</span></code> は辞書の浅いコピー（shallow copy）を作成する。トップレベルのキーと値の組は新しい辞書にコピーされるが、値自体がミュータブルなオブジェクトの場合はそのオブジェクトが共有される点に注意する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;admin&quot;</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bob&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
-<span class="go">&#39;Alice&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span>        <span class="c1"># リストは共有されているため変化する</span>
-<span class="go">[&#39;admin&#39;, &#39;user&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;admin&quot;</span><span class="p">]}</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bob&quot;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+<span class="linenos">5</span><span class="go">&#39;Alice&#39;</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copied</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span>        <span class="c1"># リストは共有されているため変化する</span>
+<span class="linenos">8</span><span class="go">[&#39;admin&#39;, &#39;user&#39;]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">fromkeys(iterable,</span> <span class="pre">value)</span></code> はクラスメソッドで、指定したイテラブルの各要素をキーとし、すべて同じ値（省略時は <code class="docutils literal notranslate"><span class="pre">None</span></code>）を持つ新しい辞書を作成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">{&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
-<span class="go">{&#39;x&#39;: None, &#39;y&#39;: None}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">{&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: 0}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">{&#39;x&#39;: None, &#39;y&#39;: None}</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -206,25 +206,25 @@
 <section id="dict-pop-dict-popitem">
 <h2>dict.pop / dict.popitem<a class="headerlink" href="#dict-pop-dict-popitem" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pop</span></code> は指定したキーの値を辞書から取り除いて返す。キーが存在しない場合、第 2 引数のデフォルト値を指定していなければ <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">popitem</span></code> は最後に挿入されたキーと値の組を取り除いて返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
-<span class="go">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;grape&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span>
-<span class="go">{&#39;apple&#39;: 10, &#39;cherry&#39;: 20}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span>
-<span class="go">(&#39;cherry&#39;, 20)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span>
-<span class="go">{&#39;apple&#39;: 10}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;banana&quot;</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="go">5</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;grape&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="go">0</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span>
+<span class="linenos"> 7</span><span class="go">{&#39;apple&#39;: 10, &#39;cherry&#39;: 20}</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="go">(&#39;cherry&#39;, 20)</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span>
+<span class="linenos">11</span><span class="go">{&#39;apple&#39;: 10}</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>辞書操作に関する補足として、新しい辞書を作る際は、<code class="docutils literal notranslate"><span class="pre">{k:</span> <span class="pre">v</span> <span class="pre">for</span> <span class="pre">k,</span> <span class="pre">v</span> <span class="pre">in</span> <span class="pre">...}</span></code> の形式で書ける <a class="reference internal" href="comprehension.html"><span class="doc">辞書内包表記</span></a> を使うと簡潔に書ける。また、辞書は挿入順を保持することが言語仕様として保証されており、<code class="docutils literal notranslate"><span class="pre">keys</span></code> や <code class="docutils literal notranslate"><span class="pre">items</span></code> などで反復した際も、キーを追加した順序で値が得られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
-<span class="go">{2: 4, 4: 16}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
+<span class="linenos">3</span><span class="go">{2: 4, 4: 16}</span>
 </pre></div>
 </div>
 </div>

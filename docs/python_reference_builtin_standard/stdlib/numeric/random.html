@@ -63,6 +63,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#random-choices">random.choices</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#random-shuffle">random.shuffle</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#random-seed">random.seed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">コマンドラインからの利用</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html">statistics</a></li>
@@ -105,9 +106,7 @@
              
   <section id="random">
 <h1>random<a class="headerlink" href="#random" title="Link to this heading"></a></h1>
-<p>擬似乱数を生成するためのモジュール。乱数の取得、リストからのランダムな
-選択、要素の並べ替えなど、ゲームやシミュレーション、シャッフル処理などで
-よく使われる機能を提供する。</p>
+<p>擬似乱数を生成するためのモジュール。乱数の取得、リストからのランダムな選択、要素の並べ替えなど、ゲームやシミュレーション、シャッフル処理などでよく使われる機能を提供する。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>このモジュールが生成する乱数は暗号論的に安全ではない。パスワードやトークン、セキュリティ関連の用途には、暗号論的に安全な乱数を生成する <a class="reference internal" href="../misc/secrets.html"><span class="doc">secrets</span></a> モジュールを使用すること。</p>
@@ -115,77 +114,86 @@
 <section id="random-random">
 <h2>random.random<a class="headerlink" href="#random-random" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">0.0</span></code> 以上 <code class="docutils literal notranslate"><span class="pre">1.0</span></code> 未満の浮動小数点数を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-<span class="go">0.6394267984578837</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">0.6394267984578837</span>
 </pre></div>
 </div>
 </section>
 <section id="random-randint">
 <h2>random.randint<a class="headerlink" href="#random-randint" title="Link to this heading"></a></h2>
 <p>指定した範囲（両端を含む）のランダムな整数を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="go">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-<span class="go">[3, 1, 6, 2, 5]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">4</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="linenos">4</span><span class="go">[3, 1, 6, 2, 5]</span>
 </pre></div>
 </div>
 </section>
 <section id="random-choice-random-sample">
 <h2>random.choice / random.sample<a class="headerlink" href="#random-choice-random-sample" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">choice</span></code> はシーケンスから要素を1つ選ぶ。<code class="docutils literal notranslate"><span class="pre">sample</span></code> は重複なしで
-指定した個数の要素を選ぶ。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="s2">&quot;Dave&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
-<span class="go">&#39;Carol&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">[&#39;Dave&#39;, &#39;Alice&#39;]</span>
+<p><code class="docutils literal notranslate"><span class="pre">choice</span></code> はシーケンスから要素を 1 つ選ぶ。<code class="docutils literal notranslate"><span class="pre">sample</span></code> は重複なしで指定した個数の要素を選ぶ。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">,</span> <span class="s2">&quot;Dave&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">&#39;Carol&#39;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">[&#39;Dave&#39;, &#39;Alice&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="random-uniform">
 <h2>random.uniform<a class="headerlink" href="#random-uniform" title="Link to this heading"></a></h2>
-<p>指定した範囲の浮動小数点数を返す。<code class="docutils literal notranslate"><span class="pre">randint</span></code> の浮動小数点数版で、
-両端の値も含まれる可能性がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
-<span class="go">8.599796663725433</span>
+<p>指定した範囲の浮動小数点数を返す。<code class="docutils literal notranslate"><span class="pre">randint</span></code> の浮動小数点数版で、両端の値も含まれる可能性がある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">8.599796663725433</span>
 </pre></div>
 </div>
 </section>
 <section id="random-choices">
 <h2>random.choices<a class="headerlink" href="#random-choices" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">sample</span></code> とは異なり重複を許した（同じ要素を何度でも選べる）
-サンプリングを行う。<code class="docutils literal notranslate"><span class="pre">weights</span></code> 引数で要素ごとの重みを指定すると、
-重みが大きい要素ほど選ばれやすくなる（重み付きサンプリング）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">[&#39;Bob&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Carol&#39;, &#39;Bob&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;Alice&quot; が他の10倍選ばれやすくなる</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">[&#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;]</span>
+<p><code class="docutils literal notranslate"><span class="pre">sample</span></code> とは異なり重複を許した（同じ要素を何度でも選べる）サンプリングを行う。<code class="docutils literal notranslate"><span class="pre">weights</span></code> 引数で要素ごとの重みを指定すると、重みが大きい要素ほど選ばれやすくなる（重み付きサンプリング）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">[&#39;Bob&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Carol&#39;, &#39;Bob&#39;]</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;Alice&quot; が他の 10 倍選ばれやすくなる</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">[&#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;, &#39;Alice&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="random-shuffle">
 <h2>random.shuffle<a class="headerlink" href="#random-shuffle" title="Link to this heading"></a></h2>
 <p>リストの要素をその場（in-place）でランダムに並べ替える。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cards</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cards</span>
-<span class="go">[3, 1, 5, 2, 4]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">cards</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">cards</span>
+<span class="linenos">4</span><span class="go">[3, 1, 5, 2, 4]</span>
 </pre></div>
 </div>
 </section>
 <section id="random-seed">
 <h2>random.seed<a class="headerlink" href="#random-seed" title="Link to this heading"></a></h2>
-<p>乱数生成器の種（シード）を設定する。同じシードを与えると、以降の乱数列が
-再現可能になるため、テストやデバッグに有用。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-<span class="go">0.8444218515250481</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-<span class="go">0.8444218515250481</span>
+<p>乱数生成器の種（シード）を設定する。同じシードを与えると、以降の乱数列が再現可能になるため、テストやデバッグに有用である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">0.8444218515250481</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="linenos">6</span><span class="go">0.8444218515250481</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>モジュールレベルの関数はすべて 1 つの共有された乱数生成器を使う。他のコードの影響を受けずに再現性のある乱数列を得たい場合は、<code class="docutils literal notranslate"><span class="pre">rng</span> <span class="pre">=</span> <span class="pre">random.Random(0)</span></code> のように独立したインスタンスを生成し、そのメソッド（<code class="docutils literal notranslate"><span class="pre">rng.random()</span></code> など）を使うとよい。</p>
+</div>
+</section>
+<section id="id1">
+<h2>コマンドラインからの利用<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Python 3.13 以降では、<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">random</span></code> としてコマンドラインから直接乱数を得られる。引数が整数なら 1 以上その値以下の整数、浮動小数点数なら 0 以上その値以下の浮動小数点数を表示し、それ以外の文字列（または複数の引数）なら、その中からランダムに 1 つを選んで表示する。<code class="docutils literal notranslate"><span class="pre">-c</span></code> / <code class="docutils literal notranslate"><span class="pre">-i</span></code> / <code class="docutils literal notranslate"><span class="pre">-f</span></code> オプションで動作を明示することもできる。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>$ python -m random 6
+<span class="linenos">2</span>4
+<span class="linenos">3</span>$ python -m random Alice Bob Carol
+<span class="linenos">4</span>Bob
 </pre></div>
 </div>
 </section>

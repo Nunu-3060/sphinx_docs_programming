@@ -105,101 +105,103 @@
              
   <section id="configparser">
 <h1>configparser<a class="headerlink" href="#configparser" title="Link to this heading"></a></h1>
-<p>INI ファイル形式（<code class="docutils literal notranslate"><span class="pre">[section]</span></code> とキー・バリューの組で構成される設定ファイル）
-を読み書きするためのモジュール。アプリケーションの設定ファイルを扱う際によく使われる。</p>
+<p>INI ファイル形式（<code class="docutils literal notranslate"><span class="pre">[section]</span></code> とキー・バリューの組で構成される設定ファイル）を読み書きするためのモジュール。アプリケーションの設定ファイルを扱う際によく使われる。</p>
 <section id="id1">
 <h2>ConfigParser の基本<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> オブジェクトを生成し、<code class="docutils literal notranslate"><span class="pre">read</span></code> でファイルを読み込む。
-設定はセクションごとに辞書のようにアクセスできる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># config.ini の内容:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># [server]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># host = localhost</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># port = 8080</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># debug = true</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">configparser</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;config.ini&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="go">[&#39;config.ini&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;host&quot;</span><span class="p">]</span>
-<span class="go">&#39;localhost&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
-<span class="go">&#39;8080&#39;</span>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> オブジェクトを生成し、<code class="docutils literal notranslate"><span class="pre">read</span></code> でファイルを読み込む。設定はセクションごとに辞書のようにアクセスできる。<code class="docutils literal notranslate"><span class="pre">read</span></code> は読み込みに成功したファイル名のリストを返し、存在しないファイルはエラーにならずに無視される。ファイルの存在を前提とする場合は、戻り値を確認するか、<code class="docutils literal notranslate"><span class="pre">open()</span></code> で開いたファイルを <code class="docutils literal notranslate"><span class="pre">read_file</span></code> に渡す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># config.ini の内容:</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># [server]</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># host = localhost</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># port = 8080</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># debug = true</span>
+<span class="linenos"> 6</span><span class="gp">&gt;&gt;&gt;</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">configparser</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;config.ini&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">[&#39;config.ini&#39;]</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;host&quot;</span><span class="p">]</span>
+<span class="linenos">12</span><span class="go">&#39;localhost&#39;</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
+<span class="linenos">14</span><span class="go">&#39;8080&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>セクションとキーの一覧<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">sections()</span></code> でセクション名の一覧を、各セクションに対して <code class="docutils literal notranslate"><span class="pre">options()</span></code> や辞書メソッドでキーの一覧を取得できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
-<span class="go">[&#39;server&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="go">[&#39;host&#39;, &#39;port&#39;, &#39;debug&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;server&quot;</span> <span class="ow">in</span> <span class="n">config</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
+<span class="linenos">2</span><span class="go">[&#39;server&#39;]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="linenos">4</span><span class="go">[&#39;host&#39;, &#39;port&#39;, &#39;debug&#39;]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;server&quot;</span> <span class="ow">in</span> <span class="n">config</span>
+<span class="linenos">6</span><span class="go">True</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+<span class="linenos">8</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="getint-getboolean">
 <h2>getint / getboolean による型変換<a class="headerlink" href="#getint-getboolean" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">config[&quot;section&quot;][&quot;key&quot;]</span></code> で取得した値は常に文字列になる。数値や真偽値として扱いたい場合は <code class="docutils literal notranslate"><span class="pre">getint</span></code>、<code class="docutils literal notranslate"><span class="pre">getfloat</span></code>、<code class="docutils literal notranslate"><span class="pre">getboolean</span></code> を使うと自動的に変換される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
-<span class="go">&#39;8080&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
-<span class="go">8080</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">)</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="go">&#39;8080&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">8080</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>値の設定とファイルへの書き込み<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>セクションの追加や値の変更を行い、<code class="docutils literal notranslate"><span class="pre">write</span></code> でファイルに保存できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">][</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;9090&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;config.ini&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="gp">...</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">][</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;9090&quot;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;config.ini&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">5</span><span class="gp">... </span>    <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="linenos">6</span><span class="gp">...</span>
 </pre></div>
 </div>
 </section>
 <section id="fallback">
 <h2>fallback とデフォルト値<a class="headerlink" href="#fallback" title="Link to this heading"></a></h2>
 <p>キーが存在しない場合に備え、<code class="docutils literal notranslate"><span class="pre">get</span></code> 系メソッドには <code class="docutils literal notranslate"><span class="pre">fallback</span></code> 引数でデフォルト値を指定できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">)</span>
-<span class="go">&#39;10&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;retries&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">3</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&#39;10&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;retries&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">3</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>セクション名・キー名の大文字小文字の扱いなど細かな挙動は Python 公式ドキュメントの configparser モジュールの説明を参照。</p>
+<p>デフォルトでは、キー名は小文字に変換されて大文字小文字を区別せずに扱われるが、セクション名は区別される。細かな挙動は <a class="reference external" href="https://docs.python.org/ja/3/library/configparser.html">Python 公式ドキュメントの configparser モジュールの説明</a> を参照。</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> は既定で <code class="docutils literal notranslate"><span class="pre">BasicInterpolation</span></code> が有効になっており、値の中の <code class="docutils literal notranslate"><span class="pre">%(name)s</span></code> を他のキーの値で置換できる。この機能のため <code class="docutils literal notranslate"><span class="pre">%</span></code> はテンプレート構文の特殊文字として扱われ、<code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">50%</span></code> のように <code class="docutils literal notranslate"><span class="pre">%</span></code> を単体で含む値をそのまま書くと、読み込み時に <code class="docutils literal notranslate"><span class="pre">InterpolationSyntaxError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">%</span></code> そのものを値に含めたい場合は <code class="docutils literal notranslate"><span class="pre">%%</span></code> のように 2 つ重ねてエスケープするか、補間機能を無効にした <code class="docutils literal notranslate"><span class="pre">configparser.ConfigParser(interpolation=None)</span></code> を使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>  <span class="c1"># 値を取得しようとした時点でエラーになる</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="gr">configparser.InterpolationSyntaxError</span>: <span class="n">&#39;%&#39; must be followed by &#39;%&#39; or &#39;(&#39;, found: &#39;%&#39;</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50</span><span class="si">%%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
-<span class="go">&#39;50%&#39;</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
-<span class="go">&#39;50%&#39;</span>
+<p><code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> はデフォルトで <code class="docutils literal notranslate"><span class="pre">BasicInterpolation</span></code> が有効になっており、値の中の <code class="docutils literal notranslate"><span class="pre">%(name)s</span></code> を他のキーの値で置換できる。この機能のため <code class="docutils literal notranslate"><span class="pre">%</span></code> はテンプレート構文の特殊文字として扱われ、<code class="docutils literal notranslate"><span class="pre">value</span> <span class="pre">=</span> <span class="pre">50%</span></code> のように <code class="docutils literal notranslate"><span class="pre">%</span></code> を単体で含む値をそのまま書くと、読み込み時に <code class="docutils literal notranslate"><span class="pre">InterpolationSyntaxError</span></code> が発生する。<code class="docutils literal notranslate"><span class="pre">%</span></code> そのものを値に含めたい場合は <code class="docutils literal notranslate"><span class="pre">%%</span></code> のように 2 つ重ねてエスケープするか、補間機能を無効にした <code class="docutils literal notranslate"><span class="pre">configparser.ConfigParser(interpolation=None)</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>  <span class="c1"># 値を取得しようとした時点でエラーになる</span>
+<span class="linenos"> 4</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="o">...</span>
+<span class="linenos"> 6</span><span class="gr">configparser.InterpolationSyntaxError</span>: <span class="n">&#39;%&#39; must be followed by &#39;%&#39; or &#39;(&#39;, found: &#39;%&#39;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50</span><span class="si">%%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+<span class="linenos">11</span><span class="go">&#39;50%&#39;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="linenos">14</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="s2">&quot;[server]</span><span class="se">\n</span><span class="s2">value = 50%</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">15</span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+<span class="linenos">16</span><span class="go">&#39;50%&#39;</span>
 </pre></div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>古い解説記事に見られる <code class="docutils literal notranslate"><span class="pre">SafeConfigParser</span></code> クラスと <code class="docutils literal notranslate"><span class="pre">readfp()</span></code> メソッドは Python 3.12 で削除された。それぞれ <code class="docutils literal notranslate"><span class="pre">ConfigParser</span></code> と <code class="docutils literal notranslate"><span class="pre">read_file()</span></code> を使う。</p>
 </div>
 </section>
 </section>

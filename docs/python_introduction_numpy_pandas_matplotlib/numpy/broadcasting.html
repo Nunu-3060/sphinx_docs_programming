@@ -97,47 +97,47 @@
              
   <section id="id1">
 <h1>ブロードキャスト<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>形状が異なる配列同士でも、一定のルールに従って自動的に形状を揃えてから演算が行われることがあります。これを「ブロードキャスト」と呼びます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-<span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
-
-<span class="n">m</span> <span class="o">+</span> <span class="n">v</span>
-<span class="c1"># array([[11, 22, 33],</span>
-<span class="c1">#        [14, 25, 36]])</span>
-<span class="c1"># v (shape (3,)) が m の各行に対して繰り返し適用される</span>
+<p>形状が異なる配列同士でも、一定のルールに従って自動的に形状を揃えてから演算が行われることがある。これを「ブロードキャスト」と呼ぶ。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos">4</span><span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">m</span> <span class="o">+</span> <span class="n">v</span>
+<span class="linenos">7</span><span class="c1"># array([[11, 22, 33],</span>
+<span class="linenos">8</span><span class="c1">#        [14, 25, 36]])</span>
+<span class="linenos">9</span><span class="c1"># v (shape (3,)) が m の各行に対して繰り返し適用される</span>
 </pre></div>
 </div>
-<p>スカラー（単一の値）との演算は、ブロードキャストの最も単純な例です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
-<span class="c1"># array([[ 2,  4,  6],</span>
-<span class="c1">#        [ 8, 10, 12]])</span>
+<p>スカラー（単一の値）との演算は、ブロードキャストの最も単純な例である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">2</span><span class="c1"># array([[ 2,  4,  6],</span>
+<span class="linenos">3</span><span class="c1">#        [ 8, 10, 12]])</span>
 </pre></div>
 </div>
-<p>ブロードキャストにより、<code class="docutils literal notranslate"><span class="pre">for</span></code> ループを書かずに配列全体へ効率的に演算を適用できます。</p>
+<p>ブロードキャストにより、<code class="docutils literal notranslate"><span class="pre">for</span></code> ループを書かずに配列全体へ効率的に演算を適用できる。</p>
 <section id="id2">
 <h2>ブロードキャストのルール<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>どのような形状同士なら演算できるのかは、次のルールで判定されます。</p>
+<p>どのような形状同士なら演算できるのかは、次のルールで判定される。</p>
 <ol class="arabic simple">
-<li><p>2 つの配列の次元数が異なる場合は、次元数が少ない方の <code class="docutils literal notranslate"><span class="pre">shape</span></code> の先頭に 1 を補って次元数を揃えます。</p></li>
-<li><p>2 つの <code class="docutils literal notranslate"><span class="pre">shape</span></code> を、末尾（右側）の次元から順に比較します。</p></li>
-<li><p>比較した次元のサイズが「等しい」か、「どちらか一方が 1」であれば、その次元は演算可能です。サイズが 1 の次元は、もう一方のサイズに合わせて拡張されます。</p></li>
-<li><p>すべての次元でこの条件を満たす場合にのみ、ブロードキャストが成立します。1 つでも条件を満たさない次元があると、<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> になります。</p></li>
+<li><p>2 つの配列の次元数が異なる場合は、次元数が少ない方の <code class="docutils literal notranslate"><span class="pre">shape</span></code> の先頭に 1 を補って次元数を揃える。</p></li>
+<li><p>2 つの <code class="docutils literal notranslate"><span class="pre">shape</span></code> を、末尾（右側）の次元から順に比較する。</p></li>
+<li><p>比較した次元のサイズが「等しい」か、「どちらか一方が 1」であれば、その次元は演算可能である。サイズが 1 の次元は、もう一方のサイズに合わせて拡張される。</p></li>
+<li><p>すべての次元でこの条件を満たす場合にのみ、ブロードキャストが成立する。1 つでも条件を満たさない次元があると、<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> になる。</p></li>
 </ol>
-<p>先ほどの <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">+</span> <span class="pre">v</span></code> の例では、<code class="docutils literal notranslate"><span class="pre">m</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">3)</span></code>、<code class="docutils literal notranslate"><span class="pre">v</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(3,)</span></code> です。<code class="docutils literal notranslate"><span class="pre">v</span></code> は次元数が 1 つ少ないため、先頭に 1 が補われて <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">3)</span></code> として扱われます。末尾から比較すると 3 と 3 は等しく、先頭の次元は 2 と 1 で一方が 1 のため、条件を満たしてブロードキャストが成立します。</p>
+<p>先ほどの <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">+</span> <span class="pre">v</span></code> の例では、<code class="docutils literal notranslate"><span class="pre">m</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">3)</span></code>、<code class="docutils literal notranslate"><span class="pre">v</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(3,)</span></code> である。<code class="docutils literal notranslate"><span class="pre">v</span></code> は次元数が 1 つ少ないため、先頭に 1 が補われて <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">3)</span></code> として扱われる。末尾から比較すると 3 と 3 は等しく、先頭の次元は 2 と 1 で一方が 1 のため、条件を満たしてブロードキャストが成立する。</p>
 </section>
 <section id="id3">
 <h2>ブロードキャストできない例<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>ルールを満たさない形状同士で演算しようとすると、<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> になります。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-<span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-
-<span class="n">m</span> <span class="o">+</span> <span class="n">v</span>
-<span class="c1"># ValueError: operands could not be broadcast together with shapes (2,3) (2,)</span>
+<p>ルールを満たさない形状同士で演算しようとすると、<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> になる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos">2</span><span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">m</span> <span class="o">+</span> <span class="n">v</span>
+<span class="linenos">5</span><span class="c1"># ValueError: operands could not be broadcast together with shapes (2,3) (2,)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">m</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">3)</span></code>、<code class="docutils literal notranslate"><span class="pre">v</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,)</span></code> です。末尾の次元を比較すると 3 と 2 になり、どちらも 1 ではなく値も異なるため、拡張できずにエラーになります。エラーが発生したときは、まず演算しようとしている配列同士の <code class="docutils literal notranslate"><span class="pre">shape</span></code> を確認する習慣をつけると原因を特定しやすくなります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">m</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">3)</span></code>、<code class="docutils literal notranslate"><span class="pre">v</span></code> の <code class="docutils literal notranslate"><span class="pre">shape</span></code> は <code class="docutils literal notranslate"><span class="pre">(2,)</span></code> である。末尾の次元を比較すると 3 と 2 になり、どちらも 1 ではなく値も異なるため、拡張できずにエラーになる。エラーが発生したときは、まず演算しようとしている配列同士の <code class="docutils literal notranslate"><span class="pre">shape</span></code> を確認する習慣をつけると原因を特定しやすくなる。</p>
 </section>
 </section>
 

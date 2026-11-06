@@ -70,9 +70,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#deepcopy">deepcopy() による深いコピー</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">浅いコピーが問題になる例</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#copy-deepcopy">__copy__ / __deepcopy__ によるコピー処理のカスタマイズ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#copy-replace">copy.replace() による一部の属性を変更した複製</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="secrets.html">secrets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ast.html">ast</a></li>
 </ul>
 </li>
 </ul>
@@ -106,74 +108,84 @@
              
   <section id="copy">
 <h1>copy<a class="headerlink" href="#copy" title="Link to this heading"></a></h1>
-<p>オブジェクトのコピーを作成するためのモジュール。単純な代入 <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a</span></code> は同じオブジェクトを指す別名を作るだけだが、<code class="docutils literal notranslate"><span class="pre">copy</span></code> モジュールを使うと実体そのものを複製できる。複製の深さによって <code class="docutils literal notranslate"><span class="pre">copy()</span></code> （浅いコピー）と <code class="docutils literal notranslate"><span class="pre">deepcopy()</span></code> （深いコピー）を使い分ける。</p>
+<p>オブジェクトのコピーを作成するためのモジュール。単純な代入 <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a</span></code> は同じオブジェクトを指す別名を作るだけだが、<code class="docutils literal notranslate"><span class="pre">copy</span></code> モジュールを使うと実体そのものを複製できる。複製の深さによって <code class="docutils literal notranslate"><span class="pre">copy()</span></code>（浅いコピー）と <code class="docutils literal notranslate"><span class="pre">deepcopy()</span></code>（深いコピー）を使い分ける。</p>
 <section id="id1">
 <h2>copy() による浅いコピー<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">copy.copy()</span></code> は新しいオブジェクトを作成するが、その中身がリストや
-辞書などのミュータブルなオブジェクトである場合、内部の要素までは複製せず
-元のオブジェクトと共有する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="ow">is</span> <span class="n">a</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">[1, 2, [3, 4]]</span>
+<p><code class="docutils literal notranslate"><span class="pre">copy.copy()</span></code> は新しいオブジェクトを作成するが、その中身がリストや辞書などのミュータブルなオブジェクトである場合、内部の要素までは複製せず元のオブジェクトと共有する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="ow">is</span> <span class="n">a</span>
+<span class="linenos">5</span><span class="go">False</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos">8</span><span class="go">[1, 2, [3, 4]]</span>
 </pre></div>
 </div>
 </section>
 <section id="deepcopy">
 <h2>deepcopy() による深いコピー<a class="headerlink" href="#deepcopy" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code> はネストされた要素も再帰的にすべて複製する。
-元のオブジェクトと複製後のオブジェクトが、内部の要素も含めて完全に
-独立したものになる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">[1, 2, [3, 4]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
-<span class="go">[1, 2, [999, 4]]</span>
+<p><code class="docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code> はネストされた要素も再帰的にすべて複製する。元のオブジェクトと複製後のオブジェクトが、内部の要素も含めて完全に独立したものになる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="linenos">4</span><span class="go">False</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="linenos">7</span><span class="go">[1, 2, [3, 4]]</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
+<span class="linenos">9</span><span class="go">[1, 2, [999, 4]]</span>
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>浅いコピーが問題になる例<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>浅いコピーでは、ネストしたミュータブルなオブジェクト（リストの中のリスト
-など）が元のオブジェクトと共有されたままになるため、片方を変更すると
-もう片方にも影響が及んでしまう。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># ネストしたリストを変更</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>
-<span class="go">[1, 2, [3, 4, 5]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span>
-<span class="go">[1, 2, [3, 4, 5]]</span>
+<p>浅いコピーでは、ネストしたミュータブルなオブジェクト（リストの中のリストなど）が元のオブジェクトと共有されたままになるため、片方を変更するともう片方にも影響が及んでしまう。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># ネストしたリストを変更</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">original</span>
+<span class="linenos">5</span><span class="go">[1, 2, [3, 4, 5]]</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">shallow</span>
+<span class="linenos">7</span><span class="go">[1, 2, [3, 4, 5]]</span>
 </pre></div>
 </div>
 <p>このように、内側のリストは <code class="docutils literal notranslate"><span class="pre">original</span></code> と <code class="docutils literal notranslate"><span class="pre">shallow</span></code> の両方から参照されている同一オブジェクトである。ネストした構造を独立に扱いたい場合は <code class="docutils literal notranslate"><span class="pre">deepcopy()</span></code> を使う必要がある。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>イミュータブルな要素（数値や文字列など）だけで構成されたリストの
-場合は、浅いコピーでも実質的に独立したコピーとして扱える。深いコピーが
-本当に必要かどうかは、扱っているデータの構造次第である。</p>
+<p>イミュータブルな要素（数値や文字列など）だけで構成されたリストの場合は、浅いコピーでも実質的に独立したコピーとして扱える。深いコピーが本当に必要かどうかは、扱っているデータの構造次第である。</p>
 </div>
 </section>
 <section id="copy-deepcopy">
 <h2>__copy__ / __deepcopy__ によるコピー処理のカスタマイズ<a class="headerlink" href="#copy-deepcopy" title="Link to this heading"></a></h2>
 <p>ファイルハンドルやキャッシュなど、複製すべきでない外部リソースを持つ自作クラスでは、<code class="docutils literal notranslate"><span class="pre">__copy__</span></code>/<code class="docutils literal notranslate"><span class="pre">__deepcopy__</span></code> メソッドを定義することで、<code class="docutils literal notranslate"><span class="pre">copy.copy()</span></code>/<code class="docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code> が呼ばれた際の振る舞いを自分で制御できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Cache</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>  <span class="c1"># 複製したくない外部リソースの例</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
-        <span class="n">new</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
-        <span class="n">new</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>  <span class="c1"># 接続オブジェクトは共有する</span>
-        <span class="k">return</span> <span class="n">new</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">class</span><span class="w"> </span><span class="nc">Cache</span><span class="p">:</span>
+<span class="linenos">2</span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="linenos">3</span>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+<span class="linenos">4</span>        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>  <span class="c1"># 複製したくない外部リソースの例</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span>    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+<span class="linenos">7</span>        <span class="n">new</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+<span class="linenos">8</span>        <span class="n">new</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>  <span class="c1"># 接続オブジェクトは共有する</span>
+<span class="linenos">9</span>        <span class="k">return</span> <span class="n">new</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">__deepcopy__</span></code> の引数 <code class="docutils literal notranslate"><span class="pre">memo</span></code> は、コピー済みのオブジェクトを記録しておく辞書で、循環参照があっても無限に再帰しないようにするために使われる。内部の要素を <code class="docutils literal notranslate"><span class="pre">deepcopy()</span></code> する際は、受け取った <code class="docutils literal notranslate"><span class="pre">memo</span></code> をそのまま渡す。</p>
+</section>
+<section id="copy-replace">
+<h2>copy.replace() による一部の属性を変更した複製<a class="headerlink" href="#copy-replace" title="Link to this heading"></a></h2>
+<p>Python 3.13 で追加された <code class="docutils literal notranslate"><span class="pre">copy.replace()</span></code> は、オブジェクトを複製しつつ、指定した属性だけを新しい値に置き換える。dataclass や <code class="docutils literal notranslate"><span class="pre">collections.namedtuple</span></code>、<code class="docutils literal notranslate"><span class="pre">datetime</span></code> オブジェクトなど、<code class="docutils literal notranslate"><span class="pre">__replace__()</span></code> メソッドを実装した型で使える。特に、属性を直接変更できないイミュータブルなオブジェクトから「一部だけ異なるもの」を作りたい場合に便利である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="linenos"> 2</span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="gp">... </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="gp">... </span>    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+<span class="linenos"> 5</span><span class="gp">... </span>    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+<span class="linenos"> 6</span><span class="gp">...</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="go">Point(x=10, y=2)</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
+<span class="linenos">11</span><span class="go">Point(x=1, y=2)</span>
 </pre></div>
 </div>
 </section>

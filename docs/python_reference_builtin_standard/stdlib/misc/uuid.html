@@ -74,6 +74,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="copy.html">copy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="secrets.html">secrets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ast.html">ast</a></li>
 </ul>
 </li>
 </ul>
@@ -110,77 +111,64 @@
 <p>重複する可能性が極めて低い一意な識別子（UUID: Universally Unique Identifier）を生成するためのモジュール。データベースのレコード ID やセッション ID など、システム全体で衝突しない識別子が必要な場面で使う。</p>
 <section id="uuid4-uuid">
 <h2>uuid4() によるランダムな UUID<a class="headerlink" href="#uuid4-uuid" title="Link to this heading"></a></h2>
-<p>最もよく使われるのは、乱数から生成する <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code>。呼び出すたびに
-異なる値が生成される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
-<span class="go">UUID(&#39;c994db5d-afc0-4bfd-a988-69c323db57e9&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
-<span class="go">UUID(&#39;504685d9-2774-4c0b-8059-de2e6500ff4f&#39;)</span>
+<p>最もよく使われるのは、乱数から生成する <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code>。呼び出すたびに異なる値が生成される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">UUID(&#39;c994db5d-afc0-4bfd-a988-69c323db57e9&#39;)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+<span class="linenos">5</span><span class="go">UUID(&#39;504685d9-2774-4c0b-8059-de2e6500ff4f&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="uuid1-uuid">
 <h2>uuid1() によるホスト情報を含む UUID<a class="headerlink" href="#uuid1-uuid" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">uuid1()</span></code> は現在時刻とネットワークインタフェースの MAC アドレスなどを
-元に生成される。生成順序に一定の時系列性があるが、MAC アドレスの情報が
-含まれるためプライバシー上の懸念がある場合は <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> を使う方が無難である。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
-<span class="go">UUID(&#39;a8098c1a-f86e-11da-bd1a-00112444be1e&#39;)</span>
+<p><code class="docutils literal notranslate"><span class="pre">uuid1()</span></code> は現在時刻とネットワークインタフェースの MAC アドレスなどを元に生成される。生成順序に一定の時系列性があるが、MAC アドレスの情報が含まれるためプライバシー上の懸念がある場合は <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> を使う方が無難である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
+<span class="linenos">2</span><span class="go">UUID(&#39;a8098c1a-f86e-11da-bd1a-00112444be1e&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="uuid3-uuid5-uuid">
 <h2>uuid3() / uuid5() による名前ベースの UUID<a class="headerlink" href="#uuid3-uuid5-uuid" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">uuid3()</span></code> と <code class="docutils literal notranslate"><span class="pre">uuid5()</span></code> は、名前空間（<code class="docutils literal notranslate"><span class="pre">uuid.NAMESPACE_DNS</span></code> など）と
-名前の文字列から決定的に UUID を生成する。乱数を使わないため、同じ
-名前空間と名前を渡せば、何度呼び出しても常に同じ UUID が得られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">)</span>
-<span class="go">UUID(&#39;cfbff0d1-9375-5685-968c-48ce8b15ae17&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">)</span>
-<span class="go">UUID(&#39;cfbff0d1-9375-5685-968c-48ce8b15ae17&#39;)</span>
+<p><code class="docutils literal notranslate"><span class="pre">uuid3()</span></code> と <code class="docutils literal notranslate"><span class="pre">uuid5()</span></code> は、名前空間（<code class="docutils literal notranslate"><span class="pre">uuid.NAMESPACE_DNS</span></code> など）と名前の文字列から決定的に UUID を生成する。乱数を使わないため、同じ名前空間と名前を渡せば、何度呼び出しても常に同じ UUID が得られる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">UUID(&#39;cfbff0d1-9375-5685-968c-48ce8b15ae17&#39;)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid5</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">NAMESPACE_DNS</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">UUID(&#39;cfbff0d1-9375-5685-968c-48ce8b15ae17&#39;)</span>
 </pre></div>
 </div>
 <p>内部的には <code class="docutils literal notranslate"><span class="pre">uuid3()</span></code> が MD5、<code class="docutils literal notranslate"><span class="pre">uuid5()</span></code> が SHA-1 でハッシュ計算を行う。<a class="reference internal" href="hashlib.html"><span class="doc">hashlib</span></a> でも触れているように MD5 は衝突攻撃に対して脆弱であるため、特別な理由がない限り <code class="docutils literal notranslate"><span class="pre">uuid3()</span></code> より <code class="docutils literal notranslate"><span class="pre">uuid5()</span></code> を選ぶのが無難である。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>Python 3.14 で追加された <code class="docutils literal notranslate"><span class="pre">uuid7()</span></code> は、RFC 9562 で定義された
-時系列順に並ぶ UUID を生成する。<code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> が完全にランダムなのに
-対し、<code class="docutils literal notranslate"><span class="pre">uuid7()</span></code> はミリ秒単位のタイムスタンプを値の先頭に埋め込むため、
-生成順に単調増加する値になる。データベースの主キーとして使うと、
-ランダムな <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> に比べてインデックスへの挿入が局所化され
-性能上有利になりつつ、実用上一意性も保たれるという利点がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid7</span><span class="p">()</span>
-<span class="go">UUID(&#39;018f4f3e-2c1a-7c3e-9b2a-5e6f7a8b9c0d&#39;)</span>
+<p>Python 3.14 で追加された <code class="docutils literal notranslate"><span class="pre">uuid7()</span></code> は、RFC 9562 で定義された時系列順に並ぶ UUID を生成する。<code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> が完全にランダムなのに対し、<code class="docutils literal notranslate"><span class="pre">uuid7()</span></code> はミリ秒単位のタイムスタンプを値の先頭に埋め込むため、生成順に単調増加する値になる。データベースの主キーとして使うと、ランダムな <code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> に比べてインデックスへの挿入が局所化され性能上有利になりつつ、実用上一意性も保たれるという利点がある。Python 3.13 以前で同様の UUID が必要な場合は、サードパーティ製のライブラリを使う必要がある。なお 3.14 では、同じく RFC 9562 で定義された <code class="docutils literal notranslate"><span class="pre">uuid6()</span></code>/<code class="docutils literal notranslate"><span class="pre">uuid8()</span></code> や、すべてのビットが 0 または 1 の特別な UUID を表す定数 <code class="docutils literal notranslate"><span class="pre">uuid.NIL</span></code>/<code class="docutils literal notranslate"><span class="pre">uuid.MAX</span></code> も追加されている。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid7</span><span class="p">()</span>
+<span class="linenos">2</span><span class="go">UUID(&#39;018f4f3e-2c1a-7c3e-9b2a-5e6f7a8b9c0d&#39;)</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="id1">
 <h2>一意な識別子としての利用例<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>ファイル名やレコードのキーなど、他と衝突してはいけない識別子を発行する
-用途で使われることが多い。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">id</span>
-<span class="go">UUID(&#39;16fd2706-8baf-433b-82eb-8c7fada847da&#39;)</span>
+<p>ファイル名やレコードのキーなど、他と衝突してはいけない識別子を発行する用途で使われることが多い。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+<span class="linenos">4</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="linenos">5</span><span class="gp">...</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">)</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span><span class="o">.</span><span class="n">id</span>
+<span class="linenos">8</span><span class="go">UUID(&#39;16fd2706-8baf-433b-82eb-8c7fada847da&#39;)</span>
 </pre></div>
 </div>
 </section>
 <section id="str-uuid-obj">
 <h2>str(uuid_obj) による文字列化<a class="headerlink" href="#str-uuid-obj" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> などが返す <code class="docutils literal notranslate"><span class="pre">UUID</span></code> オブジェクトは、<code class="docutils literal notranslate"><span class="pre">str()</span></code> に渡すことで
-ハイフン区切りの文字列表現に変換できる。JSON など、UUID 型を直接扱えない
-形式で保存する場合によく使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-<span class="go">&#39;550e8400-e29b-41d4-a716-446655440000&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
-<span class="go">&lt;class &#39;str&#39;&gt;</span>
+<p><code class="docutils literal notranslate"><span class="pre">uuid4()</span></code> などが返す <code class="docutils literal notranslate"><span class="pre">UUID</span></code> オブジェクトは、<code class="docutils literal notranslate"><span class="pre">str()</span></code> に渡すことでハイフン区切りの文字列表現に変換できる。JSON など、UUID 型を直接扱えない形式で保存する場合によく使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">&#39;550e8400-e29b-41d4-a716-446655440000&#39;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+<span class="linenos">5</span><span class="go">&lt;class &#39;str&#39;&gt;</span>
 </pre></div>
 </div>
 <div class="admonition note">

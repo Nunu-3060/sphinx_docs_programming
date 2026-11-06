@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#testcase-test">基本構造: TestCase / <code class="docutils literal notranslate"><span class="pre">test_</span></code> で始まるメソッド</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">代表的なアサーションメソッド</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#setup-teardown">setUp / tearDown</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isolatedasynciotestcase">非同期コードのテスト: IsolatedAsyncioTestCase</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="unittest_mock.html">unittest.mock</a></li>
@@ -101,99 +102,124 @@
              
   <section id="unittest">
 <h1>unittest<a class="headerlink" href="#unittest" title="Link to this heading"></a></h1>
-<p>Python 標準のユニットテストフレームワーク。<code class="docutils literal notranslate"><span class="pre">TestCase</span></code> を継承したクラスに
-テストメソッドを書き、コードが期待通りに動作するかを自動的に検証する。
-追加のインストールが不要で標準ライブラリだけで完結するため、多くの
-既存プロジェクトで採用されている。</p>
+<p>Python 標準のユニットテストフレームワーク。<code class="docutils literal notranslate"><span class="pre">TestCase</span></code> を継承したクラスにテストメソッドを書き、コードが期待通りに動作するかを自動的に検証する。追加のインストールが不要で標準ライブラリだけで完結するため、多くの既存プロジェクトで採用されている。</p>
 <section id="testcase-test">
 <h2>基本構造: TestCase / <code class="docutils literal notranslate"><span class="pre">test_</span></code> で始まるメソッド<a class="headerlink" href="#testcase-test" title="Link to this heading"></a></h2>
 <p>テストは <code class="docutils literal notranslate"><span class="pre">unittest.TestCase</span></code> を継承したクラスとして書く。クラス内の <code class="docutils literal notranslate"><span class="pre">test_</span></code> で始まるメソッドがテストケースとして自動的に認識され、実行される。実行するには <code class="docutils literal notranslate"><span class="pre">unittest.main()</span></code> を呼び出すか、コマンドラインから <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">unittest</span> <span class="pre">ファイル名</span></code> とする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># test_calc.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TestCalc</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_add_is_commutative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># test_calc.py</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 6</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">class</span><span class="w"> </span><span class="nc">TestCalc</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">12</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_add_is_commutative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">19</span>    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>上記のファイルを実行すると、以下のような出力が得られる。</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ python -m unittest test_calc -v
-test_add (test_calc.TestCalc.test_add) ... ok
-test_add_is_commutative (test_calc.TestCalc.test_add_is_commutative) ... ok
-
-----------------------------------------------------------------------
-Ran 2 tests in 0.001s
-
-OK
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>$ python -m unittest test_calc -v
+<span class="linenos">2</span>test_add (test_calc.TestCalc.test_add) ... ok
+<span class="linenos">3</span>test_add_is_commutative (test_calc.TestCalc.test_add_is_commutative) ... ok
+<span class="linenos">4</span>
+<span class="linenos">5</span>----------------------------------------------------------------------
+<span class="linenos">6</span>Ran 2 tests in 0.001s
+<span class="linenos">7</span>
+<span class="linenos">8</span>OK
 </pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">unittest</span></code> を引数なしで実行すると、カレントディレクトリ以下から <code class="docutils literal notranslate"><span class="pre">test*.py</span></code> という名前のファイルを探して、その中のテストをまとめて実行する（テストディスカバリ）。<code class="docutils literal notranslate"><span class="pre">-k</span></code> オプションでテスト名の一部を指定して実行対象を絞り込んだり、<code class="docutils literal notranslate"><span class="pre">--durations</span> <span class="pre">N</span></code>（Python 3.12 で追加）で実行に時間がかかったテストを表示したりすることもできる。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">unittest.makeSuite()</span></code>/<code class="docutils literal notranslate"><span class="pre">unittest.findTestCases()</span></code>/<code class="docutils literal notranslate"><span class="pre">unittest.getTestCaseNames()</span></code> は Python 3.13 で削除された。テストスイートを自分で組み立てる必要がある場合は、<code class="docutils literal notranslate"><span class="pre">unittest.TestLoader</span></code> の <code class="docutils literal notranslate"><span class="pre">loadTestsFromTestCase()</span></code>/<code class="docutils literal notranslate"><span class="pre">loadTestsFromModule()</span></code> などを使う。</p>
 </div>
 </section>
 <section id="id1">
 <h2>代表的なアサーションメソッド<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">TestCase</span></code> は、値を検証するための多数の <code class="docutils literal notranslate"><span class="pre">assert*</span></code> メソッドを提供する。最もよく使うのは、値が等しいことを検証する <code class="docutils literal notranslate"><span class="pre">assertEqual</span></code>、真偽値を検証する <code class="docutils literal notranslate"><span class="pre">assertTrue</span></code>/<code class="docutils literal notranslate"><span class="pre">assertFalse</span></code>、そして例外の送出を検証する <code class="docutils literal notranslate"><span class="pre">assertRaises</span></code> である。<code class="docutils literal notranslate"><span class="pre">assertRaises</span></code> はコンテキストマネージャとして使うと、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロック内で対象の例外が発生したかどうかを検証できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;0 で割ることはできません&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TestDivide</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">divide</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide_is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">divide</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide_by_zero_raises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
-            <span class="n">divide</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 5</span>    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;0 で割ることはできません&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">class</span><span class="w"> </span><span class="nc">TestDivide</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">13</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">divide</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide_is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">16</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">divide</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_divide_by_zero_raises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">19</span>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="linenos">20</span>            <span class="n">divide</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>このほかにも、値がコンテナに含まれるかを調べる <code class="docutils literal notranslate"><span class="pre">assertIn</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code> であることを調べる <code class="docutils literal notranslate"><span class="pre">assertIsNone</span></code>、浮動小数点数の近似比較を行う <code class="docutils literal notranslate"><span class="pre">assertAlmostEqual</span></code> など、多数のアサーションメソッドが用意されている。詳しくは公式ドキュメントの一覧を参照。</p>
+<p>このほかにも、値がコンテナに含まれるかを調べる <code class="docutils literal notranslate"><span class="pre">assertIn</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code> であることを調べる <code class="docutils literal notranslate"><span class="pre">assertIsNone</span></code>、浮動小数点数の近似比較を行う <code class="docutils literal notranslate"><span class="pre">assertAlmostEqual</span></code> など、多数のアサーションメソッドが用意されている。詳しくは公式ドキュメントの一覧を参照のこと。</p>
 </div>
 </section>
 <section id="setup-teardown">
 <h2>setUp / tearDown<a class="headerlink" href="#setup-teardown" title="Link to this heading"></a></h2>
 <p>各テストメソッドの実行前・実行後に共通の準備・後片付けを行いたい場合は、<code class="docutils literal notranslate"><span class="pre">setUp()</span></code>/<code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> をオーバーライドする。<code class="docutils literal notranslate"><span class="pre">setUp()</span></code> は各テストメソッドの実行前に、<code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> は実行後に、それぞれ毎回呼び出される。テスト間で状態が影響し合わないよう、テストごとに新しい状態を用意するのに使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TestStack</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># 各テストメソッドの実行前に毎回呼ばれる</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># 各テストメソッドの実行後に毎回呼ばれる（後片付け用）</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">test_append</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">class</span><span class="w"> </span><span class="nc">TestStack</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 7</span>        <span class="c1"># 各テストメソッドの実行前に毎回呼ばれる</span>
+<span class="linenos"> 8</span>        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>    <span class="k">def</span><span class="w"> </span><span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">11</span>        <span class="c1"># 各テストメソッドの実行後に毎回呼ばれる（後片付け用）</span>
+<span class="linenos">12</span>        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span><span class="w"> </span><span class="nf">test_append</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">19</span>        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">20</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="isolatedasynciotestcase">
+<h2>非同期コードのテスト: IsolatedAsyncioTestCase<a class="headerlink" href="#isolatedasynciotestcase" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> で定義したコルーチンをテストしたい場合は、<code class="docutils literal notranslate"><span class="pre">TestCase</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">unittest.IsolatedAsyncioTestCase</span></code> を継承する。テストメソッド自体を <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> で書けるようになり、その中で <code class="docutils literal notranslate"><span class="pre">await</span></code> を使える。準備・後片付けには <code class="docutils literal notranslate"><span class="pre">asyncSetUp()</span></code>/<code class="docutils literal notranslate"><span class="pre">asyncTearDown()</span></code> を使う。テストごとに新しいイベントループが用意されるため、テスト間でイベントループの状態が影響し合わない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fetch_value</span><span class="p">():</span>
+<span class="linenos"> 6</span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="linenos"> 7</span>    <span class="k">return</span> <span class="mi">42</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">class</span><span class="w"> </span><span class="nc">TestFetch</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">IsolatedAsyncioTestCase</span><span class="p">):</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">asyncSetUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">13</span>        <span class="bp">self</span><span class="o">.</span><span class="n">expected</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_fetch_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">16</span>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch_value</span><span class="p">()</span>
+<span class="linenos">17</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">

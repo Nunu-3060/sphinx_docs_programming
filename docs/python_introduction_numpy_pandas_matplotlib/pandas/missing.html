@@ -101,107 +101,107 @@
              
   <section id="id1">
 <h1>欠損値の処理と重複の除去<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>実際のデータには、値が存在しない「欠損値」が含まれていることがよくあります。pandas では欠損値を <code class="docutils literal notranslate"><span class="pre">NaN</span></code> として表現します。</p>
+<p>実際のデータには、値が存在しない「欠損値」が含まれていることがよくある。pandas では欠損値を <code class="docutils literal notranslate"><span class="pre">NaN</span></code> として表現する。</p>
 <section id="id2">
 <h2>欠損値の確認<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
-<span class="p">})</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
-<span class="c1">#     name    age</span>
-<span class="c1"># 0  False  False</span>
-<span class="c1"># 1  False   True</span>
-<span class="c1"># 2  False  False</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="c1"># name    0</span>
-<span class="c1"># age     1</span>
-<span class="c1"># dtype: int64</span>
-<span class="c1"># 列ごとの欠損値の個数</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="linenos"> 5</span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Carol&quot;</span><span class="p">],</span>
+<span class="linenos"> 6</span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+<span class="linenos"> 7</span><span class="p">})</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+<span class="linenos">10</span><span class="c1">#     name    age</span>
+<span class="linenos">11</span><span class="c1"># 0  False  False</span>
+<span class="linenos">12</span><span class="c1"># 1  False   True</span>
+<span class="linenos">13</span><span class="c1"># 2  False  False</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="linenos">16</span><span class="c1"># name    0</span>
+<span class="linenos">17</span><span class="c1"># age     1</span>
+<span class="linenos">18</span><span class="c1"># dtype: int64</span>
+<span class="linenos">19</span><span class="c1"># 列ごとの欠損値の個数</span>
 </pre></div>
 </div>
 </section>
 <section id="any-all">
 <h2>any / all による判定<a class="headerlink" href="#any-all" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">any()</span></code> は「1 つでも <code class="docutils literal notranslate"><span class="pre">True</span></code> があるか」、<code class="docutils literal notranslate"><span class="pre">all()</span></code> は「すべて <code class="docutils literal notranslate"><span class="pre">True</span></code> か」を判定します。<code class="docutils literal notranslate"><span class="pre">notna()</span></code> は <code class="docutils literal notranslate"><span class="pre">isna()</span></code> とちょうど逆の結果を返すメソッドで、欠損値でない要素を <code class="docutils literal notranslate"><span class="pre">True</span></code> と判定します。これらを組み合わせると、欠損値の有無を列ごと・<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 全体のどちらでも手早く確認できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-<span class="c1"># name    False</span>
-<span class="c1"># age      True</span>
-<span class="c1"># dtype: bool</span>
-<span class="c1"># 列ごとに、欠損値が 1 つでもあるかどうか</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-<span class="c1"># True</span>
-<span class="c1"># DataFrame 全体で欠損値が 1 つでもあるかどうか</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># name     True</span>
-<span class="c1"># age     False</span>
-<span class="c1"># dtype: bool</span>
-<span class="c1"># 列ごとに、欠損値が 1 つも無いかどうか（isna().any() の逆）</span>
+<p><code class="docutils literal notranslate"><span class="pre">any()</span></code> は「1 つでも <code class="docutils literal notranslate"><span class="pre">True</span></code> があるか」、<code class="docutils literal notranslate"><span class="pre">all()</span></code> は「すべて <code class="docutils literal notranslate"><span class="pre">True</span></code> か」を判定する。<code class="docutils literal notranslate"><span class="pre">notna()</span></code> は <code class="docutils literal notranslate"><span class="pre">isna()</span></code> とちょうど逆の結果を返すメソッドで、欠損値でない要素を <code class="docutils literal notranslate"><span class="pre">True</span></code> と判定する。これらを組み合わせると、欠損値の有無を列ごとと <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 全体のどちらでも手早く確認できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+<span class="linenos"> 2</span><span class="c1"># name    False</span>
+<span class="linenos"> 3</span><span class="c1"># age      True</span>
+<span class="linenos"> 4</span><span class="c1"># dtype: bool</span>
+<span class="linenos"> 5</span><span class="c1"># 列ごとに、欠損値が 1 つでもあるかどうか</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="c1"># True</span>
+<span class="linenos"> 9</span><span class="c1"># DataFrame 全体で欠損値が 1 つでもあるかどうか</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">df</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="linenos">12</span><span class="c1"># name     True</span>
+<span class="linenos">13</span><span class="c1"># age     False</span>
+<span class="linenos">14</span><span class="c1"># dtype: bool</span>
+<span class="linenos">15</span><span class="c1"># 列ごとに、欠損値が 1 つも無いかどうか（isna().any() の逆）</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">any()</span></code> / <code class="docutils literal notranslate"><span class="pre">all()</span></code> は <code class="docutils literal notranslate"><span class="pre">Series</span></code> に対しては単一の真偽値を返しますが、<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> に対しては既定で列ごとの結果（<code class="docutils literal notranslate"><span class="pre">Series</span></code>）を返します。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 全体で 1 つの真偽値にまとめたい場合は、上の例のように <code class="docutils literal notranslate"><span class="pre">.any()</span></code> をもう一度呼び出します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">any()</span></code> / <code class="docutils literal notranslate"><span class="pre">all()</span></code> は <code class="docutils literal notranslate"><span class="pre">Series</span></code> に対しては単一の真偽値を返すが、<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> に対しては既定で列ごとの結果（<code class="docutils literal notranslate"><span class="pre">Series</span></code>）を返す。<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 全体で 1 つの真偽値にまとめたい場合は、上の例のように <code class="docutils literal notranslate"><span class="pre">.any()</span></code> をもう一度呼び出す。</p>
 </div>
 </section>
 <section id="id3">
 <h2>欠損値の除去<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="c1"># 欠損値を含む行をすべて削除する</span>
-<span class="c1">#     name   age</span>
-<span class="c1"># 0  Alice  30.0</span>
-<span class="c1"># 2  Carol  35.0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="linenos">2</span><span class="c1"># 欠損値を含む行をすべて削除する</span>
+<span class="linenos">3</span><span class="c1">#     name   age</span>
+<span class="linenos">4</span><span class="c1"># 0  Alice  30.0</span>
+<span class="linenos">5</span><span class="c1"># 2  Carol  35.0</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>欠損値の穴埋め<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># 欠損値を 0 で穴埋めする</span>
-
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-<span class="c1"># 欠損値をその列の平均値で穴埋めする</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">2</span><span class="c1"># 欠損値を 0 で穴埋めする</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="linenos">5</span><span class="c1"># 欠損値をその列の平均値で穴埋めする</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">dropna</span></code> や <code class="docutils literal notranslate"><span class="pre">fillna</span></code> も、「<a class="reference internal" href="dataframe.html"><span class="doc">DataFrame の基本</span></a>」で紹介した <code class="docutils literal notranslate"><span class="pre">drop</span></code> や <code class="docutils literal notranslate"><span class="pre">rename</span></code> と同様に、既定では元のデータを変更せず、結果を新しいオブジェクトとして返します。元のデータを直接書き換えたい場合は、戻り値を変数に代入し直すか、<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dropna</span></code> や <code class="docutils literal notranslate"><span class="pre">fillna</span></code> も、「<a class="reference internal" href="dataframe.html"><span class="doc">DataFrame の基本</span></a>」で紹介した <code class="docutils literal notranslate"><span class="pre">drop</span></code> や <code class="docutils literal notranslate"><span class="pre">rename</span></code> と同様に、既定では元のデータを変更せず、結果を新しいオブジェクトとして返す。元のデータを更新したい場合は、<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.dropna()</span></code> のように戻り値を変数に代入し直す。<code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> は非推奨となっているため使わないこと（「<a class="reference internal" href="dataframe.html"><span class="doc">DataFrame の基本</span></a>」の警告を参照）。</p>
 </div>
 </section>
 <section id="id5">
 <h2>重複行の除去<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>欠損値の処理と並んで、重複行の除去もよく行うデータクレンジングです。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Alice&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-<span class="p">})</span>
-
-<span class="n">df2</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
-<span class="c1"># 0    False</span>
-<span class="c1"># 1    False</span>
-<span class="c1"># 2     True</span>
-<span class="c1"># dtype: bool</span>
-<span class="c1"># 2 行目（Alice, 30）が、それより前の行と完全に一致している</span>
-
-<span class="n">df2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-<span class="c1">#     name  age</span>
-<span class="c1"># 0  Alice   30</span>
-<span class="c1"># 1    Bob   25</span>
+<p>欠損値の処理と並んで、重複行の除去もよく行うデータクレンジングである。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="linenos"> 2</span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Alice&quot;</span><span class="p">],</span>
+<span class="linenos"> 3</span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+<span class="linenos"> 4</span><span class="p">})</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">df2</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
+<span class="linenos"> 7</span><span class="c1"># 0    False</span>
+<span class="linenos"> 8</span><span class="c1"># 1    False</span>
+<span class="linenos"> 9</span><span class="c1"># 2     True</span>
+<span class="linenos">10</span><span class="c1"># dtype: bool</span>
+<span class="linenos">11</span><span class="c1"># 2 行目（Alice, 30）が、それより前の行と完全に一致している</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">df2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="linenos">14</span><span class="c1">#     name  age</span>
+<span class="linenos">15</span><span class="c1"># 0  Alice   30</span>
+<span class="linenos">16</span><span class="c1"># 1    Bob   25</span>
 </pre></div>
 </div>
-<p>既定ではすべての列が一致する行を重複とみなしますが、<code class="docutils literal notranslate"><span class="pre">subset</span></code> 引数で判定に使う列を絞ることもできます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
-<span class="c1"># name 列だけで重複を判定する（先に出現した行が残る）</span>
+<p>既定ではすべての列が一致する行を重複とみなすが、<code class="docutils literal notranslate"><span class="pre">subset</span></code> 引数で判定に使う列を絞ることもできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">df2</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+<span class="linenos">2</span><span class="c1"># name 列だけで重複を判定する（先に出現した行が残る）</span>
 </pre></div>
 </div>
-<p>重複が複数見つかった場合にどちらを残すかは <code class="docutils literal notranslate"><span class="pre">keep</span></code> 引数（既定は <code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>）で指定できます。</p>
+<p>重複が複数見つかった場合にどちらを残すかは <code class="docutils literal notranslate"><span class="pre">keep</span></code> 引数（既定は <code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>）で指定できる。</p>
 </section>
 </section>
 

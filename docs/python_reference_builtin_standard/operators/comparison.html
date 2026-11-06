@@ -90,27 +90,27 @@
              
   <section id="id1">
 <h1>比較演算子<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>2つのオブジェクトの値やその大小関係を比較し、<code class="docutils literal notranslate"><span class="pre">bool</span></code> 値を返す演算子群。</p>
+<p>2 つのオブジェクトの値やその大小関係を比較し、<code class="docutils literal notranslate"><span class="pre">bool</span></code> 値を返す演算子群。</p>
 <section id="id2">
 <h2><code class="docutils literal notranslate"><span class="pre">==</span></code> / <code class="docutils literal notranslate"><span class="pre">!=</span></code><a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>値が等しいか、等しくないかを判定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">==</span> <span class="mf">1.0</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;abc&quot;</span> <span class="o">!=</span> <span class="s2">&quot;abd&quot;</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">==</span> <span class="mf">1.0</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos">4</span><span class="go">True</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;abc&quot;</span> <span class="o">!=</span> <span class="s2">&quot;abd&quot;</span>
+<span class="linenos">6</span><span class="go">True</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><code class="docutils literal notranslate"><span class="pre">==</span></code> はオブジェクトの「値」を比較する（内部的には <code class="docutils literal notranslate"><span class="pre">__eq__</span></code> メソッドが呼ばれる）。これは「同一のオブジェクトかどうか」を調べる <code class="docutils literal notranslate"><span class="pre">is</span></code> 演算子とは異なる概念であり、値が等しくても <code class="docutils literal notranslate"><span class="pre">is</span></code> では <code class="docutils literal notranslate"><span class="pre">False</span></code> になることがある。<code class="docutils literal notranslate"><span class="pre">is</span></code> による同一性の比較については <a class="reference internal" href="membership_identity.html"><span class="doc">メンバーシップ・同一性演算子</span></a> で詳しく扱う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+<span class="linenos">4</span><span class="go">True</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="linenos">6</span><span class="go">False</span>
 </pre></div>
 </div>
 </div>
@@ -118,36 +118,36 @@
 <section id="id3">
 <h2><code class="docutils literal notranslate"><span class="pre">&lt;</span></code> / <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> / <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> / <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>大小関係を判定する。数値だけでなく、文字列やタプルなど順序付け可能な型にも使用できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">5</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">&lt;=</span> <span class="mi">5</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;apple&quot;</span> <span class="o">&lt;</span> <span class="s2">&quot;banana&quot;</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">5</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">&lt;=</span> <span class="mi">5</span>
+<span class="linenos">4</span><span class="go">True</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;apple&quot;</span> <span class="o">&lt;</span> <span class="s2">&quot;banana&quot;</span>
+<span class="linenos">6</span><span class="go">True</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">8</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>連鎖比較<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> のように比較演算子を連ねて書くと、<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">and</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> と同じ意味になる（<code class="docutils literal notranslate"><span class="pre">a</span></code> や <code class="docutils literal notranslate"><span class="pre">b</span></code> が2回評価されない点にも注意）。数学的な区間の表記に近い書き方ができる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">3</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">2</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span>
-<span class="go">True</span>
+<p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> のように比較演算子を連ねて書くと、<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span> <span class="pre">and</span> <span class="pre">b</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> と同じ意味になる（<code class="docutils literal notranslate"><span class="pre">a</span></code> や <code class="docutils literal notranslate"><span class="pre">b</span></code> が 2 回評価されない点にも注意）。数学的な区間の表記に近い書き方ができる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">3</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">2</span>
+<span class="linenos">4</span><span class="go">False</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span>
+<span class="linenos">7</span><span class="go">True</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>連鎖比較は <code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">&lt;</span> <span class="pre">b)</span> <span class="pre">&lt;</span> <span class="pre">c</span></code> のように左から順に評価して結果の <code class="docutils literal notranslate"><span class="pre">bool</span></code> を次の比較に使う、という意味では <strong>ない</strong>。あくまで各項どうしの比較を <code class="docutils literal notranslate"><span class="pre">and</span></code> でつないだものと等価である。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">1</span>          <span class="c1"># 連鎖比較: (5 &lt; 3) and (3 &lt; 1) と同じ</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>        <span class="c1"># 左の結果 False (== 0) を 1 と比較すると True になってしまう</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">1</span>          <span class="c1"># 連鎖比較: (5 &lt; 3) and (3 &lt; 1) と同じ</span>
+<span class="linenos">2</span><span class="go">False</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>        <span class="c1"># 左の結果 False (== 0) を 1 と比較すると True になってしまう</span>
+<span class="linenos">4</span><span class="go">True</span>
 </pre></div>
 </div>
 </div>

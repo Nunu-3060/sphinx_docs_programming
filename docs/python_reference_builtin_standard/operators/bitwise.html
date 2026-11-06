@@ -94,58 +94,58 @@
 <section id="id2">
 <h2><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> / <code class="docutils literal notranslate"><span class="pre">|</span></code> / <code class="docutils literal notranslate"><span class="pre">^</span></code><a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> はビットごとの論理積（AND）、<code class="docutils literal notranslate"><span class="pre">|</span></code> はビットごとの論理和（OR）、<code class="docutils literal notranslate"><span class="pre">^</span></code> はビットごとの排他的論理和（XOR）を計算する。<code class="docutils literal notranslate"><span class="pre">0b</span></code> 接頭辞を使った二進数リテラルで書くとビットパターンが分かりやすい。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mb">0b1010</span> <span class="o">&amp;</span> <span class="mb">0b0110</span>
-<span class="go">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">&amp;</span> <span class="mb">0b0110</span><span class="p">)</span>
-<span class="go">&#39;0b10&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">|</span> <span class="mb">0b0110</span><span class="p">)</span>
-<span class="go">&#39;0b1110&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">^</span> <span class="mb">0b0110</span><span class="p">)</span>
-<span class="go">&#39;0b1100&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mb">0b1010</span> <span class="o">&amp;</span> <span class="mb">0b0110</span>
+<span class="linenos">2</span><span class="go">2</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">&amp;</span> <span class="mb">0b0110</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;0b10&#39;</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">|</span> <span class="mb">0b0110</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">&#39;0b1110&#39;</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mb">0b1010</span> <span class="o">^</span> <span class="mb">0b0110</span><span class="p">)</span>
+<span class="linenos">8</span><span class="go">&#39;0b1100&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2><code class="docutils literal notranslate"><span class="pre">~</span></code><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>ビットごとの否定（NOT）を行う単項演算子。各ビットを反転させる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mb">0b1010</span>
-<span class="go">-11</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">5</span>
-<span class="go">-6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">0</span>
-<span class="go">-1</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mb">0b1010</span>
+<span class="linenos">2</span><span class="go">-11</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">5</span>
+<span class="linenos">4</span><span class="go">-6</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="mi">0</span>
+<span class="linenos">6</span><span class="go">-1</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>Python の整数は2の補数表現で解釈されるため、<code class="docutils literal notranslate"><span class="pre">~x</span></code> は <code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">-</span> <span class="pre">1</span></code> と等しくなる。ビットをすべて反転すると符号が反転し、さらに1だけずれるためである。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
-<span class="go">True</span>
+<p>Python の整数は 2 の補数表現で解釈されるため、<code class="docutils literal notranslate"><span class="pre">~x</span></code> は <code class="docutils literal notranslate"><span class="pre">-x</span> <span class="pre">-</span> <span class="pre">1</span></code> と等しくなる。ビットをすべて反転すると符号が反転し、さらに 1 だけずれるためである。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="o">~</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="linenos">3</span><span class="go">True</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="id4">
 <h2><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> / <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> は左シフト、<code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> は右シフトを行う。左シフトは値を2のべき乗倍することに相当し、右シフトは2のべき乗で割った商（切り捨て）に相当する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
-<span class="go">8</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span>
-<span class="go">1024</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">20</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
-<span class="go">5</span>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> は左シフト、<code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> は右シフトを行う。左シフトは値を 2 のべき乗倍することに相当し、右シフトは 2 のべき乗で割った商（切り捨て）に相当する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
+<span class="linenos">2</span><span class="go">8</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span>
+<span class="linenos">4</span><span class="go">1024</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">20</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+<span class="linenos">6</span><span class="go">5</span>
 </pre></div>
 </div>
 <p>左シフトを使うと、フラグ用のビットマスクを見やすく定義できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">READ</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span>    <span class="c1"># 0b0001</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">WRITE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>   <span class="c1"># 0b0010</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">EXEC</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>    <span class="c1"># 0b0100</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">perm</span> <span class="o">=</span> <span class="n">READ</span> <span class="o">|</span> <span class="n">WRITE</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">perm</span> <span class="o">&amp;</span> <span class="n">WRITE</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">perm</span> <span class="o">&amp;</span> <span class="n">EXEC</span><span class="p">)</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">READ</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span>    <span class="c1"># 0b0001</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">WRITE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>   <span class="c1"># 0b0010</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">EXEC</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>    <span class="c1"># 0b0100</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">perm</span> <span class="o">=</span> <span class="n">READ</span> <span class="o">|</span> <span class="n">WRITE</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">perm</span> <span class="o">&amp;</span> <span class="n">WRITE</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">True</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="n">perm</span> <span class="o">&amp;</span> <span class="n">EXEC</span><span class="p">)</span>
+<span class="linenos">8</span><span class="go">False</span>
 </pre></div>
 </div>
 </section>

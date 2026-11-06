@@ -101,81 +101,81 @@
 <h1>集約関数<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>配列全体に対する集計<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>合計や平均、最大・最小などを計算する関数が用意されています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="c1"># 21</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="c1"># 3.5</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-<span class="c1"># 6</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-<span class="c1"># 1</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-<span class="c1"># 標準偏差</span>
+<p>合計や平均、最大・最小などを計算する関数が用意されている。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="linenos"> 6</span><span class="c1"># 21</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">a</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="linenos"> 9</span><span class="c1"># 3.5</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">a</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="linenos">12</span><span class="c1"># 6</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="linenos">15</span><span class="c1"># 1</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="n">a</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="linenos">18</span><span class="c1"># 標準偏差</span>
 </pre></div>
 </div>
 </section>
 <section id="axis">
 <h2>axis を指定した集計<a class="headerlink" href="#axis" title="Link to this heading"></a></h2>
-<p>多次元配列では、<code class="docutils literal notranslate"><span class="pre">axis</span></code> 引数を指定することで、行方向・列方向など特定の方向についてのみ集計できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># array([5, 7, 9])  列ごとの合計（行方向に集約）</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># array([ 6, 15])  行ごとの合計（列方向に集約）</span>
+<p>多次元配列では、<code class="docutils literal notranslate"><span class="pre">axis</span></code> 引数を指定することで、行方向・列方向など特定の方向についてのみ集計できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">4</span><span class="c1"># array([5, 7, 9])  列ごとの合計（行方向に集約）</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">7</span><span class="c1"># array([ 6, 15])  行ごとの合計（列方向に集約）</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> は「0 番目の次元（行）に沿って集約する」という意味になり、結果として各列の値がまとめられます。<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> はその逆で、各行の値がまとめられます。慣れないうちは、実際に小さな配列で試してみると理解しやすくなります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">axis=0</span></code> は「0 番目の次元（行）に沿って集約する」という意味になり、結果として各列の値がまとめられる。<code class="docutils literal notranslate"><span class="pre">axis=1</span></code> はその逆で、各行の値がまとめられる。慣れないうちは、実際に小さな配列で試してみると理解しやすくなる。</p>
 </section>
 <section id="id3">
 <h2>その他の集計関数<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>最大値・最小値そのものだけでなく、その「位置（インデックス）」を知りたい場合は <code class="docutils literal notranslate"><span class="pre">argmax</span></code> / <code class="docutils literal notranslate"><span class="pre">argmin</span></code> を使います。また、中央値や分散も専用の関数・メソッドで計算できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
-<span class="c1"># 5  全体を 1 次元とみなしたときの最大値の位置</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1"># array([1, 2])  各行における最大値の位置</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
-<span class="c1"># 0  全体を 1 次元とみなしたときの最小値の位置</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># 4.0  中央値</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
-<span class="c1"># 分散</span>
+<p>最大値・最小値そのものだけでなく、その「位置（インデックス）」を知りたい場合は <code class="docutils literal notranslate"><span class="pre">argmax</span></code> / <code class="docutils literal notranslate"><span class="pre">argmin</span></code> を使う。また、中央値や分散も専用の関数・メソッドで計算できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="linenos"> 4</span><span class="c1"># 5  全体を 1 次元とみなしたときの最大値の位置</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">a</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="c1"># array([1, 2])  各行における最大値の位置</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">a</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+<span class="linenos">10</span><span class="c1"># 0  全体を 1 次元とみなしたときの最小値の位置</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">13</span><span class="c1"># 4.0  中央値</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="n">a</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="linenos">16</span><span class="c1"># 分散</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">argmax</span></code> / <code class="docutils literal notranslate"><span class="pre">argmin</span></code> は <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> のメソッドとして呼び出せますが、<code class="docutils literal notranslate"><span class="pre">median</span></code> はメソッドではなく <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> のように関数として呼び出す点に注意してください。</p>
+<p><code class="docutils literal notranslate"><span class="pre">argmax</span></code> / <code class="docutils literal notranslate"><span class="pre">argmin</span></code> は <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> のメソッドとして呼び出せるが、<code class="docutils literal notranslate"><span class="pre">median</span></code> はメソッドではなく <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> のように関数として呼び出す点に注意すること。</p>
 </div>
 </section>
 <section id="id4">
 <h2>累積計算<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">sum</span></code> や <code class="docutils literal notranslate"><span class="pre">mean</span></code> はすべての要素を 1 つの値にまとめますが、<code class="docutils literal notranslate"><span class="pre">cumsum</span></code> / <code class="docutils literal notranslate"><span class="pre">cumprod</span></code> は「そこまでの累積値」を、元の配列と同じ要素数の配列として返します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
-
-<span class="n">a</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
-<span class="c1"># array([ 1,  6,  8, 16, 19, 28])  累積和</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
-<span class="c1"># array([ 1,  2,  6, 24])  累積積</span>
+<p><code class="docutils literal notranslate"><span class="pre">sum</span></code> や <code class="docutils literal notranslate"><span class="pre">mean</span></code> はすべての要素を 1 つの値にまとめるが、<code class="docutils literal notranslate"><span class="pre">cumsum</span></code> / <code class="docutils literal notranslate"><span class="pre">cumprod</span></code> は「そこまでの累積値」を、元の配列と同じ要素数の配列として返す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">a</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="linenos">4</span><span class="c1"># array([ 1,  6,  8, 16, 19, 28])  累積和</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
+<span class="linenos">7</span><span class="c1"># array([ 1,  2,  6, 24])  累積積</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">cumsum</span></code> / <code class="docutils literal notranslate"><span class="pre">cumprod</span></code> も <code class="docutils literal notranslate"><span class="pre">axis</span></code> 引数を指定することで、行方向・列方向を指定して累積計算できます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cumsum</span></code> / <code class="docutils literal notranslate"><span class="pre">cumprod</span></code> も <code class="docutils literal notranslate"><span class="pre">axis</span></code> 引数を指定することで、行方向・列方向を指定して累積計算できる。</p>
 </section>
 </section>
 

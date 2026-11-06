@@ -103,44 +103,53 @@
 <section id="len">
 <h2>len<a class="headerlink" href="#len" title="Link to this heading"></a></h2>
 <p>オブジェクトの長さ（要素数）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="go">5</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">3</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">5</span>
 </pre></div>
 </div>
 </section>
 <section id="range">
 <h2>range<a class="headerlink" href="#range" title="Link to this heading"></a></h2>
 <p>等差数列を生成するイミュータブルなシーケンス型。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="go">[0, 1, 2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="go">[2, 4, 6, 8]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">[0, 1, 2, 3, 4]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">4</span><span class="go">[2, 4, 6, 8]</span>
 </pre></div>
 </div>
 </section>
 <section id="enumerate">
 <h2>enumerate<a class="headerlink" href="#enumerate" title="Link to this heading"></a></h2>
 <p>イテラブルの要素にインデックスを付与したイテレータを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]))</span>
-<span class="go">[(0, &#39;a&#39;), (1, &#39;b&#39;), (2, &#39;c&#39;)]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]))</span>
+<span class="linenos">2</span><span class="go">[(0, &#39;a&#39;), (1, &#39;b&#39;), (2, &#39;c&#39;)]</span>
 </pre></div>
 </div>
 </section>
 <section id="zip">
 <h2>zip<a class="headerlink" href="#zip" title="Link to this heading"></a></h2>
 <p>複数のイテラブルの要素を組にまとめたイテレータを返す。最も短いイテラブルの長さで打ち切られる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]))</span>
-<span class="go">[(1, &#39;a&#39;), (2, &#39;b&#39;), (3, &#39;c&#39;)]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]))</span>
+<span class="linenos">2</span><span class="go">[(1, &#39;a&#39;), (2, &#39;b&#39;), (3, &#39;c&#39;)]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]))</span>
+<span class="linenos">4</span><span class="go">[(1, &#39;a&#39;), (2, &#39;b&#39;)]</span>
+</pre></div>
+</div>
+<p>長さが揃っていることを前提とする場合は <code class="docutils literal notranslate"><span class="pre">strict=True</span></code> を指定すると、長さが異なるときに <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が送出され、データの欠落に気付ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="linenos">2</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">3</span><span class="w">  </span><span class="c">...</span>
+<span class="linenos">4</span><span class="gr">ValueError</span>: <span class="n">zip() argument 2 is shorter than argument 1</span>
 </pre></div>
 </div>
 </section>
 <section id="map">
 <h2>map<a class="headerlink" href="#map" title="Link to this heading"></a></h2>
 <p>イテラブルの各要素に関数を適用したイテレータを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
-<span class="go">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="linenos">2</span><span class="go">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -156,84 +165,84 @@
 <section id="filter">
 <h2>filter<a class="headerlink" href="#filter" title="Link to this heading"></a></h2>
 <p>関数が <code class="docutils literal notranslate"><span class="pre">True</span></code> を返す要素だけを残したイテレータを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
-<span class="go">[0, 2, 4, 6, 8]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="linenos">2</span><span class="go">[0, 2, 4, 6, 8]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>map の場合と同様の理由で、内包表記より <code class="docutils literal notranslate"><span class="pre">filter</span></code> が適する場面がある。<code class="docutils literal notranslate"><span class="pre">filter</span></code> 特有の便利な使い方として、関数の代わりに <code class="docutils literal notranslate"><span class="pre">None</span></code> を渡す <code class="docutils literal notranslate"><span class="pre">filter(None,</span> <span class="pre">xs)</span></code> は、偽値（<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">''</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code> など）を取り除くイディオムとしてよく使われる。</p>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code> の場合と同様の理由で、内包表記より <code class="docutils literal notranslate"><span class="pre">filter</span></code> が適する場面がある。<code class="docutils literal notranslate"><span class="pre">filter</span></code> 特有の便利な使い方として、関数の代わりに <code class="docutils literal notranslate"><span class="pre">None</span></code> を渡す <code class="docutils literal notranslate"><span class="pre">filter(None,</span> <span class="pre">xs)</span></code> は、偽値（<code class="docutils literal notranslate"><span class="pre">0</span></code>、<code class="docutils literal notranslate"><span class="pre">''</span></code>、<code class="docutils literal notranslate"><span class="pre">None</span></code> など）を取り除くイディオムとしてよく使われる。</p>
 </div>
 </section>
 <section id="sorted">
 <h2>sorted<a class="headerlink" href="#sorted" title="Link to this heading"></a></h2>
 <p>イテラブルの要素を並べ替えた新しいリストを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">[1, 2, 3]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
-<span class="go">[&#39;apple&#39;, &#39;banana&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">[1, 2, 3]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">([</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">[&#39;apple&#39;, &#39;banana&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="reversed">
 <h2>reversed<a class="headerlink" href="#reversed" title="Link to this heading"></a></h2>
 <p>シーケンスを逆順にたどるイテレータを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
-<span class="go">[3, 2, 1]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="linenos">2</span><span class="go">[3, 2, 1]</span>
 </pre></div>
 </div>
 </section>
 <section id="sum">
 <h2>sum<a class="headerlink" href="#sum" title="Link to this heading"></a></h2>
 <p>イテラブルの要素の合計を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">16</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">6</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">16</span>
 </pre></div>
 </div>
 </section>
 <section id="min-max">
 <h2>min / max<a class="headerlink" href="#min-max" title="Link to this heading"></a></h2>
 <p>イテラブル中の最小値・最大値を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">min</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="s2">&quot;ccc&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
-<span class="go">&#39;ccc&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">min</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">1</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">3</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="s2">&quot;ccc&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">&#39;ccc&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="any-all">
 <h2>any / all<a class="headerlink" href="#any-all" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">any</span></code> はいずれかの要素が真なら <code class="docutils literal notranslate"><span class="pre">True</span></code>、<code class="docutils literal notranslate"><span class="pre">all</span></code> はすべての要素が真なら <code class="docutils literal notranslate"><span class="pre">True</span></code> を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">False</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>空のイテラブルを渡した場合、<code class="docutils literal notranslate"><span class="pre">any</span></code> は <code class="docutils literal notranslate"><span class="pre">False</span></code>、<code class="docutils literal notranslate"><span class="pre">all</span></code> は <code class="docutils literal notranslate"><span class="pre">True</span></code> を返す。これは「1つでも真の要素があるか（存在）」「すべての要素が真か（全称）」という論理を、要素が0個の場合にも数学的に一貫させた結果（空真理、vacuous truth）であり、バグではない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([])</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">([])</span>
-<span class="go">True</span>
+<p>空のイテラブルを渡した場合、<code class="docutils literal notranslate"><span class="pre">any</span></code> は <code class="docutils literal notranslate"><span class="pre">False</span></code>、<code class="docutils literal notranslate"><span class="pre">all</span></code> は <code class="docutils literal notranslate"><span class="pre">True</span></code> を返す。これは「1 つでも真の要素があるか（存在）」「すべての要素が真か（全称）」という論理を、要素が 0 個の場合にも数学的に一貫させた結果（空真理、vacuous truth）であり、バグではない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([])</span>
+<span class="linenos">2</span><span class="go">False</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">([])</span>
+<span class="linenos">4</span><span class="go">True</span>
 </pre></div>
 </div>
-<p>このため、<code class="docutils literal notranslate"><span class="pre">all()</span></code> を「対象データがすべて条件を満たしているか」の検証に使う場合、対象が1件もないと意図せず <code class="docutils literal notranslate"><span class="pre">True</span></code> になってしまう点に注意が必要。件数チェックを別途行うなど、空である場合の扱いを明確にしておくとよい。</p>
+<p>このため、<code class="docutils literal notranslate"><span class="pre">all()</span></code> を「対象データがすべて条件を満たしているか」の検証に使う場合、対象が 1 件もないと意図せず <code class="docutils literal notranslate"><span class="pre">True</span></code> になってしまう点に注意が必要である。件数チェックを別途行うなど、空である場合の扱いを明確にしておくとよい。</p>
 </div>
 </section>
 <section id="iter-next">
 <h2>iter / next<a class="headerlink" href="#iter-next" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">iter</span></code> はイテラブルからイテレータを取得し、<code class="docutils literal notranslate"><span class="pre">next</span></code> はイテレータから次の要素を取り出す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-<span class="go">2</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">1</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">2</span>
 </pre></div>
 </div>
 </section>

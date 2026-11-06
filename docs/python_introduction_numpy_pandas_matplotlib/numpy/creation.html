@@ -99,66 +99,66 @@
              
   <section id="id1">
 <h1>配列の作成<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を作成するには、いくつかの方法があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を作成するには、いくつかの方法がある。</p>
 <section id="list">
 <h2>list からの作成<a class="headerlink" href="#list" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">np.array</span></code> に Python の <code class="docutils literal notranslate"><span class="pre">list</span></code>（入れ子の list でも可）を渡すことで <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を作成できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># [1 2 3]</span>
-
-<span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="c1"># [[1 2 3]</span>
-<span class="c1">#  [4 5 6]]</span>
+<p><code class="docutils literal notranslate"><span class="pre">np.array</span></code> に Python の <code class="docutils literal notranslate"><span class="pre">list</span></code>（入れ子の list でも可）を渡すことで <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を作成できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos"> 4</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="c1"># [1 2 3]</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="linenos"> 8</span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="c1"># [[1 2 3]</span>
+<span class="linenos">10</span><span class="c1">#  [4 5 6]]</span>
 </pre></div>
 </div>
 </section>
 <section id="id2">
 <h2>初期値を指定した作成<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>決まった値で埋めた配列を作成する関数も用意されています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="c1"># 0 で埋めた 2x3 の配列</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="c1"># 1 で埋めた 2x3 の配列</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">7</span><span class="p">)</span>
-<span class="c1"># 7 で埋めた 2x3 の配列</span>
+<p>決まった値で埋めた配列を作成する関数も用意されている。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="linenos">2</span><span class="c1"># 0 で埋めた 2x3 の配列</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="linenos">5</span><span class="c1"># 1 で埋めた 2x3 の配列</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">7</span><span class="p">)</span>
+<span class="linenos">8</span><span class="c1"># 7 で埋めた 2x3 の配列</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>連続した値の作成<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="c1"># array([0, 2, 4, 6, 8])</span>
-<span class="c1"># Python 標準の range と同様に、開始・終了（含まない）・間隔を指定する</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="c1"># array([0.  , 0.25, 0.5 , 0.75, 1.  ])</span>
-<span class="c1"># 開始から終了（含む）までを等間隔で分割した個数を指定する</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">2</span><span class="c1"># array([0, 2, 4, 6, 8])</span>
+<span class="linenos">3</span><span class="c1"># Python 標準の range と同様に、開始・終了（含まない）・間隔を指定する</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="linenos">6</span><span class="c1"># array([0.  , 0.25, 0.5 , 0.75, 1.  ])</span>
+<span class="linenos">7</span><span class="c1"># 開始から終了（含む）までを等間隔で分割した個数を指定する</span>
 </pre></div>
 </div>
 </section>
 <section id="dtype">
 <h2>dtype の指定<a class="headerlink" href="#dtype" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の要素はすべて同じ型（<code class="docutils literal notranslate"><span class="pre">dtype</span></code>）を持ちます。作成時に明示的に指定することもできます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># [1. 2. 3.]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-<span class="c1"># float64</span>
+<p><code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の要素はすべて同じ型（<code class="docutils literal notranslate"><span class="pre">dtype</span></code>）を持つ。作成時に明示的に指定することもできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos">2</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">a</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">6</span><span class="c1"># [1. 2. 3.]</span>
+<span class="linenos">7</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="linenos">8</span><span class="c1"># float64</span>
 </pre></div>
 </div>
-<p>dtype を指定しない場合は、渡した値から自動的に適切な型が推定されます。</p>
+<p>dtype を指定しない場合は、渡した値から自動的に適切な型が推定される。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code> は要素の型を問わない型ヒントですが、<code class="docutils literal notranslate"><span class="pre">numpy.typing.NDArray</span></code> を使うと <code class="docutils literal notranslate"><span class="pre">NDArray[np.float64]</span></code> のように要素の型まで含めて表現できます。要素の型（dtype）を意識するこのページのような場面では、こちらを使うとより正確な型ヒントになります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code> は要素の型を問わない型ヒントであるが、<code class="docutils literal notranslate"><span class="pre">numpy.typing.NDArray</span></code> を使うと <code class="docutils literal notranslate"><span class="pre">NDArray[np.float64]</span></code> のように要素の型まで含めて表現できる。要素の型（dtype）を意識するこのページのような場面では、こちらを使うとより正確な型ヒントになる。</p>
 </div>
 </section>
 </section>

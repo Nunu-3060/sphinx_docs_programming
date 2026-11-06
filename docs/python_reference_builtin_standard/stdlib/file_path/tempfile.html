@@ -109,46 +109,56 @@
 <p>一時的なファイルやディレクトリを安全に作成・削除するためのモジュール。後片付け忘れによるゴミファイルの残留を防げる。</p>
 <section id="tempfile-temporaryfile">
 <h2>tempfile.TemporaryFile<a class="headerlink" href="#tempfile-temporaryfile" title="Link to this heading"></a></h2>
-<p>名前を持たない一時ファイルを作成する。<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜けると自動的に閉じられ、ファイルは削除される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w+t&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="go">&#39;hello&#39;</span>
+<p>ファイルシステム上の名前を持たない一時ファイルを作成する（POSIX 環境の場合。Windows では <code class="docutils literal notranslate"><span class="pre">NamedTemporaryFile</span></code> と同じ動作になる）。<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜けると自動的に閉じられ、ファイルは削除される。既定のモードは <code class="docutils literal notranslate"><span class="pre">&quot;w+b&quot;</span></code>（バイナリ）なので、文字列を扱う場合は例のように <code class="docutils literal notranslate"><span class="pre">mode=&quot;w+t&quot;</span></code> を指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w+t&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="linenos">6</span><span class="go">&#39;hello&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="tempfile-namedtemporaryfile">
 <h2>tempfile.NamedTemporaryFile<a class="headerlink" href="#tempfile-namedtemporaryfile" title="Link to this heading"></a></h2>
-<p>ファイルシステム上に名前（パス）を持つ一時ファイルを作成する。他のプロセスやライブラリにパスを渡して使わせたい場合に便利。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w+t&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">path</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span>
-<span class="go">&#39;C:\\Users\\...\\Temp\\tmpabcd1234.txt&#39;</span>
+<p>ファイルシステム上に名前（パス）を持つ一時ファイルを作成する。他のプロセスやライブラリにパスを渡して使わせたい場合に便利である。既定（<code class="docutils literal notranslate"><span class="pre">delete=True</span></code>）ではファイルを閉じた時点で削除される。例のように <code class="docutils literal notranslate"><span class="pre">delete=False</span></code> を指定するとファイルは残るため、不要になったら呼び出し側で削除する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w+t&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="n">path</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">path</span>
+<span class="linenos">5</span><span class="go">&#39;C:\\Users\\...\\Temp\\tmpabcd1234.txt&#39;</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Windows では、既定の設定で作成した一時ファイルを開いたまま、そのパスで別途開き直すことはできない。Python 3.12 以降では <code class="docutils literal notranslate"><span class="pre">delete_on_close=False</span></code> を指定すると、<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロック内でファイルを閉じても削除されず、ブロックを抜けた時点で削除される。これにより、いったん書き込んで閉じたファイルのパスを他のプログラムに渡し、後片付けは <code class="docutils literal notranslate"><span class="pre">with</span></code> 文に任せるという使い方が OS を問わずできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete_on_close</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos">4</span><span class="gp">... </span>    <span class="c1"># ここで f.name を他のプログラムに渡して読ませられる</span>
+</pre></div>
+</div>
 </div>
 </section>
 <section id="tempfile-temporarydirectory">
 <h2>tempfile.TemporaryDirectory<a class="headerlink" href="#tempfile-temporarydirectory" title="Link to this heading"></a></h2>
 <p>一時ディレクトリを作成する。<code class="docutils literal notranslate"><span class="pre">with</span></code> ブロックを抜けると、中身ごと再帰的に削除される。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpdir</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="c1"># tmpdir 以下に自由にファイルを作成できる</span>
-<span class="go">C:\Users\...\Temp\tmpxyz9876</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpdir</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="c1"># tmpdir 以下に自由にファイルを作成できる</span>
+<span class="linenos">4</span><span class="go">C:\Users\...\Temp\tmpxyz9876</span>
 </pre></div>
 </div>
 </section>
 <section id="tempfile-mkstemp-tempfile-mkdtemp">
 <h2>tempfile.mkstemp / tempfile.mkdtemp<a class="headerlink" href="#tempfile-mkstemp-tempfile-mkdtemp" title="Link to this heading"></a></h2>
 <p>より低水準な API。<code class="docutils literal notranslate"><span class="pre">mkstemp</span></code> はファイルディスクリプタとパスのタプルを、<code class="docutils literal notranslate"><span class="pre">mkdtemp</span></code> はディレクトリパスを返すだけで、後片付け（クローズや削除）は呼び出し側が行う必要がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dirpath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">dirpath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

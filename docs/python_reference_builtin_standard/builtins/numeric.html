@@ -96,50 +96,50 @@
 <section id="abs">
 <h2>abs<a class="headerlink" href="#abs" title="Link to this heading"></a></h2>
 <p>数値の絶対値を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="mf">3.2</span><span class="p">)</span>
-<span class="go">3.2</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">5</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="mf">3.2</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">3.2</span>
 </pre></div>
 </div>
 </section>
 <section id="round">
 <h2>round<a class="headerlink" href="#round" title="Link to this heading"></a></h2>
-<p>数値を指定した桁数で四捨五入する（正確には偶数丸め）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">3.14</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="go">2</span>
+<p>数値を指定した桁数に丸める。四捨五入ではなく、ちょうど中間の値は偶数側に丸める（偶数丸め、銀行家の丸め）。また <code class="docutils literal notranslate"><span class="pre">float</span></code> は 2 進数で近似されているため、<code class="docutils literal notranslate"><span class="pre">round(2.675,</span> <span class="pre">2)</span></code> が <code class="docutils literal notranslate"><span class="pre">2.67</span></code> になるように直感と異なる結果になることがある。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">3.14</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">2</span>
 </pre></div>
 </div>
 </section>
 <section id="divmod">
 <h2>divmod<a class="headerlink" href="#divmod" title="Link to this heading"></a></h2>
 <p>商と余りのタプルを返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">divmod</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">(2, 1)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">divmod</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">(2, 1)</span>
 </pre></div>
 </div>
 </section>
 <section id="pow">
 <h2>pow<a class="headerlink" href="#pow" title="Link to this heading"></a></h2>
-<p>累乗を計算する。3引数版では剰余演算を含めて計算できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="go">1024</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="go">24</span>
+<p>累乗を計算する。3 引数版 <code class="docutils literal notranslate"><span class="pre">pow(base,</span> <span class="pre">exp,</span> <span class="pre">mod)</span></code> は <code class="docutils literal notranslate"><span class="pre">(base</span> <span class="pre">**</span> <span class="pre">exp)</span> <span class="pre">%</span> <span class="pre">mod</span></code> を効率よく計算する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">1024</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">24</span>
 </pre></div>
 </div>
 </section>
 <section id="hex-oct-bin">
 <h2>hex / oct / bin<a class="headerlink" href="#hex-oct-bin" title="Link to this heading"></a></h2>
-<p>整数を、それぞれ16進数・8進数・2進数を表す文字列に変換する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
-<span class="go">&#39;0xff&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">oct</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="go">&#39;0o10&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">&#39;0b101&#39;</span>
+<p>整数を、それぞれ 16 進数・8 進数・2 進数を表す文字列に変換する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&#39;0xff&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">oct</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;0o10&#39;</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bin</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">&#39;0b101&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">

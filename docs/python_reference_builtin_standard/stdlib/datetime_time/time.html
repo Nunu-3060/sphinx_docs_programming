@@ -104,43 +104,43 @@
 <section id="time-time">
 <h2>time.time<a class="headerlink" href="#time-time" title="Link to this heading"></a></h2>
 <p>エポックからの経過秒数を浮動小数点数で返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="go">1789516800.123456</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">1789516800.123456</span>
 </pre></div>
 </div>
 </section>
 <section id="time-sleep">
 <h2>time.sleep<a class="headerlink" href="#time-sleep" title="Link to this heading"></a></h2>
-<p>指定した秒数だけ処理を一時停止する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
-<span class="go">start</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
-<span class="go">end</span>
+<p>指定した秒数だけ処理を一時停止する。小数を指定すれば 1 秒未満の待機もできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">start</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">end</span>
 </pre></div>
 </div>
 </section>
 <section id="time-perf-counter">
 <h2>time.perf_counter<a class="headerlink" href="#time-perf-counter" title="Link to this heading"></a></h2>
-<p>処理時間の計測に特化した高精度なカウンタを返す。基準点は不定なので、差分（経過時間）を求める用途にのみ使う。ベンチマークには <code class="docutils literal notranslate"><span class="pre">time.time()</span></code> よりもこちらが適している。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">elapsed</span>
-<span class="go">0.021345</span>
+<p>処理時間の計測に特化した高精度なカウンタの値（秒）を返す。基準点は不定なので、差分（経過時間）を求める用途にのみ使う。<code class="docutils literal notranslate"><span class="pre">time.time()</span></code> はシステム時刻の変更（NTP による補正など）の影響を受けて逆行することもあるため、経過時間の計測やベンチマークには、単調増加が保証された <code class="docutils literal notranslate"><span class="pre">perf_counter</span></code> のほうが適している。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">))</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">elapsed</span>
+<span class="linenos">6</span><span class="go">0.021345</span>
 </pre></div>
 </div>
 </section>
 <section id="time-strftime-time-localtime">
 <h2>time.strftime / time.localtime<a class="headerlink" href="#time-strftime-time-localtime" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">localtime</span></code> はエポック秒をローカルタイムの <code class="docutils literal notranslate"><span class="pre">struct_time</span></code> に変換し、<code class="docutils literal notranslate"><span class="pre">strftime</span></code> はそれを書式文字列に変換する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-<span class="go">&#39;2026-09-16 13:45:30&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;2026-09-16 13:45:30&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">

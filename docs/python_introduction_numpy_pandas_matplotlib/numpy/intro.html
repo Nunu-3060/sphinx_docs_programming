@@ -97,7 +97,7 @@
              
   <section id="numpy">
 <h1>numpy とは<a class="headerlink" href="#numpy" title="Link to this heading"></a></h1>
-<p>numpy (Numerical Python) は、Python で数値計算を効率的に行うためのライブラリです。numpy が提供する多次元配列 <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> は、pandas や matplotlib をはじめ多くのライブラリの基盤としても使われています。</p>
+<p>numpy (Numerical Python) は、Python で数値計算を効率的に行うためのライブラリである。numpy が提供する多次元配列 <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> は、pandas や matplotlib をはじめ多くのライブラリの基盤としても使われている。</p>
 <p>公式サイト: <a class="reference external" href="https://numpy.org/">numpy</a></p>
 <section id="id2">
 <h2>なぜ numpy を使うのか<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
@@ -109,19 +109,19 @@
 </section>
 <section id="list-ndarray">
 <h2>list と ndarray の違い<a class="headerlink" href="#list-ndarray" title="Link to this heading"></a></h2>
-<p>Python の <code class="docutils literal notranslate"><span class="pre">list</span></code> は要素ごとに異なる型を格納できる汎用的なコンテナですが、その分オーバーヘッドがあります。numpy の <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> は同じ型のデータを連続したメモリ領域に格納するため、要素ごとの演算をまとめて高速に実行できます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="c1"># list を 2 倍しても、要素が繰り返されるだけ</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 1, 2, 3]</span>
-
-<span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="c1"># ndarray は要素ごとに 2 倍される</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">arr</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># [2 4 6]</span>
+<p>Python の <code class="docutils literal notranslate"><span class="pre">list</span></code> は要素ごとに異なる型を格納できる汎用的なコンテナであるが、その分オーバーヘッドがある。numpy の <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> は同じ型のデータを連続したメモリ領域に格納するため、要素ごとの演算をまとめて高速に実行できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">4</span><span class="c1"># list を 2 倍しても、要素が繰り返されるだけ</span>
+<span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">data</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 1, 2, 3]</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">8</span><span class="c1"># ndarray は要素ごとに 2 倍される</span>
+<span class="linenos">9</span><span class="nb">print</span><span class="p">(</span><span class="n">arr</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># [2 4 6]</span>
 </pre></div>
 </div>
-<p>このように、<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を使うと「配列全体に対する演算」を直感的に書くことができます。次のページから、<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の作成方法を見ていきます。</p>
+<p>このように、<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> を使うと「配列全体に対する演算」を直感的に書くことができる。次のページから、<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> の作成方法を見ていく。</p>
 </section>
 </section>
 

@@ -113,31 +113,31 @@
 <section id="os-getcwd-os-chdir">
 <h2>os.getcwd / os.chdir<a class="headerlink" href="#os-getcwd-os-chdir" title="Link to this heading"></a></h2>
 <p>カレントディレクトリの取得・変更を行う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="go">&#39;G:\\python\\standard&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-<span class="go">&#39;G:\\python\\standard\\source&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="linenos">3</span><span class="go">&#39;G:\\python\\standard&#39;</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="linenos">6</span><span class="go">&#39;G:\\python\\standard\\source&#39;</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="os-listdir-os-scandir">
 <h2>os.listdir / os.scandir<a class="headerlink" href="#os-listdir-os-scandir" title="Link to this heading"></a></h2>
-<p>ディレクトリ内のエントリ一覧を取得する。<code class="docutils literal notranslate"><span class="pre">scandir</span></code> はファイル種別などの情報を保持したまま反復できるため、大量のファイルを扱う際は高速。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="go">[&#39;source&#39;, &#39;Makefile&#39;, &#39;build_html.bat&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
-<span class="go">[&#39;source&#39;]</span>
+<p>ディレクトリ内のエントリ一覧を取得する。<code class="docutils literal notranslate"><span class="pre">listdir</span></code> は名前の文字列のリストを返す。<code class="docutils literal notranslate"><span class="pre">scandir</span></code> はファイル種別などの情報を保持した <code class="docutils literal notranslate"><span class="pre">os.DirEntry</span></code> オブジェクトのイテレータを返すため、種別判定を伴う場合に追加のシステムコールが減り、大量のファイルを扱う際に高速である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">[&#39;source&#39;, &#39;Makefile&#39;, &#39;build_html.bat&#39;]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
+<span class="linenos">4</span><span class="go">[&#39;source&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="os-walk">
 <h2>os.walk<a class="headerlink" href="#os-walk" title="Link to this heading"></a></h2>
-<p>ディレクトリツリーを再帰的にたどり、各ディレクトリについて <code class="docutils literal notranslate"><span class="pre">(ディレクトリパス,</span> <span class="pre">サブディレクトリ名のリスト,</span> <span class="pre">ファイル名のリスト)</span></code> のタプルを生成する。ディレクトリ配下を丸ごと処理したい場合に最もよく使う関数。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">))</span>
+<p>ディレクトリツリーを再帰的にたどり、各ディレクトリについて <code class="docutils literal notranslate"><span class="pre">(ディレクトリパス,</span> <span class="pre">サブディレクトリ名のリスト,</span> <span class="pre">ファイル名のリスト)</span></code> のタプルを生成する。ディレクトリ配下を丸ごと処理したい場合に最もよく使う関数である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;source/stdlib&quot;</span><span class="p">):</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -147,51 +147,54 @@
 </section>
 <section id="os-makedirs-os-remove-os-rmdir">
 <h2>os.makedirs / os.remove / os.rmdir<a class="headerlink" href="#os-makedirs-os-remove-os-rmdir" title="Link to this heading"></a></h2>
-<p>ディレクトリ・ファイルの作成や削除を行う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;a/b/c/file.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;a/b/c/file.txt&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">)</span>
+<p>ディレクトリ・ファイルの作成や削除を行う。<code class="docutils literal notranslate"><span class="pre">makedirs</span></code> は中間ディレクトリもまとめて作成し、<code class="docutils literal notranslate"><span class="pre">exist_ok=True</span></code> を指定すると既に存在していてもエラーにしない。<code class="docutils literal notranslate"><span class="pre">rmdir</span></code> は空のディレクトリしか削除できない（中身ごと削除するには <a class="reference internal" href="shutil.html"><span class="doc">shutil</span></a> の <code class="docutils literal notranslate"><span class="pre">shutil.rmtree</span></code> を使う）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;a/b/c/file.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;a/b/c/file.txt&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s2">&quot;a/b/c&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="os-environ">
 <h2>os.environ<a class="headerlink" href="#os-environ" title="Link to this heading"></a></h2>
-<p>環境変数を辞書のように参照・設定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MY_APP_ENV&quot;</span><span class="p">,</span> <span class="s2">&quot;development&quot;</span><span class="p">)</span>
-<span class="go">&#39;development&#39;</span>
+<p>環境変数を辞書のように参照・設定する。存在しないキーを <code class="docutils literal notranslate"><span class="pre">[]</span></code> で参照すると <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> になるため、未設定の可能性がある場合は <code class="docutils literal notranslate"><span class="pre">get()</span></code> で既定値を指定する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span>
+<span class="linenos">2</span><span class="go">&#39;C:\\Windows\\system32;C:\\Windows;...&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MY_APP_ENV&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;production&quot;</span>  <span class="c1"># 子プロセスにも引き継がれる</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MY_APP_ENV&quot;</span><span class="p">]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MY_APP_ENV&quot;</span><span class="p">,</span> <span class="s2">&quot;development&quot;</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">&#39;development&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="os-getpid-os-system-os-kill">
 <h2>os.getpid / os.system / os.kill<a class="headerlink" href="#os-getpid-os-system-os-kill" title="Link to this heading"></a></h2>
-<p>実行中のプロセスに関する情報の取得や、他プロセスの起動・制御も <code class="docutils literal notranslate"><span class="pre">os</span></code> モジュールの役割の一つ。<code class="docutils literal notranslate"><span class="pre">os.getpid()</span></code> は現在のプロセス ID を返す。シェルコマンドを実行したい場合は <code class="docutils literal notranslate"><span class="pre">os.system()</span></code>、他プロセスにシグナルを送りたい場合は <code class="docutils literal notranslate"><span class="pre">os.kill()</span></code> が使えるが、いずれもより高機能な <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#module-subprocess" title="(in Python v3.15)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> モジュールで代替できることが多い。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
-<span class="go">12345</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;echo hello&quot;</span><span class="p">)</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">signal</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pid</span> <span class="o">=</span> <span class="mi">12345</span>  <span class="c1"># 実在するプロセスの ID を指定する必要がある</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+<p>実行中のプロセスに関する情報の取得や、他プロセスの起動・制御も <code class="docutils literal notranslate"><span class="pre">os</span></code> モジュールの役割の 1 つである。<code class="docutils literal notranslate"><span class="pre">os.getpid()</span></code> は現在のプロセス ID を返す。シェルコマンドを実行したい場合は <code class="docutils literal notranslate"><span class="pre">os.system()</span></code>、他プロセスにシグナルを送りたい場合は <code class="docutils literal notranslate"><span class="pre">os.kill()</span></code> が使える。ただし、外部コマンドの実行には出力の取得やエラー処理が柔軟に行える <a class="reference internal" href="../system/subprocess.html"><span class="doc">subprocess</span></a> モジュールを使うのが推奨される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+<span class="linenos">2</span><span class="go">12345</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;echo hello&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">0</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">signal</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="n">pid</span> <span class="o">=</span> <span class="mi">12345</span>  <span class="c1"># 実在するプロセスの ID を指定する必要がある</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="os-path">
 <h2>os.path<a class="headerlink" href="#os-path" title="Link to this heading"></a></h2>
-<p>パス文字列を操作するサブモジュール。パスの結合や存在確認などによく使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;index.rst&quot;</span><span class="p">)</span>
-<span class="go">&#39;source\\index.rst&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="s2">&quot;index.rst&quot;</span><span class="p">)</span>
-<span class="go">(&#39;index&#39;, &#39;.rst&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
-<span class="go">&#39;source/stdlib&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
-<span class="go">&#39;os.rst&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
-<span class="go">&#39;G:\\python\\standard\\source\\index.rst&#39;</span>
+<p>パス文字列を操作するサブモジュール。パスの結合や存在確認などによく使う。区切り文字は OS に応じて切り替わる（以下の例は Windows での出力）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;index.rst&quot;</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="go">&#39;source\\index.rst&#39;</span>
+<span class="linenos"> 3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="go">True</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="s2">&quot;index.rst&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="go">(&#39;index&#39;, &#39;.rst&#39;)</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="go">&#39;source/stdlib&#39;</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s2">&quot;source/stdlib/os.rst&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="go">&#39;os.rst&#39;</span>
+<span class="linenos">11</span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;source/index.rst&quot;</span><span class="p">)</span>
+<span class="linenos">12</span><span class="go">&#39;G:\\python\\standard\\source\\index.rst&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">

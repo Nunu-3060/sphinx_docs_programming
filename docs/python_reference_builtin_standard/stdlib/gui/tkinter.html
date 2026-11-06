@@ -103,158 +103,153 @@
              
   <section id="tkinter">
 <h1>tkinter<a class="headerlink" href="#tkinter" title="Link to this heading"></a></h1>
-<p>Python 標準の GUI ツールキット。Tcl/Tk をラップしており、ウィンドウやボタン、
-テキスト入力欄などの基本的なウィジェットを組み合わせて簡単な GUI アプリケーションを
-作成できる。標準ライブラリに含まれているため追加のインストールが不要な点が特徴。</p>
+<p>Python 標準の GUI ツールキット。Tcl/Tk をラップしており、ウィンドウやボタン、テキスト入力欄などの基本的なウィジェットを組み合わせて簡単な GUI アプリケーションを作成できる。標準ライブラリに含まれているため、多くの環境では追加のインストールが不要な点が特徴。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Windows や macOS 向けの公式インストーラでは Tcl/Tk も同梱されるが、Linux ディストリビューションのパッケージでは <code class="docutils literal notranslate"><span class="pre">tkinter</span></code> が別パッケージ（Debian/Ubuntu の <code class="docutils literal notranslate"><span class="pre">python3-tk</span></code> など）に分かれていることがある。<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">tkinter</span></code> を実行すると簡単なテスト用ウィンドウが開き、<code class="docutils literal notranslate"><span class="pre">tkinter</span></code> が使えるかどうかと、使われている Tcl/Tk のバージョンを確認できる。</p>
+</div>
 <section id="tk">
 <h2>Tk() とメインループ<a class="headerlink" href="#tk" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">tkinter.Tk()</span></code> はアプリケーションのルートウィンドウを生成する。ウィジェットを
-配置した後、<code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> を呼び出してイベントループを開始する。この呼び出しは
-ウィンドウが閉じられるまでブロックし、その間キー入力やマウス操作などの
-イベントを受け付ける。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-<span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;サンプルアプリ&quot;</span><span class="p">)</span>
-<span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;300x150&quot;</span><span class="p">)</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">tkinter.Tk()</span></code> はアプリケーションのルートウィンドウを生成する。ウィジェットを配置した後、<code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> を呼び出してイベントループを開始する。この呼び出しはウィンドウが閉じられるまでブロックし、その間キー入力やマウス操作などのイベントを受け付ける。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos">4</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;サンプルアプリ&quot;</span><span class="p">)</span>
+<span class="linenos">5</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;300x150&quot;</span><span class="p">)</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="label-button-entry">
 <h2>基本ウィジェット: Label / Button / Entry<a class="headerlink" href="#label-button-entry" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Label</span></code> はテキストや画像を表示するウィジェット、<code class="docutils literal notranslate"><span class="pre">Entry</span></code> は1行のテキスト
-入力欄、<code class="docutils literal notranslate"><span class="pre">Button</span></code> はクリック可能なボタン。いずれもコンストラクタの第一引数に
-親ウィジェット（通常はルートウィンドウ）を渡して生成し、その後ジオメトリ
-マネージャで画面上に配置する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;お名前を入力してください&quot;</span><span class="p">)</span>
-<span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
-
-<span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">Label</span></code> はテキストや画像を表示するウィジェット、<code class="docutils literal notranslate"><span class="pre">Entry</span></code> は 1 行のテキスト入力欄、<code class="docutils literal notranslate"><span class="pre">Button</span></code> はクリック可能なボタン。いずれもコンストラクタの第一引数に親ウィジェット（通常はルートウィンドウ）を渡して生成し、その後ジオメトリマネージャで画面上に配置する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;お名前を入力してください&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">10</span><span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">11</span><span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="frame">
 <h2>Frame によるグループ化<a class="headerlink" href="#frame" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Frame</span></code> は見た目を持たないコンテナウィジェットで、複数のウィジェットをまとめて1つの領域として扱うために使う。画面を複数の領域に分けたい場合や、領域ごとに異なるジオメトリマネージャ（<code class="docutils literal notranslate"><span class="pre">pack()</span></code>/<code class="docutils literal notranslate"><span class="pre">grid()</span></code>）を使いたい場合に、<code class="docutils literal notranslate"><span class="pre">Frame</span></code> の中だけで完結させることで、同じコンテナ内に <code class="docutils literal notranslate"><span class="pre">pack()</span></code> と <code class="docutils literal notranslate"><span class="pre">grid()</span></code> を混在させてしまう問題を避けられる（詳しくは次節を参照）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">header</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">header</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ヘッダー領域&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">body</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">body</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ユーザー名&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">Frame</span></code> は（デフォルトでは）枠線などの見た目を持たないコンテナウィジェットで、複数のウィジェットをまとめて 1 つの領域として扱うために使う。画面を複数の領域に分けたい場合や、領域ごとに異なるジオメトリマネージャ（<code class="docutils literal notranslate"><span class="pre">pack()</span></code>/<code class="docutils literal notranslate"><span class="pre">grid()</span></code>）を使いたい場合に、<code class="docutils literal notranslate"><span class="pre">Frame</span></code> の中だけで完結させることで、同じコンテナ内に <code class="docutils literal notranslate"><span class="pre">pack()</span></code> と <code class="docutils literal notranslate"><span class="pre">grid()</span></code> を混在させてしまう問題を避けられる（詳しくは次節を参照）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">header</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">header</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ヘッダー領域&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">body</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">body</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="linenos">11</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ユーザー名&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="pack-grid">
 <h2>ジオメトリマネージャ: pack() と grid()<a class="headerlink" href="#pack-grid" title="Link to this heading"></a></h2>
 <p>ウィジェットを配置するには <code class="docutils literal notranslate"><span class="pre">pack()</span></code> か <code class="docutils literal notranslate"><span class="pre">grid()</span></code> を使うことが多い。<code class="docutils literal notranslate"><span class="pre">pack()</span></code> はウィジェットを上下左右方向に積み重ねるように配置する簡易的な方法で、単純なレイアウトに向く。<code class="docutils literal notranslate"><span class="pre">grid()</span></code> は行・列を指定する表形式のレイアウトで、複数のウィジェットを整然と並べたい場合に扱いやすい。同じコンテナ内で <code class="docutils literal notranslate"><span class="pre">pack()</span></code> と <code class="docutils literal notranslate"><span class="pre">grid()</span></code> を混在させることはできない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="c1"># pack(): 上から順に積み重ねる</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;pack の例&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
-
-<span class="c1"># grid(): 行・列を指定して配置する</span>
-<span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ユーザー名&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;パスワード&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1"># pack(): 上から順に積み重ねる</span>
+<span class="linenos"> 6</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;pack の例&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1"># grid(): 行・列を指定して配置する</span>
+<span class="linenos"> 9</span><span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">11</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ユーザー名&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">13</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;パスワード&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">14</span><span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h2>イベント処理とコールバック<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Button</span></code> の <code class="docutils literal notranslate"><span class="pre">command</span></code> 引数に関数を渡すと、クリック時にその関数が呼び出される。より汎用的なイベント（キー入力やマウス移動など）を扱うには <code class="docutils literal notranslate"><span class="pre">bind()</span></code> メソッドでイベント名とコールバック関数を対応付ける。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
-    <span class="n">label</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2"> さん&quot;</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;挨拶する&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="c1"># Enter キー押下でも同じ処理を実行する</span>
-<span class="n">entry</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Return&gt;&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="n">on_click</span><span class="p">())</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
+<span class="linenos"> 4</span>    <span class="n">label</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2"> さん&quot;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;挨拶する&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="linenos">15</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="c1"># Enter キー押下でも同じ処理を実行する</span>
+<span class="linenos">18</span><span class="n">entry</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Return&gt;&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="n">on_click</span><span class="p">())</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="stringvar-intvar">
 <h2>StringVar / IntVar による制御変数<a class="headerlink" href="#stringvar-intvar" title="Link to this heading"></a></h2>
 <p>前のイベント処理の例では <code class="docutils literal notranslate"><span class="pre">label[&quot;text&quot;]</span> <span class="pre">=</span> <span class="pre">...</span></code> のようにウィジェットの属性を直接書き換えていたが、より tkinter らしい方法として、<code class="docutils literal notranslate"><span class="pre">StringVar</span></code>/<code class="docutils literal notranslate"><span class="pre">IntVar</span></code> のような制御変数を使うやり方がある。ウィジェットの <code class="docutils literal notranslate"><span class="pre">textvariable</span></code>/<code class="docutils literal notranslate"><span class="pre">variable</span></code> 引数にこれらを渡して結びつけておくと、変数の値を <code class="docutils literal notranslate"><span class="pre">set()</span></code> するだけでウィジェット側の表示が自動的に更新され、複数のウィジェットで同じ値を共有することも簡単になる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">greeting</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
-    <span class="n">greeting</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2"> さん&quot;</span><span class="p">)</span>
-
-<span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;挨拶する&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="c1"># label[&quot;text&quot;] を直接更新する代わりに、変数を textvariable で結びつける</span>
-<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">greeting</span><span class="p">)</span>
-<span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">greeting</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
+<span class="linenos"> 8</span>    <span class="n">greeting</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;こんにちは、</span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="si">}</span><span class="s2"> さん&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="linenos">11</span><span class="n">entry</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;挨拶する&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
+<span class="linenos">14</span><span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="c1"># label[&quot;text&quot;] を直接更新する代わりに、変数を textvariable で結びつける</span>
+<span class="linenos">17</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">greeting</span><span class="p">)</span>
+<span class="linenos">18</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">IntVar</span></code> も同様に、数値を扱うウィジェットと結びつけて使う。以下は
-ボタンを押すたびに値が 1 増えるカウンタの例。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">count</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">increment</span><span class="p">():</span>
-    <span class="n">count</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
-<span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;+1&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">increment</span><span class="p">)</span>
-<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<p><code class="docutils literal notranslate"><span class="pre">IntVar</span></code> も同様に、数値を扱うウィジェットと結びつけて使う。以下はボタンを押すたびに値が 1 増えるカウンタの例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">count</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">increment</span><span class="p">():</span>
+<span class="linenos"> 8</span>    <span class="n">count</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+<span class="linenos">11</span><span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;+1&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">increment</span><span class="p">)</span>
+<span class="linenos">14</span><span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -265,32 +260,26 @@
 <section id="ttk">
 <h2>ttk によるテーマ付きウィジェット<a class="headerlink" href="#ttk" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> は、OS ネイティブに近い見た目のテーマが適用されたウィジェット群を提供するサブモジュール。<code class="docutils literal notranslate"><span class="pre">Label</span></code>/<code class="docutils literal notranslate"><span class="pre">Button</span></code>/<code class="docutils literal notranslate"><span class="pre">Entry</span></code> などに対応する <code class="docutils literal notranslate"><span class="pre">ttk.Label</span></code>/<code class="docutils literal notranslate"><span class="pre">ttk.Button</span></code>/<code class="docutils literal notranslate"><span class="pre">ttk.Entry</span></code> が用意されており、API はほぼ同じまま見た目だけが改善される。新しいコードでは、素の <code class="docutils literal notranslate"><span class="pre">tkinter</span></code> ウィジェットの代わりに <code class="docutils literal notranslate"><span class="pre">ttk</span></code> を使うことが推奨されることが多い。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttk</span>
-
-<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-
-<span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;お名前を入力してください&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">ttk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-
-<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="linenos"> 2</span><span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttk</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;お名前を入力してください&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos"> 7</span><span class="n">ttk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos"> 8</span><span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">ttk</span></code> にはコンボボックス（<code class="docutils literal notranslate"><span class="pre">ttk.Combobox</span></code>）やプログレスバー
-（<code class="docutils literal notranslate"><span class="pre">ttk.Progressbar</span></code>）など、素の <code class="docutils literal notranslate"><span class="pre">tkinter</span></code> には無いウィジェットも
-含まれている。一方 <code class="docutils literal notranslate"><span class="pre">Frame</span></code> は <code class="docutils literal notranslate"><span class="pre">ttk.Frame</span></code> としても提供されており、
-見た目の統一のためにコンテナも <code class="docutils literal notranslate"><span class="pre">ttk</span></code> 側に揃えることが多い。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ttk</span></code> にはコンボボックス（<code class="docutils literal notranslate"><span class="pre">ttk.Combobox</span></code>）やプログレスバー（<code class="docutils literal notranslate"><span class="pre">ttk.Progressbar</span></code>）、ツリー表示（<code class="docutils literal notranslate"><span class="pre">ttk.Treeview</span></code>）、タブ（<code class="docutils literal notranslate"><span class="pre">ttk.Notebook</span></code>）など、素の <code class="docutils literal notranslate"><span class="pre">tkinter</span></code> には無いウィジェットも含まれている。また <code class="docutils literal notranslate"><span class="pre">Frame</span></code> も <code class="docutils literal notranslate"><span class="pre">ttk.Frame</span></code> として提供されており、見た目の統一のためにコンテナも <code class="docutils literal notranslate"><span class="pre">ttk</span></code> 側に揃えることが多い。</p>
 </div>
 </section>
 <section id="id2">
 <h2>まとめ<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>この手軽さから、tkinter は社内向けの小さなツールや、スクリプトに簡単な操作画面を付けたい場合の第一候補になりやすい。一方で、モダンな見た目や高度なレイアウト、モバイル対応などが求められる大規模な GUI アプリケーションでは、PyQt/PySide や Kivy といった他のフレームワークが選ばれることも多い。</p>
-</div>
+<p>標準ライブラリだけで手軽に使えることから、<code class="docutils literal notranslate"><span class="pre">tkinter</span></code> は社内向けの小さなツールや、スクリプトに簡単な操作画面を付けたい場合の第一候補になりやすい。一方で、モダンな見た目や高度なレイアウト、モバイル対応などが求められる大規模な GUI アプリケーションでは、PyQt/PySide や Kivy といった他のフレームワークが選ばれることも多い。</p>
 </section>
 </section>
 

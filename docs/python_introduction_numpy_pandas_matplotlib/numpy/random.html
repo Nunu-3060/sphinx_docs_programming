@@ -97,59 +97,59 @@
              
   <section id="id1">
 <h1>乱数生成<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>サンプルデータの作成や動作確認の際、乱数を使うと便利です。numpy では <code class="docutils literal notranslate"><span class="pre">np.random.default_rng</span></code> で乱数生成器を作成して利用します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<p>サンプルデータの作成や動作確認の際、乱数を使うと便利である。numpy では <code class="docutils literal notranslate"><span class="pre">np.random.default_rng</span></code> で乱数生成器を作成して利用する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">seed</span></code> を指定すると、実行するたびに同じ乱数列を再現できます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">seed</span></code> を指定すると、実行するたびに同じ乱数列を再現できる。</p>
 <section id="id2">
 <h2>代表的な乱数生成<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="c1"># 0 以上 10 未満の整数を 5 個生成</span>
-<span class="c1"># array([8, 6, 5, 2, 3])</span>
-
-<span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="c1"># 0.0 以上 1.0 未満の浮動小数点数を 3 個生成</span>
-<span class="c1"># array([0.01652764, 0.81327024, 0.91275558])</span>
-
-<span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="c1"># 平均 0、標準偏差 1 の正規分布に従う乱数を 5 個生成</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="c1"># 0 以上 10 未満の整数を 5 個生成</span>
+<span class="linenos"> 3</span><span class="c1"># array([8, 6, 5, 2, 3])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="c1"># 0.0 以上 1.0 未満の浮動小数点数を 3 個生成</span>
+<span class="linenos"> 7</span><span class="c1"># array([0.01652764, 0.81327024, 0.91275558])</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">10</span><span class="c1"># 平均 0、標準偏差 1 の正規分布に従う乱数を 5 個生成</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">size</span></code> にタプルを渡すことで、多次元配列を直接生成することもできます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="c1"># array([[0, 6, 0],</span>
-<span class="c1">#        [3, 8, 5]])</span>
+<p><code class="docutils literal notranslate"><span class="pre">size</span></code> にタプルを渡すことで、多次元配列を直接生成することもできる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="linenos">2</span><span class="c1"># array([[0, 6, 0],</span>
+<span class="linenos">3</span><span class="c1">#        [3, 8, 5]])</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>要素の抽出・並び替え<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>既存の配列から要素をランダムに抽出したり、順序をランダムに並び替えたりする機能も用意されています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="c1"># array([1, 4, 4])</span>
-<span class="c1"># 配列からランダムに 3 個を選ぶ（既定では重複あり）</span>
-
-<span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="c1"># array([0, 2, 4])</span>
-<span class="c1"># 0〜4 の整数から重複なしで 3 個を選ぶ（replace=False）</span>
-
-<span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="c1"># [3 5 4 1 2]  a 自体を並び替える（戻り値はない）</span>
-
-<span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="c1"># array([3, 2, 0, 1, 4])</span>
-<span class="c1"># 0〜4 を並び替えた新しい配列を返す（元の配列は変更しない）</span>
+<p>既存の配列から要素をランダムに抽出したり、順序をランダムに並び替えたりする機能も用意されている。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos"> 2</span><span class="c1"># array([1, 4, 4])</span>
+<span class="linenos"> 3</span><span class="c1"># 配列からランダムに 3 個を選ぶ（既定では重複あり）</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="c1"># array([0, 2, 4])</span>
+<span class="linenos"> 7</span><span class="c1"># 0〜4 の整数から重複なしで 3 個を選ぶ（replace=False）</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="linenos">10</span><span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">11</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">12</span><span class="c1"># [3 5 4 1 2]  a 自体を並び替える（戻り値はない）</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="linenos">15</span><span class="c1"># array([3, 2, 0, 1, 4])</span>
+<span class="linenos">16</span><span class="c1"># 0〜4 を並び替えた新しい配列を返す（元の配列は変更しない）</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code> は配列そのものを直接並び替える（元の配列が変更される）のに対し、<code class="docutils literal notranslate"><span class="pre">permutation</span></code> は並び替えた新しい配列を返す点が異なります。元のデータを残しておきたい場合は <code class="docutils literal notranslate"><span class="pre">permutation</span></code> を使ってください。</p>
+<p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code> は配列そのものを直接並び替える（元の配列が変更される）のに対し、<code class="docutils literal notranslate"><span class="pre">permutation</span></code> は並び替えた新しい配列を返す点が異なる。元のデータを残しておきたい場合は <code class="docutils literal notranslate"><span class="pre">permutation</span></code> を使うこと。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>古い numpy のコードでは、<code class="docutils literal notranslate"><span class="pre">np.random.seed()</span></code> で乱数のシードを設定し、<code class="docutils literal notranslate"><span class="pre">np.random.rand()</span></code> や <code class="docutils literal notranslate"><span class="pre">np.random.randint()</span></code> のように <code class="docutils literal notranslate"><span class="pre">np.random</span></code> モジュールの関数を直接呼び出す書き方も見られます。この書き方は現在も動作しますが、numpy の公式ドキュメントでは、このページで紹介している <code class="docutils literal notranslate"><span class="pre">np.random.default_rng()</span></code> で生成した <code class="docutils literal notranslate"><span class="pre">Generator</span></code> オブジェクト（<code class="docutils literal notranslate"><span class="pre">rng</span></code>）を使う書き方が推奨されています。<code class="docutils literal notranslate"><span class="pre">Generator</span></code> を使うと、乱数生成器を変数として明示的に持てるため、複数の場所で乱数を使うコードでも挙動を管理しやすくなります。新しくコードを書く場合は、<code class="docutils literal notranslate"><span class="pre">default_rng</span></code> の方を使うようにしてください。</p>
+<p>古い numpy のコードでは、<code class="docutils literal notranslate"><span class="pre">np.random.seed()</span></code> で乱数のシードを設定し、<code class="docutils literal notranslate"><span class="pre">np.random.rand()</span></code> や <code class="docutils literal notranslate"><span class="pre">np.random.randint()</span></code> のように <code class="docutils literal notranslate"><span class="pre">np.random</span></code> モジュールの関数を直接呼び出す書き方も見られる。この書き方は現在も動作するが、numpy の公式ドキュメントでは、このページで紹介している <code class="docutils literal notranslate"><span class="pre">np.random.default_rng()</span></code> で生成した <code class="docutils literal notranslate"><span class="pre">Generator</span></code> オブジェクト（<code class="docutils literal notranslate"><span class="pre">rng</span></code>）を使う書き方が推奨されている。<code class="docutils literal notranslate"><span class="pre">Generator</span></code> を使うと、乱数生成器を変数として明示的に持てるため、複数の場所で乱数を使うコードでも挙動を管理しやすくなる。新しくコードを書く場合は、<code class="docutils literal notranslate"><span class="pre">default_rng</span></code> の方を使うようにすること。</p>
 </div>
 </section>
 </section>

@@ -105,138 +105,142 @@
 <section id="int">
 <h2>int<a class="headerlink" href="#int" title="Link to this heading"></a></h2>
 <p>整数、または整数に変換可能な文字列・数値から <code class="docutils literal notranslate"><span class="pre">int</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;42&quot;</span><span class="p">)</span>
-<span class="go">42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="mf">3.9</span><span class="p">)</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;ff&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<span class="go">255</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;42&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">42</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="mf">3.9</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">3</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;ff&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">255</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Python 3.11 以降では、サービス拒否（DoS）攻撃への対策として、10 進数など 2 の累乗以外の基数による文字列と <code class="docutils literal notranslate"><span class="pre">int</span></code> の相互変換で、扱える桁数に上限（既定値は 4300 桁）が設けられている。これを超える桁数の文字列を <code class="docutils literal notranslate"><span class="pre">int()</span></code> に渡したり、巨大な整数を <code class="docutils literal notranslate"><span class="pre">str()</span></code> で文字列化したりすると <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> が送出される。上限は <code class="docutils literal notranslate"><span class="pre">sys.set_int_max_str_digits()</span></code> で変更できる。</p>
 </div>
 </section>
 <section id="float">
 <h2>float<a class="headerlink" href="#float" title="Link to this heading"></a></h2>
 <p>浮動小数点数、または変換可能な文字列・数値から <code class="docutils literal notranslate"><span class="pre">float</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;3.14&quot;</span><span class="p">)</span>
-<span class="go">3.14</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="go">10.0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;3.14&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">3.14</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">10.0</span>
 </pre></div>
 </div>
 </section>
 <section id="complex">
 <h2>complex<a class="headerlink" href="#complex" title="Link to this heading"></a></h2>
 <p>実部と虚部から、または変換可能な文字列から <code class="docutils literal notranslate"><span class="pre">complex</span></code> オブジェクト（複素数）を生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">(1+2j)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="s2">&quot;1+2j&quot;</span><span class="p">)</span>
-<span class="go">(1+2j)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">(1+2j)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">complex</span><span class="p">(</span><span class="s2">&quot;1+2j&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">(1+2j)</span>
 </pre></div>
 </div>
 </section>
 <section id="chr">
 <h2>chr<a class="headerlink" href="#chr" title="Link to this heading"></a></h2>
-<p>Unicode コードポイント（整数）から、対応する1文字の文字列を生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
-<span class="go">&#39;A&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mh">0x3042</span><span class="p">)</span>
-<span class="go">&#39;あ&#39;</span>
+<p>Unicode コードポイント（整数）から、対応する 1 文字の文字列を生成する。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&#39;A&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mh">0x3042</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&#39;あ&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="ord">
 <h2>ord<a class="headerlink" href="#ord" title="Link to this heading"></a></h2>
-<p>1文字の文字列から、対応する Unicode コードポイント（整数）を返す。<code class="docutils literal notranslate"><span class="pre">chr</span></code> の逆演算にあたる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
-<span class="go">65</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;あ&#39;</span><span class="p">)</span>
-<span class="go">12354</span>
+<p>1 文字の文字列から、対応する Unicode コードポイント（整数）を返す。<code class="docutils literal notranslate"><span class="pre">chr</span></code> の逆演算にあたる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">65</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;あ&#39;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">12354</span>
 </pre></div>
 </div>
 </section>
 <section id="str">
 <h2>str<a class="headerlink" href="#str" title="Link to this heading"></a></h2>
 <p>オブジェクトの人間可読な文字列表現を返す。引数を省略すると空文字列 <code class="docutils literal notranslate"><span class="pre">''</span></code> を返す。<code class="docutils literal notranslate"><span class="pre">repr</span></code> との違いなど、文字列表現の詳細は <a class="reference internal" href="string_repr.html"><span class="doc">文字列表現・フォーマット</span></a> を参照。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-<span class="go">&#39;123&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">&#39;[1, 2, 3]&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&#39;123&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">&#39;[1, 2, 3]&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="bool">
 <h2>bool<a class="headerlink" href="#bool" title="Link to this heading"></a></h2>
 <p>オブジェクトの真偽値（<code class="docutils literal notranslate"><span class="pre">True</span></code> / <code class="docutils literal notranslate"><span class="pre">False</span></code>）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">False</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">False</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">6</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="list">
 <h2>list<a class="headerlink" href="#list" title="Link to this heading"></a></h2>
 <p>イテラブルの要素から新しい <code class="docutils literal notranslate"><span class="pre">list</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-<span class="go">[0, 1, 2]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="linenos">4</span><span class="go">[0, 1, 2]</span>
 </pre></div>
 </div>
 </section>
 <section id="tuple">
 <h2>tuple<a class="headerlink" href="#tuple" title="Link to this heading"></a></h2>
 <p>イテラブルの要素から新しい <code class="docutils literal notranslate"><span class="pre">tuple</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">(1, 2, 3)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">(1, 2, 3)</span>
 </pre></div>
 </div>
 </section>
 <section id="dict">
 <h2>dict<a class="headerlink" href="#dict" title="Link to this heading"></a></h2>
 <p>キーと値のペアから新しい <code class="docutils literal notranslate"><span class="pre">dict</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
-<span class="go">{&#39;x&#39;: 1, &#39;y&#39;: 2}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="linenos">4</span><span class="go">{&#39;x&#39;: 1, &#39;y&#39;: 2}</span>
 </pre></div>
 </div>
 </section>
 <section id="set">
 <h2>set<a class="headerlink" href="#set" title="Link to this heading"></a></h2>
 <p>イテラブルの要素から重複のない <code class="docutils literal notranslate"><span class="pre">set</span></code> オブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">{1, 2, 3}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">{1, 2, 3}</span>
 </pre></div>
 </div>
 </section>
 <section id="frozenset">
 <h2>frozenset<a class="headerlink" href="#frozenset" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">set</span></code> をイミュータブル（変更不可）にしたもの。ハッシュ可能なので辞書のキーや集合の要素として使用できる（ハッシュ可能性については <a class="reference internal" href="introspection.html"><span class="doc">オブジェクト検査・リフレクション</span></a> の <code class="docutils literal notranslate"><span class="pre">hash()</span></code> の項を参照）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">frozenset</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="go">frozenset({1, 2, 3})</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">frozenset</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">frozenset({1, 2, 3})</span>
 </pre></div>
 </div>
 </section>
 <section id="bytes">
 <h2>bytes<a class="headerlink" href="#bytes" title="Link to this heading"></a></h2>
 <p>イミュータブルなバイト列を生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bytes</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="go">b&#39;abc&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">bytes</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">67</span><span class="p">])</span>
-<span class="go">b&#39;ABC&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bytes</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">b&#39;abc&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">bytes</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">67</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">b&#39;ABC&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="bytearray">
 <h2>bytearray<a class="headerlink" href="#bytearray" title="Link to this heading"></a></h2>
 <p>ミュータブル（変更可能）なバイト列を生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">65</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span>
-<span class="go">bytearray(b&#39;Abc&#39;)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">65</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ba</span>
+<span class="linenos">4</span><span class="go">bytearray(b&#39;Abc&#39;)</span>
 </pre></div>
 </div>
 </section>

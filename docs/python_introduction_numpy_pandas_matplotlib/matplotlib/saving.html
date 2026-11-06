@@ -98,70 +98,70 @@
              
   <section id="id1">
 <h1>グラフの保存<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>作成したグラフをファイルとして保存するには、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を使います。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
-
-<span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-
-<span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span>
-<span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">)</span>
+<p>作成したグラフをファイルとして保存するには、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
+<span class="linenos"> 4</span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span>
+<span class="linenos"> 9</span><span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
+<span class="linenos">10</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="linenos">11</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>拡張子から出力形式（PNG、PDF、SVG など）が自動的に判別されます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.pdf&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.svg&quot;</span><span class="p">)</span>
+<p>拡張子から出力形式（PNG、PDF、SVG など）が自動的に判別される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.pdf&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.svg&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="id2">
 <h2>解像度の指定<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>（1 インチあたりのドット数）を指定すると、画質を調整できます。資料に貼り付ける画像は、<code class="docutils literal notranslate"><span class="pre">dpi</span></code> を高めに設定するときれいに表示されます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>（1 インチあたりのドット数）を指定すると、画質を調整できる。資料に貼り付ける画像は、<code class="docutils literal notranslate"><span class="pre">dpi</span></code> を高めに設定するときれいに表示される。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>余白の調整<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>保存時にグラフの周囲の余白が気になる場合は、<code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code> を指定すると余分な余白を自動的に切り詰められます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<p>保存時にグラフの周囲の余白が気になる場合は、<code class="docutils literal notranslate"><span class="pre">bbox_inches=&quot;tight&quot;</span></code> を指定すると余分な余白を自動的に切り詰められる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;sin_curve.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> でグラフを表示した後は、<code class="docutils literal notranslate"><span class="pre">Figure</span></code> の内容が破棄される環境があります。表示と保存の両方を行いたい場合は、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> より前に呼び出してください。</p>
+<p><code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> でグラフを表示した後は、<code class="docutils literal notranslate"><span class="pre">Figure</span></code> の内容が破棄される環境がある。表示と保存の両方を行いたい場合は、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> より前に呼び出すこと。</p>
 </div>
 </section>
 <section id="id4">
 <h2>グラフを閉じる（メモリの解放）<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code> ループで大量のグラフを作成して保存するような場合、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を呼び出した後も <code class="docutils literal notranslate"><span class="pre">Figure</span></code> はメモリ上に残り続けます。件数が多いとメモリ使用量が増え続けてしまうため、保存が終わった <code class="docutils literal notranslate"><span class="pre">Figure</span></code> は <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> で明示的に閉じておくと安全です。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-    <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-
-    <span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span>
-    <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span><span class="p">))</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sin_curve_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-    <span class="c1"># 保存済みの Figure をメモリから解放する</span>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> ループで大量のグラフを作成して保存するような場合、<code class="docutils literal notranslate"><span class="pre">fig.savefig()</span></code> を呼び出した後も <code class="docutils literal notranslate"><span class="pre">Figure</span></code> はメモリ上に残り続ける。件数が多いとメモリ使用量が増え続けてしまうため、保存が終わった <code class="docutils literal notranslate"><span class="pre">Figure</span></code> は <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> で明示的に閉じておくと安全である。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
+<span class="linenos"> 4</span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="linenos"> 7</span>    <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="n">fig</span><span class="p">:</span> <span class="n">Figure</span>
+<span class="linenos">10</span>    <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
+<span class="linenos">11</span>    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="linenos">12</span>    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span><span class="p">))</span>
+<span class="linenos">13</span>    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sin_curve_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="linenos">16</span>    <span class="c1"># 保存済みの Figure をメモリから解放する</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code> のように <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を指定すると、そのグラフだけを閉じます。引数を省略した <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> は現在の <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を、<code class="docutils literal notranslate"><span class="pre">plt.close(&quot;all&quot;)</span></code> はすべての <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を閉じます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">plt.close(fig)</span></code> のように <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を指定すると、そのグラフだけを閉じる。引数を省略した <code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> は現在の <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を、<code class="docutils literal notranslate"><span class="pre">plt.close(&quot;all&quot;)</span></code> はすべての <code class="docutils literal notranslate"><span class="pre">Figure</span></code> を閉じる。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p><code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> で画面表示だけを行うような対話的な用途では、グラフの数も少なく問題になりにくいため、<code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> を意識する必要はあまりありません。「<a class="reference internal" href="../practice/index.html"><span class="doc">実務での活用例</span></a>」の章のように大量のデータから多数のグラフを自動生成・保存するスクリプトを書く場合に、特に効果を発揮します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">plt.show()</span></code> で画面表示だけを行うような対話的な用途では、グラフの数も少なく問題になりにくいため、<code class="docutils literal notranslate"><span class="pre">plt.close()</span></code> を意識する必要はあまりない。「<a class="reference internal" href="../practice/index.html"><span class="doc">実務での活用例</span></a>」の章のように大量のデータから多数のグラフを自動生成・保存するスクリプトを書く場合に、特に効果を発揮する。</p>
 </div>
 </section>
 </section>

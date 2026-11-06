@@ -57,10 +57,11 @@
 <li class="toctree-l3"><a class="reference internal" href="math.html">math</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html">random</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">statistics</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#statistics-mean">statistics.mean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statistics-mean-statistics-fmean">statistics.mean / statistics.fmean</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#statistics-median">statistics.median</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#statistics-mode">statistics.mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statistics-mode-statistics-multimode">statistics.mode / statistics.multimode</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#statistics-stdev-statistics-variance">statistics.stdev / statistics.variance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">相関と回帰</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="decimal.html">decimal</a></li>
@@ -102,51 +103,67 @@
              
   <section id="statistics">
 <h1>statistics<a class="headerlink" href="#statistics" title="Link to this heading"></a></h1>
-<p>数値データに対する基本的な統計量を計算するためのモジュール。平均や
-中央値、分散といった代表値を、外部ライブラリを使わずに標準ライブラリ
-だけで求めたい場合に利用する。</p>
-<section id="statistics-mean">
-<h2>statistics.mean<a class="headerlink" href="#statistics-mean" title="Link to this heading"></a></h2>
-<p>データの算術平均（相加平均）を計算する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">3</span>
+<p>数値データに対する基本的な統計量を計算するためのモジュール。平均や中央値、分散といった代表値を、外部ライブラリを使わずに標準ライブラリだけで求めたい場合に利用する。</p>
+<section id="statistics-mean-statistics-fmean">
+<h2>statistics.mean / statistics.fmean<a class="headerlink" href="#statistics-mean-statistics-fmean" title="Link to this heading"></a></h2>
+<p>データの算術平均（相加平均）を計算する。<code class="docutils literal notranslate"><span class="pre">mean</span></code> は入力の型を保とうとするため、整数のリストに対しては結果が割り切れれば <code class="docutils literal notranslate"><span class="pre">int</span></code> を返す。常に <code class="docutils literal notranslate"><span class="pre">float</span></code> で高速に計算したい場合は <code class="docutils literal notranslate"><span class="pre">fmean</span></code> を使う（3.11 以降は <code class="docutils literal notranslate"><span class="pre">weights</span></code> 引数で重み付き平均も計算できる）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">3</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">fmean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">6</span><span class="go">3.0</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">fmean</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="linenos">8</span><span class="go">1.6</span>
 </pre></div>
 </div>
 </section>
 <section id="statistics-median">
 <h2>statistics.median<a class="headerlink" href="#statistics-median" title="Link to this heading"></a></h2>
-<p>データを昇順に並べたときの中央値を返す。データ数が偶数の場合は、
-中央2つの値の平均となる。外れ値の影響を受けにくいのが特徴。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="go">2.5</span>
+<p>データを昇順に並べたときの中央値を返す。データ数が偶数の場合は、中央 2 つの値の平均となる。外れ値の影響を受けにくいのが特徴。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">3</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">2.5</span>
 </pre></div>
 </div>
 </section>
-<section id="statistics-mode">
-<h2>statistics.mode<a class="headerlink" href="#statistics-mode" title="Link to this heading"></a></h2>
-<p>データの中で最も頻繁に現れる値（最頻値）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">])</span>
-<span class="go">&#39;b&#39;</span>
+<section id="statistics-mode-statistics-multimode">
+<h2>statistics.mode / statistics.multimode<a class="headerlink" href="#statistics-mode-statistics-multimode" title="Link to this heading"></a></h2>
+<p>データの中で最も頻繁に現れる値（最頻値）を返す。最頻値が複数ある場合は最初に現れたものを返す。すべての最頻値をリストで得たい場合は <code class="docutils literal notranslate"><span class="pre">multimode</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos">2</span><span class="go">3</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">])</span>
+<span class="linenos">4</span><span class="go">&#39;b&#39;</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">multimode</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">6</span><span class="go">[1, 2]</span>
 </pre></div>
 </div>
 </section>
 <section id="statistics-stdev-statistics-variance">
 <h2>statistics.stdev / statistics.variance<a class="headerlink" href="#statistics-stdev-statistics-variance" title="Link to this heading"></a></h2>
-<p>標本標準偏差・標本分散を計算する。これらはデータのばらつきの度合いを
-表す指標である。
-母集団全体に対して計算したい場合は <code class="docutils literal notranslate"><span class="pre">pstdev</span></code> / <code class="docutils literal notranslate"><span class="pre">pvariance</span></code> を使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">4.571428571428571</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">2.138089935299395</span>
+<p>標本標準偏差・標本分散を計算する。これらはデータのばらつきの度合いを表す指標である。母集団全体に対して計算したい場合は <code class="docutils literal notranslate"><span class="pre">pstdev</span></code> / <code class="docutils literal notranslate"><span class="pre">pvariance</span></code> を使う。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">4.571428571428571</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">2.138089935299395</span>
 </pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>相関と回帰<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>2 つのデータ列の関係を調べる関数も用意されている。<code class="docutils literal notranslate"><span class="pre">correlation</span></code> はピアソンの相関係数（3.12 以降は <code class="docutils literal notranslate"><span class="pre">method=&quot;ranked&quot;</span></code> でスピアマンの順位相関係数）を、<code class="docutils literal notranslate"><span class="pre">linear_regression</span></code> は単回帰（最小二乗法）の傾きと切片を返す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="linenos">3</span><span class="go">1.0</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">statistics</span><span class="o">.</span><span class="n">linear_regression</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="linenos">5</span><span class="go">LinearRegression(slope=2.0, intercept=1.0)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Python 3.13 以降では、カーネル密度推定を行う <code class="docutils literal notranslate"><span class="pre">statistics.kde</span></code> と、推定した分布から乱数を生成する <code class="docutils literal notranslate"><span class="pre">statistics.kde_random</span></code> も追加されている。より本格的な数値計算やデータ分析には、NumPy や pandas などのサードパーティライブラリの利用を検討するとよい。</p>
 </div>
 </section>
 </section>

@@ -92,24 +92,24 @@
 <p><code class="docutils literal notranslate"><span class="pre">str</span></code> / <code class="docutils literal notranslate"><span class="pre">list</span></code> / <code class="docutils literal notranslate"><span class="pre">tuple</span></code> などのシーケンス型に対して使える、結合を行う <code class="docutils literal notranslate"><span class="pre">+</span></code> と繰り返しを行う <code class="docutils literal notranslate"><span class="pre">*</span></code> について解説する。</p>
 <section id="id2">
 <h2><code class="docutils literal notranslate"><span class="pre">+</span></code> （結合）<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>2つのシーケンスを結合し、新しいオブジェクトを生成する。<code class="docutils literal notranslate"><span class="pre">str</span></code> / <code class="docutils literal notranslate"><span class="pre">list</span></code> / <code class="docutils literal notranslate"><span class="pre">tuple</span></code> では使用できるが、<code class="docutils literal notranslate"><span class="pre">dict</span></code> や <code class="docutils literal notranslate"><span class="pre">set</span></code> は順序を持つシーケンスではないため <code class="docutils literal notranslate"><span class="pre">+</span></code> に対応していない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;foo&quot;</span> <span class="o">+</span> <span class="s2">&quot;bar&quot;</span>
-<span class="go">&#39;foobar&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="go">[1, 2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
-<span class="go">(1, 2, 3)</span>
+<p>2 つのシーケンスを結合し、新しいオブジェクトを生成する。<code class="docutils literal notranslate"><span class="pre">str</span></code> / <code class="docutils literal notranslate"><span class="pre">list</span></code> / <code class="docutils literal notranslate"><span class="pre">tuple</span></code> では使用できるが、<code class="docutils literal notranslate"><span class="pre">dict</span></code> や <code class="docutils literal notranslate"><span class="pre">set</span></code> は順序を持つシーケンスではないため <code class="docutils literal notranslate"><span class="pre">+</span></code> に対応していない。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;foo&quot;</span> <span class="o">+</span> <span class="s2">&quot;bar&quot;</span>
+<span class="linenos">2</span><span class="go">&#39;foobar&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="linenos">4</span><span class="go">[1, 2, 3, 4]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+<span class="linenos">6</span><span class="go">(1, 2, 3)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><code class="docutils literal notranslate"><span class="pre">dict</span></code> や <code class="docutils literal notranslate"><span class="pre">set</span></code> に <code class="docutils literal notranslate"><span class="pre">+</span></code> を使うと <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> になる。複数の <code class="docutils literal notranslate"><span class="pre">dict</span></code> をまとめるには <code class="docutils literal notranslate"><span class="pre">|</span></code> 演算子や <code class="docutils literal notranslate"><span class="pre">update()</span></code> メソッドを、<code class="docutils literal notranslate"><span class="pre">set</span></code> の結合には <code class="docutils literal notranslate"><span class="pre">|</span></code>（和集合）を使う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">+</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="gt">Traceback (most recent call last):</span>
-<span class="w">  </span><span class="c">...</span>
-<span class="gr">TypeError</span>: <span class="n">unsupported operand type(s) for +: &#39;dict&#39; and &#39;dict&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">+</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="linenos">2</span><span class="gt">Traceback (most recent call last):</span>
+<span class="linenos">3</span><span class="w">  </span><span class="c">...</span>
+<span class="linenos">4</span><span class="gr">TypeError</span>: <span class="n">unsupported operand type(s) for +: &#39;dict&#39; and &#39;dict&#39;</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="linenos">6</span><span class="go">{&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
 </pre></div>
 </div>
 </div>
@@ -117,34 +117,34 @@
 <section id="id3">
 <h2><code class="docutils literal notranslate"><span class="pre">*</span></code> （繰り返し）<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>シーケンスを整数回だけ繰り返した新しいオブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;ab&quot;</span> <span class="o">*</span> <span class="mi">3</span>
-<span class="go">&#39;ababab&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
-<span class="go">[0, 0, 0, 0, 0]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
-<span class="go">(1, 2, 1, 2)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;ab&quot;</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="linenos">2</span><span class="go">&#39;ababab&#39;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="linenos">4</span><span class="go">[0, 0, 0, 0, 0]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">6</span><span class="go">(1, 2, 1, 2)</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p><code class="docutils literal notranslate"><span class="pre">[[]]</span> <span class="pre">*</span> <span class="pre">3</span></code> のように要素がミュータブルなオブジェクト（<code class="docutils literal notranslate"><span class="pre">list</span></code> など）を含む <code class="docutils literal notranslate"><span class="pre">list</span></code> を <code class="docutils literal notranslate"><span class="pre">*</span></code> で繰り返すと、内側の <code class="docutils literal notranslate"><span class="pre">list</span></code> はコピーされず、<strong>同じオブジェクトへの参照が3つ並ぶ</strong> だけになる。そのため1つの要素を変更すると、他の要素も一緒に変わってしまう。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[]]</span> <span class="o">*</span> <span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
-<span class="go">[[], [], []]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>  <span class="c1"># 3つとも同じ内側のリストを参照しているため、全部変わる</span>
-<span class="go">[[1], [1], [1]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">True</span>
+<p><code class="docutils literal notranslate"><span class="pre">[[]]</span> <span class="pre">*</span> <span class="pre">3</span></code> のように要素がミュータブルなオブジェクト（<code class="docutils literal notranslate"><span class="pre">list</span></code> など）を含む <code class="docutils literal notranslate"><span class="pre">list</span></code> を <code class="docutils literal notranslate"><span class="pre">*</span></code> で繰り返すと、内側の <code class="docutils literal notranslate"><span class="pre">list</span></code> はコピーされず、<strong>同じオブジェクトへの参照が 3 つ並ぶ</strong> だけになる。そのため 1 つの要素を変更すると、他の要素も一緒に変わってしまう。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[]]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>
+<span class="linenos">3</span><span class="go">[[], [], []]</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>  <span class="c1"># 3 つとも同じ内側のリストを参照しているため、全部変わる</span>
+<span class="linenos">6</span><span class="go">[[1], [1], [1]]</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">8</span><span class="go">True</span>
 </pre></div>
 </div>
 <p>独立した内側のリストが必要な場合は、リスト内包表記で要素ごとに新しいオブジェクトを生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>  <span class="c1"># 各要素が独立したオブジェクトなので、他には影響しない</span>
-<span class="go">[[1], [], []]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span>  <span class="c1"># 各要素が独立したオブジェクトなので、他には影響しない</span>
+<span class="linenos">4</span><span class="go">[[1], [], []]</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">6</span><span class="go">False</span>
 </pre></div>
 </div>
 </div>

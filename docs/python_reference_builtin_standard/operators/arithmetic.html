@@ -95,37 +95,37 @@
 <section id="id2">
 <h2><code class="docutils literal notranslate"><span class="pre">+</span></code> / <code class="docutils literal notranslate"><span class="pre">-</span></code> / <code class="docutils literal notranslate"><span class="pre">*</span></code><a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>加算・減算・乗算を行う。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">+</span> <span class="mi">5</span>
-<span class="go">8</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">10</span> <span class="o">-</span> <span class="mi">4</span>
-<span class="go">6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">*</span> <span class="mi">4</span>
-<span class="go">12</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mf">2.5</span> <span class="o">*</span> <span class="mi">2</span>
-<span class="go">5.0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="linenos">2</span><span class="go">8</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">10</span> <span class="o">-</span> <span class="mi">4</span>
+<span class="linenos">4</span><span class="go">6</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="linenos">6</span><span class="go">12</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="mf">2.5</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="linenos">8</span><span class="go">5.0</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2><code class="docutils literal notranslate"><span class="pre">/</span></code> <code class="docutils literal notranslate"><span class="pre">//</span></code> <code class="docutils literal notranslate"><span class="pre">%</span></code><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">/</span></code> は真の除算（true division）を行い、常に <code class="docutils literal notranslate"><span class="pre">float</span></code> を返す。<code class="docutils literal notranslate"><span class="pre">//</span></code> は切り捨て除算（floor division）で商の小数部を切り捨て、<code class="docutils literal notranslate"><span class="pre">%</span></code> は剰余（modulo）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="go">3.5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">8</span> <span class="o">/</span> <span class="mi">4</span>
-<span class="go">2.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">//</span> <span class="mi">2</span>
-<span class="go">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">%</span> <span class="mi">2</span>
-<span class="go">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="linenos">2</span><span class="go">3.5</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">8</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="linenos">4</span><span class="go">2.0</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="linenos">6</span><span class="go">3</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">7</span> <span class="o">%</span> <span class="mi">2</span>
+<span class="linenos">8</span><span class="go">1</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p><code class="docutils literal notranslate"><span class="pre">/</span></code> は両方のオペランドが <code class="docutils literal notranslate"><span class="pre">int</span></code> であっても結果は必ず <code class="docutils literal notranslate"><span class="pre">float</span></code> になる。一方 <code class="docutils literal notranslate"><span class="pre">//</span></code> と <code class="docutils literal notranslate"><span class="pre">%</span></code> は負の数に対して「除数の符号に揃える」規則で動作するため、直感的な結果と異なる場合がある。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">7</span> <span class="o">//</span> <span class="mi">2</span>
-<span class="go">-4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">7</span> <span class="o">%</span> <span class="mi">2</span>
-<span class="go">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">7</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="linenos">2</span><span class="go">-4</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">7</span> <span class="o">%</span> <span class="mi">2</span>
+<span class="linenos">4</span><span class="go">1</span>
 </pre></div>
 </div>
 <p>これは、常に <code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">//</span> <span class="pre">b)</span> <span class="pre">*</span> <span class="pre">b</span> <span class="pre">+</span> <span class="pre">(a</span> <span class="pre">%</span> <span class="pre">b)</span> <span class="pre">==</span> <span class="pre">a</span></code> という関係が成り立つように定義されているためである。</p>
@@ -134,29 +134,29 @@
 <section id="id4">
 <h2><code class="docutils literal notranslate"><span class="pre">**</span></code><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>べき乗を計算する。右結合であり、単項マイナスより優先順位が高い。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">**</span> <span class="mi">10</span>
-<span class="go">1024</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span>
-<span class="go">1.4142135623730951</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="go">-4</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">**</span> <span class="mi">10</span>
+<span class="linenos">2</span><span class="go">1024</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span>
+<span class="linenos">4</span><span class="go">1.4142135623730951</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="linenos">6</span><span class="go">-4</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
-<p>組み込み関数 <a class="reference internal" href="../builtins/numeric.html"><span class="doc">数値演算</span></a> の <code class="docutils literal notranslate"><span class="pre">pow()</span></code> は <code class="docutils literal notranslate"><span class="pre">**</span></code> と同じ計算を行うが、第3引数（法）を渡すと剰余演算まで含めて効率的に計算できる点が異なる（<code class="docutils literal notranslate"><span class="pre">pow(2,</span> <span class="pre">10,</span> <span class="pre">1000)</span></code> は <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">10</span> <span class="pre">%</span> <span class="pre">1000</span></code> と同じ結果を返す）。</p>
+<p>組み込み関数 <a class="reference internal" href="../builtins/numeric.html"><span class="doc">数値演算</span></a> の <code class="docutils literal notranslate"><span class="pre">pow()</span></code> は <code class="docutils literal notranslate"><span class="pre">**</span></code> と同じ計算を行うが、第 3 引数（法）を渡すと剰余演算まで含めて効率的に計算できる点が異なる（<code class="docutils literal notranslate"><span class="pre">pow(2,</span> <span class="pre">10,</span> <span class="pre">1000)</span></code> は <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">10</span> <span class="pre">%</span> <span class="pre">1000</span></code> と同じ結果を返す）。</p>
 </div>
 </section>
 <section id="id5">
 <h2>単項 <code class="docutils literal notranslate"><span class="pre">+</span></code> / <code class="docutils literal notranslate"><span class="pre">-</span></code><a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
 <p>数値の符号をそのまま示す単項プラス、符号を反転する単項マイナス。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="n">x</span>
-<span class="go">-5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">+</span><span class="n">x</span>
-<span class="go">5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
-<span class="go">5</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="n">x</span>
+<span class="linenos">3</span><span class="go">-5</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="o">+</span><span class="n">x</span>
+<span class="linenos">5</span><span class="go">5</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="o">-</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">5</span>
 </pre></div>
 </div>
 </section>

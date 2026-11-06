@@ -92,22 +92,22 @@
              
   <section id="id1">
 <h1>内包表記<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>既存のイテラブルから新しい <code class="docutils literal notranslate"><span class="pre">list</span></code>/<code class="docutils literal notranslate"><span class="pre">dict</span></code>/<code class="docutils literal notranslate"><span class="pre">set</span></code> を簡潔に生成するための構文。<code class="docutils literal notranslate"><span class="pre">for</span></code> 文で書ける処理を1行で表現でき、Python では広く使われるイディオムになっている。</p>
+<p>既存のイテラブルから新しい <code class="docutils literal notranslate"><span class="pre">list</span></code>/<code class="docutils literal notranslate"><span class="pre">dict</span></code>/<code class="docutils literal notranslate"><span class="pre">set</span></code> を簡潔に生成するための構文。<code class="docutils literal notranslate"><span class="pre">for</span></code> 文で書ける処理を 1 行で表現でき、Python では広く使われるイディオムになっている。</p>
 <section id="id2">
 <h2>リスト内包表記<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">[式</span> <span class="pre">for</span> <span class="pre">変数</span> <span class="pre">in</span> <span class="pre">イテラブル]</span></code> の形式で、新しい <code class="docutils literal notranslate"><span class="pre">list</span></code> を生成する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-<span class="go">[0, 1, 4, 9, 16]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="go">[0, 1, 4, 9, 16]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>これは次の通常の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文と同じ結果になる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span>
-<span class="go">[0, 1, 4, 9, 16]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="n">squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span>
+<span class="linenos">5</span><span class="go">[0, 1, 4, 9, 16]</span>
 </pre></div>
 </div>
 </div>
@@ -115,62 +115,62 @@
 <section id="if">
 <h2>条件によるフィルタ（if）<a class="headerlink" href="#if" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">if</span></code> を末尾に付けると、条件を満たす要素だけを対象にする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="go">[0, 2, 4, 6, 8]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="linenos">2</span><span class="go">[0, 2, 4, 6, 8]</span>
 </pre></div>
 </div>
 </section>
 <section id="if-else">
 <h2>条件式（if / else）<a class="headerlink" href="#if-else" title="Link to this heading"></a></h2>
 <p>要素ごとに異なる値を生成したい場合は、<code class="docutils literal notranslate"><span class="pre">for</span></code> の前に三項演算子形式の条件式を書く。末尾に付ける「フィルタの if」とは書く位置も意味も異なる点に注意する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">&quot;偶数&quot;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;奇数&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-<span class="go">[&#39;偶数&#39;, &#39;奇数&#39;, &#39;偶数&#39;, &#39;奇数&#39;, &#39;偶数&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">&quot;偶数&quot;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;奇数&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="linenos">2</span><span class="go">[&#39;偶数&#39;, &#39;奇数&#39;, &#39;偶数&#39;, &#39;奇数&#39;, &#39;偶数&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>辞書内包表記・集合内包表記<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>波括弧を使うと <code class="docutils literal notranslate"><span class="pre">dict</span></code>（<code class="docutils literal notranslate"><span class="pre">{キー:</span> <span class="pre">値</span> <span class="pre">for</span> <span class="pre">...}</span></code>）や <code class="docutils literal notranslate"><span class="pre">set</span></code>（<code class="docutils literal notranslate"><span class="pre">{式</span> <span class="pre">for</span> <span class="pre">...}</span></code>）も同様に生成できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
-<span class="go">{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)}</span>
-<span class="go">{0, 1, 2}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
+<span class="linenos">2</span><span class="go">{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)}</span>
+<span class="linenos">4</span><span class="go">{0, 1, 2}</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h2>ネストした内包表記<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code> を複数並べると、多重ループを1つの内包表記で表現できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
-<span class="go">[1, 2, 3, 4, 5, 6]</span>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> を複数並べると、多重ループを 1 つの内包表記で表現できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+<span class="linenos">3</span><span class="go">[1, 2, 3, 4, 5, 6]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>上の例は次の入れ子の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文と同じ順序で評価される（外側から内側の順に <code class="docutils literal notranslate"><span class="pre">for</span></code> を並べる）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+<span class="linenos">3</span><span class="gp">... </span>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+<span class="linenos">4</span><span class="gp">... </span>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">for</span></code> を重ねすぎると読みにくくなるため、2重程度を超える場合は通常の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文に書き直した方が可読性が高くなることが多い。</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> を重ねすぎると読みにくくなるため、2 重程度を超える場合は通常の <code class="docutils literal notranslate"><span class="pre">for</span></code> 文に書き直した方が可読性が高くなることが多い。</p>
 </div>
 </section>
 <section id="id5">
 <h2>ジェネレータ式<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>角括弧の代わりに丸括弧を使うと、リストを作らずに1要素ずつ遅延生成するジェネレータ式になる。大きなデータを扱う際にメモリを節約できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
-<span class="go">1</span>
+<p>角括弧の代わりに丸括弧を使うと、リストを作らずに 1 要素ずつ遅延生成するジェネレータ式になる。大きなデータを扱う際にメモリを節約できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">0</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">1</span>
 </pre></div>
 </div>
 <p>関数の唯一の引数として渡す場合は、丸括弧を省略できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="go">30</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="linenos">2</span><span class="go">30</span>
 </pre></div>
 </div>
 <div class="admonition note">

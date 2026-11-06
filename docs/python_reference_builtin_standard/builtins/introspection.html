@@ -60,6 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#vars">vars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hash">hash</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#callable">callable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eval-exec-compile">eval / exec / compile</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="string_repr.html">文字列表現・フォーマット</a></li>
@@ -96,52 +97,52 @@
              
   <section id="id1">
 <h1>オブジェクト検査・リフレクション<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>オブジェクトの型や属性を実行時に調べる・操作するための関数群。</p>
+<p>オブジェクトの型や属性を実行時に調べたり操作したりするための関数群と、文字列として与えたコードを動的に評価・実行する関数について解説する。</p>
 <section id="type">
 <h2>type<a class="headerlink" href="#type" title="Link to this heading"></a></h2>
 <p>オブジェクトの型を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">&lt;class &#39;int&#39;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="go">&lt;class &#39;str&#39;&gt;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">&lt;class &#39;int&#39;&gt;</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">&lt;class &#39;str&#39;&gt;</span>
 </pre></div>
 </div>
-<p>3引数版 <code class="docutils literal notranslate"><span class="pre">type(name,</span> <span class="pre">bases,</span> <span class="pre">namespace)</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">class</span></code> 文を使わずに動的にクラスを生成できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
-<span class="go">0</span>
+<p>3 引数版 <code class="docutils literal notranslate"><span class="pre">type(name,</span> <span class="pre">bases,</span> <span class="pre">namespace)</span></code> を使うと、<code class="docutils literal notranslate"><span class="pre">class</span></code> 文を使わずに動的にクラスを生成できる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos">4</span><span class="go">0</span>
 </pre></div>
 </div>
 </section>
 <section id="isinstance">
 <h2>isinstance<a class="headerlink" href="#isinstance" title="Link to this heading"></a></h2>
 <p>オブジェクトが指定した型（またはそのサブクラス）のインスタンスかどうかを判定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+<span class="linenos">4</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="issubclass">
 <h2>issubclass<a class="headerlink" href="#issubclass" title="Link to this heading"></a></h2>
 <p>クラスが指定したクラス（またはそのサブクラス）かどうかを判定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">issubclass</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-<span class="go">True</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">issubclass</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">True</span>
 </pre></div>
 </div>
 </section>
 <section id="id">
 <h2>id<a class="headerlink" href="#id" title="Link to this heading"></a></h2>
-<p>オブジェクトの識別値（CPythonではメモリアドレス相当）を返す。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="go">False</span>
+<p>オブジェクトの識別値（CPython ではメモリアドレス相当）を返す。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="linenos">5</span><span class="go">True</span>
+<span class="linenos">6</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="linenos">7</span><span class="go">False</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">b</span></code> は <code class="docutils literal notranslate"><span class="pre">a</span></code> と同じオブジェクトを指しているため識別値が一致するが、<code class="docutils literal notranslate"><span class="pre">c</span></code> は値が等しくても別のオブジェクトなので識別値は異なる。</p>
@@ -149,59 +150,83 @@
 <section id="hasattr-getattr-setattr-delattr">
 <h2>hasattr / getattr / setattr / delattr<a class="headerlink" href="#hasattr-getattr-setattr-delattr" title="Link to this heading"></a></h2>
 <p>オブジェクトの属性の有無を調べたり、取得・設定・削除したりする。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">setattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
-<span class="go">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">delattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos"> 3</span><span class="gp">...</span>
+<span class="linenos"> 4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="linenos"> 5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="go">True</span>
+<span class="linenos"> 7</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="go">1</span>
+<span class="linenos"> 9</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">setattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">10</span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="linenos">11</span><span class="go">2</span>
+<span class="linenos">12</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">delattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="dir">
 <h2>dir<a class="headerlink" href="#dir" title="Link to this heading"></a></h2>
 <p>オブジェクトが持つ属性・メソッドの名前一覧を返す。引数を省略すると現在のスコープの名前一覧を返す。また、<a class="reference internal" href="class_helpers.html"><span class="doc">クラス設計支援</span></a> で説明する <code class="docutils literal notranslate"><span class="pre">super</span></code> や <code class="docutils literal notranslate"><span class="pre">property</span></code> などの機能を使って定義したクラスの属性も、<code class="docutils literal notranslate"><span class="pre">dir</span></code> で確認できる。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">([])[:</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">[&#39;__add__&#39;, &#39;__class__&#39;, &#39;__contains__&#39;]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">([])[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="linenos">2</span><span class="go">[&#39;__add__&#39;, &#39;__class__&#39;, &#39;__class_getitem__&#39;]</span>
 </pre></div>
 </div>
 </section>
 <section id="vars">
 <h2>vars<a class="headerlink" href="#vars" title="Link to this heading"></a></h2>
 <p>オブジェクトの <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> 属性を返す。引数を省略すると現在のローカル変数の辞書を返し、これは <code class="docutils literal notranslate"><span class="pre">locals()</span></code> と等価である（モジュールレベルの変数一覧を得るには <code class="docutils literal notranslate"><span class="pre">globals()</span></code> を使う）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">Point</span><span class="p">())</span>
-<span class="go">{&#39;x&#39;: 1}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<span class="linenos">2</span><span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">3</span><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">4</span><span class="gp">...</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">vars</span><span class="p">(</span><span class="n">Point</span><span class="p">())</span>
+<span class="linenos">6</span><span class="go">{&#39;x&#39;: 1}</span>
 </pre></div>
 </div>
 </section>
 <section id="hash">
 <h2>hash<a class="headerlink" href="#hash" title="Link to this heading"></a></h2>
 <p>オブジェクトのハッシュ値（整数）を返す。ハッシュ可能なオブジェクトのみ辞書のキーや集合（<code class="docutils literal notranslate"><span class="pre">set</span></code> / <code class="docutils literal notranslate"><span class="pre">frozenset</span></code>）の要素にできる（<a class="reference internal" href="type_conversion.html"><span class="doc">型変換・生成</span></a> の <code class="docutils literal notranslate"><span class="pre">frozenset</span></code> の項も参照）。リストや辞書のようなミュータブルなオブジェクトはハッシュ可能ではない。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hash</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">42</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">hash</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># 実行毎にランダム化されるため値は環境によって異なる</span>
-<span class="go">-4044789205657692274</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hash</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">42</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">hash</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>  <span class="c1"># 文字列のハッシュ値はプロセスごとにランダム化されるため、実行ごとに異なる</span>
+<span class="linenos">4</span><span class="go">-4044789205657692274</span>
 </pre></div>
 </div>
 </section>
 <section id="callable">
 <h2>callable<a class="headerlink" href="#callable" title="Link to this heading"></a></h2>
 <p>オブジェクトが呼び出し可能（関数のように <code class="docutils literal notranslate"><span class="pre">()</span></code> で呼べる）かどうかを判定する。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">callable</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">callable</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">False</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">callable</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">True</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">callable</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">4</span><span class="go">False</span>
 </pre></div>
+</div>
+</section>
+<section id="eval-exec-compile">
+<h2>eval / exec / compile<a class="headerlink" href="#eval-exec-compile" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">eval</span></code> は文字列として与えた式を評価してその値を返し、<code class="docutils literal notranslate"><span class="pre">exec</span></code> は文（複数行のコードも可）を実行して常に <code class="docutils literal notranslate"><span class="pre">None</span></code> を返す。<code class="docutils literal notranslate"><span class="pre">compile</span></code> はソースコードをコードオブジェクトに変換し、<code class="docutils literal notranslate"><span class="pre">eval</span></code> / <code class="docutils literal notranslate"><span class="pre">exec</span></code> に渡せるようにする。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;1 + 2 * 3&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="go">7</span>
+<span class="linenos">3</span><span class="gp">&gt;&gt;&gt; </span><span class="n">namespace</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="linenos">4</span><span class="gp">&gt;&gt;&gt; </span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;x = 10</span><span class="se">\n</span><span class="s2">y = x * 2&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+<span class="linenos">5</span><span class="gp">&gt;&gt;&gt; </span><span class="n">namespace</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+<span class="linenos">6</span><span class="go">20</span>
+<span class="linenos">7</span><span class="gp">&gt;&gt;&gt; </span><span class="n">code</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s2">&quot;x + 1&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+<span class="linenos">8</span><span class="gp">&gt;&gt;&gt; </span><span class="nb">eval</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">41</span><span class="p">})</span>
+<span class="linenos">9</span><span class="go">42</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">eval</span></code> / <code class="docutils literal notranslate"><span class="pre">exec</span></code> は渡された文字列を任意の Python コードとして実行するため、ユーザー入力や外部ファイルなど信頼できないデータに対して使ってはならない。<code class="docutils literal notranslate"><span class="pre">globals</span></code> 引数で名前空間を制限しても安全にはならない。文字列で表現されたリテラル（数値・文字列・リスト・辞書など）を値に変換したいだけであれば、リテラル以外を受け付けない <code class="docutils literal notranslate"><span class="pre">ast.literal_eval</span></code> を使う（<a class="reference internal" href="../stdlib/misc/ast.html"><span class="doc">ast</span></a> を参照）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="linenos">2</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="s2">&quot;{&#39;a&#39;: [1, 2, 3]}&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="go">{&#39;a&#39;: [1, 2, 3]}</span>
+</pre></div>
+</div>
 </div>
 </section>
 </section>
